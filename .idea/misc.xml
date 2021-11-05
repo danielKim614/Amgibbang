@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Amgibbang/app/src/main/res/drawable/button_back.xml" value="0.26979166666666665" />
+        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_add.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_card_list.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
