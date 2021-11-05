@@ -21,7 +21,7 @@ public class CardListActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.cardlist_buttonBack);
         toolbar = findViewById(R.id.toolbar);
 
-        //액션바 변경하기(들어갈 수 있는 타입 : Toolbar type
+        //액션바 변경하기(들어갈 수 있는 타입 : To olbar type
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
