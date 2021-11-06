@@ -16,7 +16,7 @@ public class CardListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_card_list);
 
         buttonBack = findViewById(R.id.cardlist_buttonBack);
         toolbar = findViewById(R.id.toolbar);

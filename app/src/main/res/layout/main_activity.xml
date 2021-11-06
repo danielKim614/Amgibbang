@@ -10,7 +10,7 @@
 
     <include
         layout="@layout/main_toolbar"
-        android:id="@+id/toolbar"/>
+        android:id="@+id/main_toolbar"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
