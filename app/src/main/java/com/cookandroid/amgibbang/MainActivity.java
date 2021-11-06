@@ -15,6 +15,5 @@ public class MainActivity extends AppCompatActivity {
         Toolbar main_toolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(main_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
     }
 }
