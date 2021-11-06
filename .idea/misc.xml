@@ -3,22 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Amgibbang/app/src/main/res/drawable/button_add.xml" value="0.26979166666666665" />
-        <entry key="..\:/Amgibbang/app/src/main/res/drawable/button_back.xml" value="0.26979166666666665" />
-        <entry key="..\:/Amgibbang/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26979166666666665" />
-        <entry key="..\:/Amgibbang/app/src/main/res/drawable/main_listbackground.xml" value="0.26979166666666665" />
-        <entry key="..\:/Amgibbang/app/src/main/res/drawable/word_background_textview.xml" value="0.26979166666666665" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_card_list.xml" value="0.16666666666666666" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.1793478260869565" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/main_activity.xml" value="0.16666666666666666" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/main_toolbar.xml" value="0.16666666666666666" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/toolbar.xml" value="0.16666666666666666" />
-        <entry key="..\:/Amgibbang/app/src/main/res/layout/word_toolbar.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_add.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_card_list.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_single_item_view.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.2046875" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/cardlist_toolbar.xml" value="0.2046875" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/sample_single_item_view.xml" value="0.5390625" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/single_item_list.xml" value="0.32019927536231885" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/test.xml" value="0.2046875" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/toolbar.xml" value="0.2957427536231884" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/word_toolbar.xml" value="0.33125" />
       </map>
     </option>
   </component>
