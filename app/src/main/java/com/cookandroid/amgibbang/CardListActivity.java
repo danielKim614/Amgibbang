@@ -4,10 +4,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,8 +22,8 @@ import java.util.ArrayList;
 public class CardListActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    ImageView buttonBack;
-    TextView editTextView_btn;
+    ImageButton buttonBack, add_btn;
+    Button edit_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,9 @@ public class CardListActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         buttonBack = findViewById(R.id.cardlist_buttonBack);
-        editTextView_btn = findViewById(R.id.cardlist_editButton);
+        edit_btn = findViewById(R.id.cardlist_editButton);
+        add_btn = findViewById(R.id.cardlist_addCardButton);
+
         ListView listView = findViewById(R.id.cardlist_listview);
         SingleAdapter adapter = new SingleAdapter();
 
@@ -44,23 +50,31 @@ public class CardListActivity extends AppCompatActivity {
         adapter.addItem(new SingleItem("bee", "벌"));
         listView.setAdapter(adapter);
 
-        buttonBack.setOnClickListener(new View.OnClickListener() {
+        Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CardListActivity.this, "뒤로가기입니다.", Toast.LENGTH_SHORT).show();
+                switch (v.getId()){
+                    //뒤로가기 버튼 행동
+                    case R.id.cardlist_buttonBack:
+                        Log.v("superoid","=================클릭 back================");
+                        //Intent intent = new Intent(MainActivity.this,SubActivity.class);
+                       //startActivity(intent);
+                        break;
+                    //edit 버튼 행동
+                    case R.id.cardlist_editButton:
+                        Log.v("superoid","=================클릭 edit================");
+                        break;
+                    //+ 버튼 행동
+                    case R.id.cardlist_addCardButton:
+                        Log.v("superoid","=================클릭 +================");
+                        break;
+                }
             }
+        };
 
-
-        });
-
-        editTextView_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CardListActivity.this, "edit입니다.", Toast.LENGTH_SHORT).show();
-            }
-
-
-        });
+        buttonBack.setOnClickListener(onClickListener);
+        edit_btn.setOnClickListener(onClickListener);
+        add_btn.setOnClickListener(onClickListener);
     }
 
     class SingleAdapter extends BaseAdapter {
