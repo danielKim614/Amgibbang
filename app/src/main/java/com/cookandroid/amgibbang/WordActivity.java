@@ -6,9 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class WordActivity extends AppCompatActivity {
+    boolean editState = false;
 
 
     @Override
@@ -30,7 +33,22 @@ public class WordActivity extends AppCompatActivity {
 
     public void onButtonClick(View view) {
         switch(view.getId()) {
-            case R.id.word_button_edit: ;  // 단어 상세 내용 편집하기 (edit 버튼 저장 버튼으로 바꾸고 텍스트뷰 editable하게 변경)
+            case R.id.word_button_edit:  // 단어 상세 내용 편집하기 (edit 버튼 저장 버튼으로 바꾸고 텍스트뷰 editable하게 변경)
+                if (editState == false) {
+                    editState = true;
+                    Button editButton = findViewById(R.id.word_button_edit);
+                    editButton.setText("저장");
+                    findViewById(R.id.word_text_word).setEnabled(true);
+                    findViewById(R.id.word_text_meaning).setEnabled(true);
+                    findViewById(R.id.word_text_explanation).setEnabled(true);
+                } else {
+                    editState = false;
+                    Button editButton = findViewById(R.id.word_button_edit);
+                    editButton.setText(R.string.edit);
+                    findViewById(R.id.word_text_word).setEnabled(false);
+                    findViewById(R.id.word_text_meaning).setEnabled(false);
+                    findViewById(R.id.word_text_explanation).setEnabled(false);
+                }
             case R.id.word_button_prev_word: ; // 이전 단어로 넘어가기
             case R.id.word_button_next_word: ; // 다음 단어로 넘어가기
         }

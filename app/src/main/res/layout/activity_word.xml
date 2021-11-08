@@ -41,7 +41,8 @@
 
     </LinearLayout>
 
-    <TextView
+    <EditText
+        android:id="@+id/word_text_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -49,9 +50,12 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"/>
+        android:text="text"
+        android:inputType="text"
+        android:enabled="false"/>
 
-    <TextView
+    <EditText
+        android:id="@+id/word_text_meaning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -60,9 +64,12 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"/>
+        android:text="text"
+        android:inputType="text"
+        android:enabled="false"/>
 
-    <TextView
+    <EditText
+        android:id="@+id/word_text_explanation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -72,6 +79,8 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"/>
+        android:text="text"
+        android:inputType="text"
+        android:enabled="false"/>
 
 </LinearLayout>
