@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class CardListActivity extends AppCompatActivity {
@@ -34,6 +36,8 @@ public class CardListActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.cardlist_buttonBack);
         edit_btn = findViewById(R.id.cardlist_editButton);
         add_btn = findViewById(R.id.cardlist_addCardButton);
+        FloatingActionButton fab = findViewById(R.id.cardlist_fab);
+        fab.setOnClickListener(new FABClickListener());
 
         ListView listView = findViewById(R.id.cardlist_listview);
         SingleAdapter adapter = new SingleAdapter();
@@ -75,6 +79,13 @@ public class CardListActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(onClickListener);
         edit_btn.setOnClickListener(onClickListener);
         add_btn.setOnClickListener(onClickListener);
+    }
+
+    class FABClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Log.v("superoid","=================클릭 Fab================");
+        }
     }
 
     class SingleAdapter extends BaseAdapter {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,13 +20,29 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Search"
             android:inputType="text|textNoSuggestions"
-            android:hint="Search" />
+            android:minHeight="48dp" />
 
-        <ListView
-            android:id="@+id/cardlist_listview"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
+            <ListView
+                android:id="@+id/cardlist_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/cardlist_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/button_play_circle_filled"
+                android:layout_margin="16dp"
+                app:tint="@null"
+                app:backgroundTint="?attr/colorPrimary" />
+        </FrameLayout>
     </LinearLayout>
+
 </androidx.drawerlayout.widget.DrawerLayout>
