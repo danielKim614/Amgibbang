@@ -15,4 +15,39 @@
         android:id="@+id/calendar_calendar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ProgressBar
+            android:layout_gravity="center"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:max="100"
+            android:progressBackgroundTint="@color/gray_400"
+            android:progressDrawable="@drawable/calendar_circle_progressbar"
+            android:progressTint="?attr/colorPrimary"
+            android:progress="70"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="단어장A"/>
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7/10"/>
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
 </LinearLayout>
