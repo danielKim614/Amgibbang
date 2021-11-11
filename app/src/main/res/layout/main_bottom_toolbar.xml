@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:contentInsetStart="0dp"
+    android:id="@+id/main_toolbar"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F1F1F1"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/main_button_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_calender"
+            app:tint="@color/gray_600"
+            android:layout_weight="1"
+            android:onClick="main_onClickMove"
+            />
+
+        <ImageView
+            android:id="@+id/main_button_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_timer"
+            app:tint="@color/gray_600"
+            android:layout_weight="1"
+            android:onClick="main_onClickMove"
+            />
+
+        <ImageView
+            android:id="@+id/main_button_adder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_adder"
+            app:tint="@color/gray_600"
+            android:layout_weight="1"
+            android:onClick="main_onClickAdd"
+            />
+
+        <ImageView
+            android:id="@+id/main_button_dictionary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_dictionary"
+            app:tint="@color/gray_600"
+            android:layout_weight="1"
+            android:onClick="main_onClickMove"
+            />
+
+        <ImageView
+            android:id="@+id/main_button_bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/button_bookmark_notfilled"
+            app:tint="@color/gray_600"
+            android:layout_weight="1"
+            android:onClick="main_onClickBookmarkList"
+            />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.Toolbar>

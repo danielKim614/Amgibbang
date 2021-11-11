@@ -15,6 +15,7 @@
         android:layout_gravity="left"
         android:src="@drawable/button_menu"
         app:tint="?attr/colorOnPrimary"
+        android:onClick="main_setting"
         />
 
     <TextView
@@ -34,7 +35,32 @@
         android:textColor="?attr/colorOnPrimary"
         android:layout_gravity="right"
         android:layout_marginRight="20dp"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:onClick="main_onClickEdit"/>
+
+    <TextView
+        android:id="@+id/main_button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삭제"
+        android:textColor="?attr/colorOnPrimary"
+        android:layout_gravity="right"
+        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        android:onClick="main_onClickDelete"
+        android:visibility="invisible"/>
+
+    <CheckBox
+        android:id="@+id/main_button_selectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체"
+        android:textColor="?attr/colorOnPrimary"
+        android:layout_gravity="right"
+        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        android:onClick="main_onClickSelectAll"
+        android:visibility="invisible"/>
 
 
 </androidx.appcompat.widget.Toolbar>
