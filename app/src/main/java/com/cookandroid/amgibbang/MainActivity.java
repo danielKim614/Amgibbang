@@ -27,7 +27,8 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     boolean editstate = false;
-    Dialog dialog;
+    String dialogInput;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,22 +62,21 @@ public class MainActivity extends AppCompatActivity {
     public void main_onClickAdd(View v){
         // 단어장 추가
         // 다이얼로그 올라옴
-        dialog = new Dialog(MainActivity.this);
-        dialog.setContentView(R.layout.main_add_dialog);
+        MainCustomDialog dialog = new MainCustomDialog(this);
+        dialog.setMainDialogListener(new MainCustomDialog.MainCustomDialogListener(){
+            @Override
+            public void mainDialogPositive(String inputName) {
+                dialogInput=inputName;
+                Log.v("다이얼로그", "입력되었습니다.");
+                Log.v("다이얼로그", "입력값 : "+dialogInput);
+            }
+            @Override
+            public void mainDialogNegative(){
+                Log.v("다이얼로그", "취소되었습니다.");
+            }
+        });
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
-
-    }
-
-    //다이얼로그 취소
-    public void main_dialogCancel(View v){
-        dialog.dismiss();
-    }
-
-    //다이얼로그 확인
-    public void main_dialogAdd(View v){
-        //입력 값 가져옴
-        dialog.dismiss();
     }
 
     public void main_onClickBookmarkList(View v){
