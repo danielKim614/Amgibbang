@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:textColor="?attr/colorOnPrimary"
         android:layout_gravity="center"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <Button
         android:id="@+id/word_button_edit"

@@ -11,43 +11,112 @@
         layout="@layout/calendar_toolbar"
         android:id="@+id/calendar_toolbar"/>
 
-    <CalendarView
-        android:id="@+id/calendar_calendar_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:layout_gravity="center"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:max="100"
-            android:progressBackgroundTint="@color/gray_400"
-            android:progressDrawable="@drawable/calendar_circle_progressbar"
-            android:progressTint="?attr/colorPrimary"
-            android:progress="70"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <ImageButton
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:src="@drawable/button_back_black"
+            android:background="@android:color/transparent"
+            android:onClick="previousMonthAction"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="단어장A"/>
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/10"/>
-        </LinearLayout>
+        <TextView
+            android:id="@+id/calendar_month_year_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Feb 2021"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"/>
 
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/button_forward_black"
+            android:background="@android:color/transparent"
+            android:onClick="nextMonthAction"/>
 
+    </LinearLayout>
 
-    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SUN"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MON"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TUE"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="WED"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="THU"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="FRI"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SAT"
+            android:textColor="?attr/colorPrimary"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -57,7 +57,8 @@ public class WordActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case android.R.id.home: // toolbar의 back 버튼이 눌렸을 때
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
