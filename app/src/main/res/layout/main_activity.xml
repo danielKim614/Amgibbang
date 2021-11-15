@@ -31,7 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/main_listbackground"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:onClick="main_onClickList">
 
                 <CheckBox
                     android:id="@+id/main_cardlist_check1"
@@ -47,14 +48,15 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/button_bookmark_notfilled"
                     android:layout_gravity="right"
-                    android:onClick="main_onClickBookmark"/>
+                    android:onClick="main_onClickBookmark"
+                    app:tint="?attr/Black" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="단어장A"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/Black"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingTop="65dp"
@@ -70,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/main_listbackground"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:onClick="main_onClickList">
 
                 <CheckBox
                     android:id="@+id/main_cardlist_check2"
@@ -84,14 +87,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/button_bookmark_notfilled"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="right"
+                    android:onClick="main_onClickBookmark"
+                    app:tint="?attr/Black"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="단어장B"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/Black"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingTop="65dp"

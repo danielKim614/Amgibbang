@@ -5,7 +5,7 @@
     app:contentInsetStart="0dp"
     android:id="@+id/main_toolbar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F1F1F1"
+    android:background="?attr/toolbarGrey"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/button_calender"
-            app:tint="@color/gray_600"
+            app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickMove"
             />
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/button_timer"
-            app:tint="@color/gray_600"
+            app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickMove"
             />
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/button_adder"
-            app:tint="@color/gray_600"
+            app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickAdd"
             />
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/button_dictionary"
-            app:tint="@color/gray_600"
+            app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickMove"
             />
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/button_bookmark_notfilled"
-            app:tint="@color/gray_600"
+            app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickBookmarkList"
             />

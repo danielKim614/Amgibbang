@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:src="@drawable/button_menu"
-        app:tint="?attr/colorOnPrimary"
+        app:tint="@color/white"
         android:onClick="main_setting"
         />
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="암기빵"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="18sp"/>
 
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="edit"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/white"
         android:layout_gravity="right"
         android:layout_marginRight="20dp"
         android:textSize="18sp"
@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="삭제"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/white"
         android:layout_gravity="right"
         android:layout_marginRight="8dp"
         android:textSize="18sp"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="전체"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/white"
         android:layout_gravity="right"
         android:layout_marginRight="8dp"
         android:textSize="18sp"

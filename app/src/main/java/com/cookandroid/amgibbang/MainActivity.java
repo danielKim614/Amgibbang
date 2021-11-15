@@ -2,11 +2,13 @@ package com.cookandroid.amgibbang;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -26,7 +28,8 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean editstate = false;
+    boolean editState = false;
+    int a=1;
     String dialogInput;
 
     @Override
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.main_button_timer:
                 break;
             case R.id.main_button_dictionary:
+                Intent intent1=new Intent(MainActivity.this, DictionaryMainActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
@@ -79,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //카드리스트로 이동
+    public void main_onClickList(View v){
+        if(editState==false){
+            Intent intent = new Intent(MainActivity.this, CardListActivity.class);
+            startActivity(intent);
+        }
+    }
+
     public void main_onClickBookmarkList(View v){
         //북마크 된 것들만 화면에 나타냄
     }
@@ -88,13 +101,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void main_setting(View v){
-        // 툴바의 설정
+        // 로그아웃, 다크모드 온 오프 창 띄움
+        String[] array = {"로그 아웃", "다크 모드 ON", "다크 모드 OFF"};
+        if(editState==false){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setItems(array, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    switch(array[i]){
+                        case "로그 아웃":
+                            Log.v("다이얼로그", "로그 아웃 합니다.");
+                            break;
+                        case "다크 모드 ON":
+                            Log.v("다이얼로그", "다크모드를 킵니다.");
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            break;
+                        case "다크 모드 OFF":
+                            Log.v("다이얼로그", "다크모드를 끕니다.");
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        }
     }
 
     public void main_onClickEdit(View v){
         // edit 버튼
-        if(editstate==false){
-            editstate=true;
+        if(editState==false){
+            editState=true;
             // 버튼 설정
             TextView textView=findViewById(R.id.main_button_edit);
             TextView textView1=findViewById(R.id.main_button_delete);
@@ -102,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("확인");
             textView1.setVisibility(View.VISIBLE);
             textView2.setVisibility(View.VISIBLE);
+            CheckBox checkAll=findViewById(R.id.main_button_selectAll);
+            checkAll.setChecked(false);
 
             //체크하는 부분 생성
             CheckBox check1=findViewById(R.id.main_cardlist_check1);
@@ -110,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             check2.setVisibility(View.VISIBLE);
         }
         else{
-            editstate=false;
+            editState=false;
             TextView textView=findViewById(R.id.main_button_edit);
             TextView textView1=findViewById(R.id.main_button_delete);
             TextView textView2=findViewById(R.id.main_button_selectAll);
@@ -153,4 +191,5 @@ public class MainActivity extends AppCompatActivity {
             check2.setChecked(false);
         }
     }
+
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="toolbarColor" format="color"/>
+    <attr name="Black" format="color"/>
+    <attr name="White" format="color"/>
+    <attr name="Grey" format="color"/>
+    <attr name="toolbarGrey" format="color"/>
+    //사용하고 싶은 색깔 이름 지정해주시면 됩니다.
+
+</resources>
