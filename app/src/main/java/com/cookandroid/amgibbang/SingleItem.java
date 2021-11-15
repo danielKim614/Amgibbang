@@ -1,5 +1,7 @@
 package com.cookandroid.amgibbang;
 
+import android.widget.CheckBox;
+
 public class SingleItem {
     String word;
     String meaning;

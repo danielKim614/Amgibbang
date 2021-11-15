@@ -15,7 +15,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/cardlist_toolbar" />
+        <include
+            layout="@layout/cardlist_toolbar"
+            android:id="@+id/cardlist_toolbar" />
 
         <EditText
             android:layout_width="match_parent"
@@ -24,25 +26,35 @@
             android:inputType="text|textNoSuggestions"
             android:minHeight="48dp" />
 
-        <FrameLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-            <ListView
-                android:id="@+id/cardlist_listview"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/cardlist_fab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/button_play_circle_filled"
-                android:layout_margin="16dp"
-                app:tint="@null"
-                app:backgroundTint="?attr/colorPrimary" />
-        </FrameLayout>
+                <ListView
+                    android:id="@+id/cardlist_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="multipleChoice" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/cardlist_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/button_play_circle_filled"
+                    app:backgroundTint="?attr/colorPrimary"
+                    app:tint="@null" />
+
+            </FrameLayout>
+
+        </ScrollView>
+
     </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
