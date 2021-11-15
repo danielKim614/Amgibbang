@@ -1,21 +1,25 @@
 package com.cookandroid.amgibbang;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
-    private final ArrayList<String> daysOfMonth;
-    private final OnItemListener onItemListener;
+    public final ArrayList<String> daysOfMonth;
+    OnItemClickListener listener;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
+    public CalendarAdapter(ArrayList<String> daysOfMonth) {
         this.daysOfMonth = daysOfMonth;
-        this.onItemListener = onItemListener;
     }
 
     @NonNull
@@ -24,8 +28,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int) (parent.getHeight() * 0.13);
-        return new CalendarViewHolder(view, onItemListener);
+        layoutParams.height = (int) (parent.getHeight() * 0.1);
+        return new CalendarViewHolder(view, listener);
     }
 
     @Override
@@ -38,7 +42,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         return daysOfMonth.size();
     }
 
-    public interface OnItemListener {
-        void onItemClick(int position, String dayText);
+    public interface OnItemClickListener {
+        void onItemClick(View view, int pos);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

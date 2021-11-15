@@ -3,15 +3,20 @@ package com.cookandroid.amgibbang;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -19,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CalendarActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
+public class CalendarActivity extends AppCompatActivity {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
@@ -40,6 +45,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         selectedDate = LocalDate.now();
         setMonthView();
 
+
     }
 
     private void initWidgets() {
@@ -51,11 +57,26 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-
-        CalendarAdapter calendarAdapter= new CalendarAdapter(daysInMonth, this);
+        CalendarAdapter calendarAdapter= new CalendarAdapter(daysInMonth);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
+
+        // 캘린더 셀 클릭 이벤트
+        calendarAdapter.setOnItemClickListener(new CalendarAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int pos) {
+                // 클릭하면 하나만 선택되게
+                for (int i = 0; i < calendarAdapter.getItemCount(); i++) {
+                    CalendarViewHolder holder =  (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(i);
+                    if (i == pos) {
+                        holder.dayOfMonth.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.calendar_background_cell, null));
+                        continue;
+                    }
+                    holder.dayOfMonth.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                }
+            }
+        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -103,11 +124,5 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     public void nextMonthAction(View view) {
         selectedDate = selectedDate.plusMonths(1);
         setMonthView();
-    }
-
-
-    @Override
-    public void onItemClick(int position, String dayText) {
-
     }
 }
