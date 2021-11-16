@@ -5,6 +5,7 @@
     <attr name="White" format="color"/>
     <attr name="Grey" format="color"/>
     <attr name="toolbarGrey" format="color"/>
-    //사용하고 싶은 색깔 이름 지정해주시면 됩니다.
+    <attr name="cardColor" format="color"/>
+    //사용하고 싶은 색깔 이름 지정해주시면 됩니다. 이름 정의
 
 </resources>

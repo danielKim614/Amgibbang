@@ -17,5 +17,6 @@
         <item name="White">@color/white</item>
         <item name="Grey">@color/gray_600</item>
         <item name="toolbarGrey">#F1F1F1</item>
+        <item name="cardColor">#E6E6E6</item>
     </style>
 </resources>

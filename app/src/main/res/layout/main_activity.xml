@@ -12,103 +12,18 @@
         layout="@layout/main_toolbar"
         android:id="@+id/main_toolbar"/>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:padding = "10dp"
+        android:scrollbars="vertical"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="5dp"
+        android:scrollbarThumbVertical="@color/gray_600">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="30dp"
-            android:weightSum="2">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/main_listbackground"
-                android:layout_marginRight="10dp"
-                android:onClick="main_onClickList">
-
-                <CheckBox
-                    android:id="@+id/main_cardlist_check1"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/button_unchecked"
-                    android:visibility="invisible"
-                    android:onClick="main_onClickCheck"/>
-
-                <ImageView
-                    android:id="@+id/bookmark1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/button_bookmark_notfilled"
-                    android:layout_gravity="right"
-                    android:onClick="main_onClickBookmark"
-                    app:tint="?attr/Black" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="단어장A"
-                    android:textColor="?attr/Black"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingTop="65dp"
-                    android:paddingBottom="65dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/main_listbackground"
-                android:layout_marginLeft="10dp"
-                android:onClick="main_onClickList">
-
-                <CheckBox
-                    android:id="@+id/main_cardlist_check2"
-                    android:layout_width="30dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/button_unchecked"
-                    android:visibility="invisible"
-                    android:onClick="main_onClickCheck"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/button_bookmark_notfilled"
-                    android:layout_gravity="right"
-                    android:onClick="main_onClickBookmark"
-                    app:tint="?attr/Black"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="단어장B"
-                    android:textColor="?attr/Black"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:paddingTop="65dp"
-                    android:paddingBottom="65dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <include
         layout="@layout/main_bottom_toolbar"
