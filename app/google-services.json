@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "284297907533",
+    "project_id": "amgibbang-3fa96",
+    "storage_bucket": "amgibbang-3fa96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284297907533:android:98a00c59b55f9080153b04",
+        "android_client_info": {
+          "package_name": "com.cookandroid.amgibbang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxyveoWKyxY5np5Sez52_YQ1By4BsoR5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
