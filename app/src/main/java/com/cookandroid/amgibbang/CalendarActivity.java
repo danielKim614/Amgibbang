@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ public class CalendarActivity extends AppCompatActivity {
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
 
+    private RecyclerView calendarProgressbarRecyclerView;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,15 @@ public class CalendarActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
 
         initWidgets();
+        calendarProgressbarRecyclerView = findViewById(R.id.calendar_progressbar_recyclerview);
         selectedDate = LocalDate.now();
         setMonthView();
 
+        ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
+        infoList.add(new CalendarProgressbarInfo(3, 10));
+        infoList.add(new CalendarProgressbarInfo(4, 10));
 
+        setProgressbarView(infoList);
     }
 
     private void initWidgets() {
@@ -67,6 +75,7 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int pos) {
                 // 클릭하면 하나만 선택되게
+                Log.d("dabin", "clicked");
                 for (int i = 0; i < calendarAdapter.getItemCount(); i++) {
                     CalendarViewHolder holder =  (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(i);
                     if (i == pos) {
@@ -124,5 +133,12 @@ public class CalendarActivity extends AppCompatActivity {
     public void nextMonthAction(View view) {
         selectedDate = selectedDate.plusMonths(1);
         setMonthView();
+    }
+
+    private void setProgressbarView(ArrayList<CalendarProgressbarInfo> infoList) {
+        CalendarProgressbarAdapter adapter= new CalendarProgressbarAdapter(infoList);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        calendarProgressbarRecyclerView.setLayoutManager(layoutManager);
+        calendarProgressbarRecyclerView.setAdapter(adapter);
     }
 }
