@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
     private ArrayList<String> nameList;
-    private String lName;
+    private String editTextName;
 
     public MainAdapter(ArrayList<String> nameList) {
         this.nameList = nameList;
@@ -25,7 +26,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @NonNull
     @Override   // 추가할 아이템 설정
     public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+        //카드뷰 설정해줌
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_recyclerview_item, parent, false);
         MainViewHolder holder = new MainViewHolder(view);
 
@@ -68,6 +69,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public class MainViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView name;
+        protected EditText editName;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);

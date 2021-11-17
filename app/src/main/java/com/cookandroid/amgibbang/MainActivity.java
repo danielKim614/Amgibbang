@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        nameList = new ArrayList<>();
+        nameList = new ArrayList<>();   // string 리스트
         mainAdapter = new MainAdapter(nameList);
         recyclerView.setAdapter(mainAdapter);
     }
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
                 nameList.add(dialogInput);
-                mainAdapter.notifyDataSetChanged();
+                mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override
             public void mainDialogNegative(){
