@@ -56,7 +56,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
                 Toast.makeText(view.getContext(), curName, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, CardListActivity.class);
-                intent.putExtra("title", curName);
+                intent.putExtra("TITLE", curName);
                 context.startActivity(intent);
             }
         });

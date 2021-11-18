@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
@@ -66,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
 
-        db.collection("apple").document("사과").set("rsd");
+        //데이터 베이스에서 값 가져오기
+        DocumentReference documentReference = db.collection("CardList").document();
     }
 
     public void main_onClickMove(View v){
