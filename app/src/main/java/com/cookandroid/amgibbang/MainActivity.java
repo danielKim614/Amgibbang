@@ -69,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
                         MainCard card = document.toObject(MainCard.class);
                         cards.add(card);
                     }
+                    mainAdapter.notifyDataSetChanged();
                 } else {
                     Log.v("main", "오류 발생");
                 }
             }
         });
-
     }
 
     public void main_onClickMove(View v){

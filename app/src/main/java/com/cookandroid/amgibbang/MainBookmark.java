@@ -1,5 +1,7 @@
 package com.cookandroid.amgibbang;
 
-public class MainBookmark {
+import java.util.ArrayList;
 
+public class MainBookmark {
+    //private ArrayList
 }

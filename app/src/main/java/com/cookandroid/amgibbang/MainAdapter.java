@@ -58,6 +58,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 Intent intent = new Intent(context, CardListActivity.class);
                 intent.putExtra("TITLE", curName);
                 context.startActivity(intent);
+
             }
         });
     }
