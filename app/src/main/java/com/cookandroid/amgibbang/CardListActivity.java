@@ -39,11 +39,10 @@ import java.util.Map;
 public class CardListActivity extends AppCompatActivity {
 
     ImageButton add_btn;
-    TextView edit_btn;
+    TextView edit_btn, title;
     boolean editstate = false;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -62,6 +61,12 @@ public class CardListActivity extends AppCompatActivity {
         add_btn = findViewById(R.id.cardlist_addCardButton);
         FloatingActionButton fab = findViewById(R.id.cardlist_fab);
         fab.setOnClickListener(new FABClickListener());
+
+        Intent intent = getIntent();
+        String titleText = intent.getStringExtra("title");
+
+        title = findViewById(R.id.cardlist_title);
+        title.setText(""+titleText);
 
 
         // 리사이클러뷰에 표시할 데이터 리스트 생성.

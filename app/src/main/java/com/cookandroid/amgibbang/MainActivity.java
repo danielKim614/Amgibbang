@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         cards = new ArrayList<>();   // string 리스트
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
+
+        db.collection("apple").document("사과").set("rsd");
     }
 
     public void main_onClickMove(View v){
