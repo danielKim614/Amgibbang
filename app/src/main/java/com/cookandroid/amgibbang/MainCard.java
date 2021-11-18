@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class MainCard {
     private String name;
     private boolean isBookmark = false;
-    private CheckBox checkBox;
+    private boolean checkBox;
 
-    public MainCard(String name){
+    public MainCard(String name, boolean isBookmark, boolean checkBox){
         this.name=name;
+        this.isBookmark=isBookmark;
+        this.checkBox=checkBox;
     }
 
     public String getName() {
@@ -21,7 +23,7 @@ public class MainCard {
         return isBookmark;
     }
 
-    public CheckBox getCheckBox() {
+    public boolean getCheckBox() {
         return checkBox;
     }
 }

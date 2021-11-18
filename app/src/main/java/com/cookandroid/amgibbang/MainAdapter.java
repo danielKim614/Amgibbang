@@ -21,10 +21,16 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
+
     private ArrayList<MainCard> cards;
 
     public MainAdapter(ArrayList<MainCard> cards) {
         this.cards = cards;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @NonNull
@@ -108,6 +114,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     // 어레이에 추가
                 }
             });
+
+            if(editState==true){
+                check.setVisibility(View.VISIBLE);
+            }
 
         }
     }

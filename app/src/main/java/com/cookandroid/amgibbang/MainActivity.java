@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
+    FirebaseFirestore firebaseFirestore;
 
 
     @Override
@@ -92,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 dialogInput=inputName;
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
-                MainCard mainCard = new MainCard(dialogInput);
+                MainCard mainCard = new MainCard(dialogInput, false, false);
+
                 cards.add(mainCard);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
@@ -159,11 +162,13 @@ public class MainActivity extends AppCompatActivity {
             CheckBox checkAll=findViewById(R.id.main_button_selectAll);
             checkAll.setChecked(false);
 
+
+
+            mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
+
             //체크하는 부분 생성
-            for(int i=0; i< mainAdapter.getItemCount();i++){
-                MainAdapter.MainViewHolder holder = (MainAdapter.MainViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                holder.check.setVisibility(View.VISIBLE);
-            }
+            //CheckBox checkBox1 = findViewById(R.id.main_check);
+
         }
         else{
             editState=false;
@@ -175,10 +180,7 @@ public class MainActivity extends AppCompatActivity {
             textView2.setVisibility(View.INVISIBLE);
 
             //체크하는 부분 삭제
-            for(int i=0; i< mainAdapter.getItemCount();i++){
-                MainAdapter.MainViewHolder holder = (MainAdapter.MainViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                holder.check.setVisibility(View.INVISIBLE);
-            }
+            mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
 
         }
     }
