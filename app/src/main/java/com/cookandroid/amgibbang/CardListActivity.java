@@ -2,11 +2,14 @@ package com.cookandroid.amgibbang;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -40,10 +43,12 @@ public class CardListActivity extends AppCompatActivity {
 
     ImageButton add_btn;
     TextView edit_btn, title;
-    boolean editstate = false;
+    boolean editState = false;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
     String titleText;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    ArrayList<Word> list = new ArrayList<>();
 
 
     @Override
@@ -71,22 +76,24 @@ public class CardListActivity extends AppCompatActivity {
 
 
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
-        ArrayList<Word> list = new ArrayList<>();
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
-        list.add(new Word("사과", "apple"));
+
+        db.collection(titleText)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Word word = document.toObject(Word.class);
+                                list.add(word);
+                            }
+                            cardListAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.w("test", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+
 
 
 
@@ -107,8 +114,12 @@ public class CardListActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(View view, int pos){
-                // 클릭하면 하나만 선택되게
-                Log.d("dabin", "clicked");
+                Intent intent = new Intent(CardListActivity.this, WordActivity.class);
+                intent.putExtra("TITLE", titleText);
+                Word word = list.get(pos);
+                intent.putExtra("POSITION", pos);
+                intent.putExtra("DATA", word);
+                startActivity(intent);
             }
         });
 
@@ -152,8 +163,8 @@ public class CardListActivity extends AppCompatActivity {
 
     public void onEditButtonClick(View v){
         // edit 버튼
-        if(editstate == false) {
-            editstate = true;
+        if(editState == false) {
+            editState = true;
             // 버튼 설정
             TextView textView=findViewById(R.id.cardlist_button_edit);
             TextView textView1=findViewById(R.id.cardlist_button_delete);
@@ -170,7 +181,7 @@ public class CardListActivity extends AppCompatActivity {
         }
 
         else {
-            editstate = false;
+            editState = false;
             TextView textView=findViewById(R.id.cardlist_button_edit);
             TextView textView1=findViewById(R.id.cardlist_button_delete);
             TextView textView2=findViewById(R.id.cardlist_button_selectAll);
@@ -194,4 +205,52 @@ public class CardListActivity extends AppCompatActivity {
         // 원 체크 후 확인 버튼 누를 시 삭제
     }
 
+    public void cardlist_fab(View v){
+        // 로그아웃, 다크모드 온 오프 창 띄움
+        String[] array = {"공부 모드", "스피드 모드", "퀴즈 모드"};
+        if(editState==false){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setItems(array, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    switch(array[i]){
+                        case "공부 모드":
+                            Log.v("다이얼로그", "공부 모드 시작");
+                            break;
+                        case "스피드 모드":
+                            Log.v("다이얼로그", "스피드 모드 시작");
+                            break;
+                        case "퀴즈 모드":
+                            Log.v("다이얼로그", "퀴즈 모드 시작");
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        }
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+        list.clear();
+
+        db.collection(titleText)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Word word = document.toObject(Word.class);
+                                list.add(word);
+                            }
+                            cardListAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.w("test", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
 }

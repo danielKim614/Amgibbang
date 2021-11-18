@@ -1,6 +1,8 @@
 package com.cookandroid.amgibbang;
 
-public class Word {
+import java.io.Serializable;
+
+public class Word implements Serializable {
     String explanation;
     String meaning;
     String word;
@@ -29,5 +31,17 @@ public class Word {
 
     public String getWord() {
         return word;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
     }
 }
