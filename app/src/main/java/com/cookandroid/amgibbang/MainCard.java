@@ -5,9 +5,9 @@ import android.widget.CheckBox;
 import java.util.ArrayList;
 
 public class MainCard {
-    private String name;
-    private boolean isBookmark = false;
     private boolean checkBox;
+    private boolean isBookmark = false;
+    private String name;
 
     public MainCard(String name, boolean isBookmark, boolean checkBox){
         this.name=name;

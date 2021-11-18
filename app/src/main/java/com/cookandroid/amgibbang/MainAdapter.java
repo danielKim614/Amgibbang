@@ -21,11 +21,12 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
-
+    private Context context;
     private ArrayList<MainCard> cards;
 
-    public MainAdapter(ArrayList<MainCard> cards) {
+    public MainAdapter(ArrayList<MainCard> cards, Context context) {
         this.cards = cards;
+        this.context = context;
     }
 
     @Override
@@ -54,7 +55,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             public void onClick(View view) {
                 String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
                 Toast.makeText(view.getContext(), curName, Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(context, CardListActivity.class);
+                intent.putExtra("title", curName);
+                context.startActivity(intent);
             }
         });
     }
