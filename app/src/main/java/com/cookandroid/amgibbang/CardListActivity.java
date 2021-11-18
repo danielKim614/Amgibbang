@@ -43,6 +43,7 @@ public class CardListActivity extends AppCompatActivity {
     boolean editstate = false;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
+    String titleText;
 
 
     @Override
@@ -63,7 +64,7 @@ public class CardListActivity extends AppCompatActivity {
         fab.setOnClickListener(new FABClickListener());
 
         Intent intent = getIntent();
-        String titleText = intent.getStringExtra("title");
+        titleText = intent.getStringExtra("TITLE");
 
         title = findViewById(R.id.cardlist_title);
         title.setText(""+titleText);
@@ -120,6 +121,7 @@ public class CardListActivity extends AppCompatActivity {
                     // + 버튼 행동
                     case R.id.cardlist_addCardButton:
                         Intent intent=new Intent(CardListActivity.this, AddWordActivity.class);
+                        intent.putExtra("TITLE", titleText);
                         startActivity(intent);
                         break;
                 }
