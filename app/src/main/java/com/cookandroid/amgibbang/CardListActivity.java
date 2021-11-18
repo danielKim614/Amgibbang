@@ -155,8 +155,29 @@ public class CardListActivity extends AppCompatActivity {
     // 플로팅액션버튼 리스너
     class FABClickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v) {
-            Log.v("superoid","=================클릭 Fab================");
+        public void onClick(View v){
+            // 로그아웃, 다크모드 온 오프 창 띄움
+            String[] array = {"공부 모드", "스피드 모드", "퀴즈 모드"};
+            if(editState==false){
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardListActivity.this);
+                builder.setItems(array, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch(array[i]){
+                            case "공부 모드":
+                                Log.v("다이얼로그", "공부 모드 시작");
+                                break;
+                            case "스피드 모드":
+                                Log.v("다이얼로그", "스피드 모드 시작");
+                                break;
+                            case "퀴즈 모드":
+                                Log.v("다이얼로그", "퀴즈 모드 시작");
+                                break;
+                        }
+                    }
+                });
+                builder.show();
+            }
         }
     }
 
@@ -205,30 +226,6 @@ public class CardListActivity extends AppCompatActivity {
         // 원 체크 후 확인 버튼 누를 시 삭제
     }
 
-    public void cardlist_fab(View v){
-        // 로그아웃, 다크모드 온 오프 창 띄움
-        String[] array = {"공부 모드", "스피드 모드", "퀴즈 모드"};
-        if(editState==false){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setItems(array, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    switch(array[i]){
-                        case "공부 모드":
-                            Log.v("다이얼로그", "공부 모드 시작");
-                            break;
-                        case "스피드 모드":
-                            Log.v("다이얼로그", "스피드 모드 시작");
-                            break;
-                        case "퀴즈 모드":
-                            Log.v("다이얼로그", "퀴즈 모드 시작");
-                            break;
-                    }
-                }
-            });
-            builder.show();
-        }
-    }
 
     @Override
     public void onRestart() {
