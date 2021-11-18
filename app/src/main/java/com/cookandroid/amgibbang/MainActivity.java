@@ -36,12 +36,13 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     static boolean editState = false;
+    int a=1;
     String dialogInput;
     private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore firebaseFirestore;
 
 
     @Override
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
 
         cards = new ArrayList<>();   // string 리스트
-        mainAdapter = new MainAdapter(cards, MainActivity.this);
+        mainAdapter = new MainAdapter(cards, this);
         recyclerView.setAdapter(mainAdapter);
 
         db.collection("apple").document("사과").set("rsd");
@@ -96,10 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
                 MainCard mainCard = new MainCard(dialogInput, false, false);
-                //Word word = new Word("1", "2", "3");
+
                 cards.add(mainCard);
-                db.collection("CardList").document(dialogInput).set(mainCard);
-                //db.collection(dialogInput).document("아무거나").set(word);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override

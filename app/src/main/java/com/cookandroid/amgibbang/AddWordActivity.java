@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -10,10 +11,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class AddWordActivity extends AppCompatActivity {
     String word;         // 단어
     String meaning;      // 뜻
     String explanation;  // 설명
+    String titleText;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,9 @@ public class AddWordActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);    // 툴바 왼쪽에 뒤로가기 버튼 추가
         getSupportActionBar().setDisplayShowTitleEnabled(false);  // 타이틀 안 보이게 하기
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
+
+        Intent intent = getIntent();
+        titleText = intent.getStringExtra("TITLE");
     }
 
     public void onButtonClick(View view) {
@@ -45,7 +53,7 @@ public class AddWordActivity extends AppCompatActivity {
             explanation = String.valueOf(charSequence);
 
             // word, meaning, explanation 어딘가에 넘기거나 저장해야 함
-
+            db.collection(titleText).document(word).set(new Word(explanation, meaning, word));
             finish();
         }
     }

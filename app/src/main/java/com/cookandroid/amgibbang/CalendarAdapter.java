@@ -49,4 +49,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+
 }
