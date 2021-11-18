@@ -9,6 +9,8 @@ public class MainCard {
     private boolean isBookmark = false;
     private String name;
 
+    public MainCard() {}
+
     public MainCard(String name, boolean isBookmark, boolean checkBox){
         this.name=name;
         this.isBookmark=isBookmark;

@@ -24,9 +24,13 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 import java.util.ArrayList;
@@ -56,9 +60,21 @@ public class MainActivity extends AppCompatActivity {
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
 
-        db.collection("apple").document("사과").set("rsd");
         //데이터 베이스에서 값 가져오기
-        DocumentReference documentReference = db.collection("CardList").document();
+        db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        MainCard card = document.toObject(MainCard.class);
+                        cards.add(card);
+                    }
+                } else {
+                    Log.v("main", "오류 발생");
+                }
+            }
+        });
+
     }
 
     public void main_onClickMove(View v){
@@ -87,10 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
                 MainCard mainCard = new MainCard(dialogInput, false, false);
-                //Word word = new Word("1", "2", "3");
                 cards.add(mainCard);
                 db.collection("CardList").document(dialogInput).set(mainCard);
-                //db.collection(dialogInput).document("아무거나").set(word);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override
