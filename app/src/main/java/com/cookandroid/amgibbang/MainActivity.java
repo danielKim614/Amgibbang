@@ -1,5 +1,4 @@
 package com.cookandroid.amgibbang;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -8,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -27,47 +25,40 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
-
     static boolean editState = false;
-    int a=1;
     String dialogInput;
     private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
-    FirebaseFirestore firebaseFirestore;
-
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
         //toolbar 지정
         Toolbar main_toolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(main_toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         Toolbar main_bottom_toolbar=findViewById(R.id.main_bottom_toolbar);
         setSupportActionBar(main_bottom_toolbar);
-
         //리사이클러뷰
         recyclerView = findViewById(R.id.main_rv);
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
         cards = new ArrayList<>();   // string 리스트
-        mainAdapter = new MainAdapter(cards, this);
+        mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
 
         db.collection("apple").document("사과").set("rsd");
+        //데이터 베이스에서 값 가져오기
+        DocumentReference documentReference = db.collection("CardList").document();
     }
 
     public void main_onClickMove(View v){
@@ -85,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
     public void main_onClickAdd(View v){
         // 단어장 추가
         // 다이얼로그 올라옴
@@ -97,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
                 MainCard mainCard = new MainCard(dialogInput, false, false);
-
+                //Word word = new Word("1", "2", "3");
                 cards.add(mainCard);
+                db.collection("CardList").document(dialogInput).set(mainCard);
+                //db.collection(dialogInput).document("아무거나").set(word);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override
@@ -109,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }
-
     //카드리스트로 이동
     public void main_onClickList(View v){
         if(editState==false){
@@ -117,15 +108,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
     public void main_onClickBookmarkList(View v){
         //북마크 된 것들만 화면에 나타냄
     }
-
     public void main_onClickBookmark(View v){
         //북마크 실행
     }
-
     public void main_setting(View v){
         // 로그아웃, 다크모드 온 오프 창 띄움
         String[] array = {"다크 모드 ON", "다크 모드 OFF"};
@@ -149,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             builder.show();
         }
     }
-
     public void main_onClickEdit(View v){
         // edit 버튼
         if(editState==false){
@@ -163,14 +150,9 @@ public class MainActivity extends AppCompatActivity {
             textView2.setVisibility(View.VISIBLE);
             CheckBox checkAll=findViewById(R.id.main_button_selectAll);
             checkAll.setChecked(false);
-
-
-
             mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
-
             //체크하는 부분 생성
             //CheckBox checkBox1 = findViewById(R.id.main_check);
-
         }
         else{
             editState=false;
@@ -180,24 +162,18 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("edit");
             textView1.setVisibility(View.INVISIBLE);
             textView2.setVisibility(View.INVISIBLE);
-
             //체크하는 부분 삭제
             mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
-
         }
     }
-
     public void main_onClickDelete(View v){
         // 삭제 버튼 누를 시 체크된 단어장 삭제됨
     }
-
     public void main_onClickCheck(View v){
         // 원 체크 후 확인 버튼 누를 시 삭제
     }
-
     public void main_onClickSelectAll(View v){
         // 전체 선택 클릭 시 모든 체크박스 체크 됨
         // 모든 체크박스 불러옴
     }
-
 }
