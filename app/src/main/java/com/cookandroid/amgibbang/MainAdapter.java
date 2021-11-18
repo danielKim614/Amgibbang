@@ -4,6 +4,7 @@ import static com.cookandroid.amgibbang.MainActivity.editState;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     private Context context;
     private ArrayList<MainCard> cards;
+    private ArrayList<MainBookmark> bookmark;
+    private String bookName;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public MainAdapter(ArrayList<MainCard> cards, Context context) {
         this.cards = cards;
@@ -48,6 +54,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         //name을 리스트 안에 있는 값으로 변환
         holder.name.setText(cards.get(position).getName());
+        bookName = cards.get(position).getName();
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
@@ -58,7 +65,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 Intent intent = new Intent(context, CardListActivity.class);
                 intent.putExtra("TITLE", curName);
                 context.startActivity(intent);
-
             }
         });
     }
@@ -95,12 +101,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             this.bookmark_no = itemView.findViewById(R.id.bookmark_no);
             this.bookmark_yes = itemView.findViewById(R.id.bookmark_yes);
             this.check = itemView.findViewById(R.id.main_check);
+
             //빈 북마크 클릭 시
             bookmark_no.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     bookmark_no.setVisibility(View.INVISIBLE);
                     bookmark_yes.setVisibility(View.VISIBLE);
+                    //MainBookmark mainBookmark = new MainBookmark(bookName);
+                    //bookmark.add(mainBookmark);
+                    //db.collection("BookMark").document(bookName).set(bookmark);
                 }
             });
             //채워진 북마크 클릭 시
@@ -109,6 +119,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 public void onClick(View view) {
                     bookmark_no.setVisibility(View.VISIBLE);
                     bookmark_yes.setVisibility(View.INVISIBLE);
+                    //MainBookmark mainBookmark = new MainBookmark(bookName);
+                    //bookmark.add(mainBookmark);
+                    //db.collection("BookMark").document(bookName).delete();
                 }
             });
             //체크박스 클릭 시
