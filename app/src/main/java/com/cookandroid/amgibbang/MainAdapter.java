@@ -67,7 +67,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             cards.remove(position);      //리스트 지움
             notifyItemRemoved(position);    //새로 고침
         }catch (IndexOutOfBoundsException ex){
-            ex.printStackTrace();
+            ex. printStackTrace();
         }
     }
 
@@ -110,9 +110,5 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             });
 
         }
-
-
-
-
     }
 }

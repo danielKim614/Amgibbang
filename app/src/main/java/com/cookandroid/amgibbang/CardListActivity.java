@@ -1,9 +1,14 @@
 package com.cookandroid.amgibbang;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,15 +22,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CardListActivity extends AppCompatActivity {
 
     ImageButton add_btn;
     TextView edit_btn;
     boolean editstate = false;
+    private CardListAdapter cardListAdapter;
+    private RecyclerView recyclerView;
+    // FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +63,56 @@ public class CardListActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.cardlist_fab);
         fab.setOnClickListener(new FABClickListener());
 
-        ListView listView = findViewById(R.id.cardlist_listview);
-        SingleAdapter adapter = new SingleAdapter();
 
-        adapter.addItem(new SingleItem("ant", "개미"));
-        adapter.addItem(new SingleItem("apple", "사과"));
-        adapter.addItem(new SingleItem("ball", "공"));
-        adapter.addItem(new SingleItem("balloon", "풍선"));
-        adapter.addItem(new SingleItem("banana", "바나나"));
-        adapter.addItem(new SingleItem("bee", "벌"));
-        adapter.addItem(new SingleItem("ant", "개미"));
-        adapter.addItem(new SingleItem("apple", "사과"));
-        adapter.addItem(new SingleItem("ball", "공"));
-        adapter.addItem(new SingleItem("balloon", "풍선"));
-        adapter.addItem(new SingleItem("banana", "바나나"));
-        adapter.addItem(new SingleItem("bee", "벌"));
-        adapter.addItem(new SingleItem("ant", "개미"));
-        adapter.addItem(new SingleItem("apple", "사과"));
-        adapter.addItem(new SingleItem("ball", "공"));
-        adapter.addItem(new SingleItem("balloon", "풍선"));
-        adapter.addItem(new SingleItem("banana", "바나나"));
-        adapter.addItem(new SingleItem("bee", "벌"));
-        listView.setAdapter(adapter);
+//        db.collection("users").document("1").set()
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                            }
+//                        } else {
+//                            Log.w(TAG, "Error getting documents.", task.getException());
+//                        }
+//                    }
+//                });
+
+        // 리사이클러뷰에 표시할 데이터 리스트 생성.
+        ArrayList<Word> list = new ArrayList<>();
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+
+
+
+//        for (int i=0; i<100; i++) {
+//            list.add(String.format("TEXT %d", i)) ;
+//        }
+
+        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
+        recyclerView = findViewById(R.id.cardlist_RecyclerView) ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
+
+        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+        cardListAdapter = new CardListAdapter(list) ;
+        recyclerView.setAdapter(cardListAdapter) ;
+
+        // 캘린더 셀 클릭 이벤트
+        cardListAdapter.setOnItemClickListener(new CardListAdapter.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int pos){
+                // 클릭하면 하나만 선택되게
+                Log.d("dabin", "clicked");
+            }
+        });
 
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
@@ -103,44 +150,6 @@ public class CardListActivity extends AppCompatActivity {
         }
     }
 
-    // 리스트뷰 어뎁터
-    class SingleAdapter extends BaseAdapter {
-        ArrayList<SingleItem> items = new ArrayList<SingleItem>();
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        public void addItem(SingleItem item) {
-            items.add(item);
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override
-        public long getItemId(int position)  {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            SingleItemView singleItemView = null;
-            if (convertView == null) {
-                singleItemView = new SingleItemView(getApplicationContext());
-            }
-            else {
-                singleItemView = (SingleItemView) convertView;
-            }
-            SingleItem item = items.get(position);
-            singleItemView.setWord(item.getWord());
-            singleItemView.setMeaning(item.getMeaning());
-            return singleItemView;
-        }
-    }
 
     public void onEditButtonClick(View v){
         // edit 버튼
@@ -156,6 +165,12 @@ public class CardListActivity extends AppCompatActivity {
             textView2.setVisibility(View.VISIBLE);
             add_btn.setVisibility(View.GONE);
             checkBox.setVisibility(View.VISIBLE);
+
+            //체크하는 부분 생성
+            for(int i=0; i< cardListAdapter.getItemCount();i++){
+                CardListAdapter.ViewHolder holder = (CardListAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                holder.checkBox.setVisibility(View.VISIBLE);
+            }
         }
 
         else {
@@ -169,6 +184,12 @@ public class CardListActivity extends AppCompatActivity {
             textView2.setVisibility(View.GONE);
             add_btn.setVisibility(View.VISIBLE);
             checkBox.setVisibility(View.INVISIBLE);
+
+            //체크하는 부분 생성
+            for(int i=0; i< cardListAdapter.getItemCount();i++){
+                CardListAdapter.ViewHolder holder = (CardListAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                holder.checkBox.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
