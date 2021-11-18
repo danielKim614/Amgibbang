@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
     private ArrayList<Word> mData = null ;
+    private int ck = 0;
     CardListAdapter.OnItemClickListener listener;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
@@ -62,7 +63,16 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(CardListAdapter.ViewHolder holder, int position) {
         holder.textView1.setText(mData.get(position).word) ;
         holder.textView2.setText(mData.get(position).meaning);
-        holder.checkBox.setVisibility(View.INVISIBLE);
+
+        if(ck == 1) {
+            holder.checkBox.setVisibility(View.VISIBLE);
+        }
+        else
+            holder.checkBox.setVisibility(View.INVISIBLE);
+    }
+
+    public void updateCheckbox(int n) {
+        ck = n;
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.

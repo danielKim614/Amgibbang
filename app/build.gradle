@@ -29,6 +29,7 @@ android {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
@@ -51,7 +52,6 @@ dependencies {
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:28.4.2')
     // Declare the dependency for the Firebase SDK for Google Analytics
-    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-firestore'
     // Declare the dependencies for any other desired Firebase products
     implementation 'com.google.firebase:firebase-auth'

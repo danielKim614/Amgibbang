@@ -43,7 +43,7 @@ public class CardListActivity extends AppCompatActivity {
     boolean editstate = false;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
-    // FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -64,23 +64,15 @@ public class CardListActivity extends AppCompatActivity {
         fab.setOnClickListener(new FABClickListener());
 
 
-//        db.collection("users").document("1").set()
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Log.d(TAG, document.getId() + " => " + document.getData());
-//                            }
-//                        } else {
-//                            Log.w(TAG, "Error getting documents.", task.getException());
-//                        }
-//                    }
-//                });
-
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
         ArrayList<Word> list = new ArrayList<>();
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
+        list.add(new Word("사과", "apple"));
         list.add(new Word("사과", "apple"));
         list.add(new Word("사과", "apple"));
         list.add(new Word("사과", "apple"));
@@ -167,10 +159,7 @@ public class CardListActivity extends AppCompatActivity {
             checkBox.setVisibility(View.VISIBLE);
 
             //체크하는 부분 생성
-            for(int i=0; i< cardListAdapter.getItemCount();i++){
-                CardListAdapter.ViewHolder holder = (CardListAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                holder.checkBox.setVisibility(View.VISIBLE);
-            }
+            cardListAdapter.updateCheckbox(1);
         }
 
         else {
@@ -186,10 +175,7 @@ public class CardListActivity extends AppCompatActivity {
             checkBox.setVisibility(View.INVISIBLE);
 
             //체크하는 부분 생성
-            for(int i=0; i< cardListAdapter.getItemCount();i++){
-                CardListAdapter.ViewHolder holder = (CardListAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
-                holder.checkBox.setVisibility(View.INVISIBLE);
-            }
+            cardListAdapter.updateCheckbox(0);
         }
     }
 
