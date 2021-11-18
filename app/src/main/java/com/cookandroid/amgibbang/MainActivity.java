@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     boolean editState = false;
     int a=1;
     String dialogInput;
-    private ArrayList<String> nameList;
+    private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -61,11 +61,10 @@ public class MainActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        nameList = new ArrayList<>();   // string 리스트
-        mainAdapter = new MainAdapter(nameList);
+        cards = new ArrayList<>();   // string 리스트
+        mainAdapter = new MainAdapter(cards);
         recyclerView.setAdapter(mainAdapter);
     }
-
 
     public void main_onClickMove(View v){
         // 화면 전환
@@ -93,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 dialogInput=inputName;
                 Log.v("다이얼로그", "입력되었습니다.");
                 Log.v("다이얼로그", "입력값 : "+dialogInput);
-                nameList.add(dialogInput);
+                MainCard mainCard = new MainCard(dialogInput);
+                cards.add(mainCard);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             checkAll.setChecked(false);
 
             //체크하는 부분 생성
-            CheckBox check1=findViewById(R.id.main_cardlist_check1);
+            CheckBox check1=findViewById(R.id.main_check);
             check1.setVisibility(View.VISIBLE);
         }
         else{
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             textView2.setVisibility(View.INVISIBLE);
 
             //체크하는 부분 삭제
-            CheckBox check1=findViewById(R.id.main_cardlist_check1);
+            CheckBox check1=findViewById(R.id.main_check);
             //체크 모두 초기화
             check1.setChecked(false);
             check1.setVisibility(View.INVISIBLE);
@@ -191,15 +191,6 @@ public class MainActivity extends AppCompatActivity {
     public void main_onClickSelectAll(View v){
         // 전체 선택 클릭 시 모든 체크박스 체크 됨
         // 모든 체크박스 불러옴
-        CheckBox check1=findViewById(R.id.main_cardlist_check1);
-        //모두 체크 or 해제
-        CheckBox checkBox=findViewById(R.id.main_button_selectAll);
-        if(checkBox.isChecked()){
-            check1.setChecked(true);
-        }
-        else{
-            check1.setChecked(false);
-        }
     }
 
 }

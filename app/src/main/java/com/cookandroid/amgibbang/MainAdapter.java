@@ -1,10 +1,13 @@
 package com.cookandroid.amgibbang;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +19,10 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder>{
 
-    private ArrayList<String> nameList;
-    private String editTextName;
+    private ArrayList<MainCard> cards;
 
-    public MainAdapter(ArrayList<String> nameList) {
-        this.nameList = nameList;
+    public MainAdapter(ArrayList<MainCard> cards) {
+        this.cards = cards;
     }
 
     @NonNull
@@ -36,22 +38,22 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         //name을 리스트 안에 있는 값으로 변환
-        holder.name.setText(nameList.get(position));
-
+        holder.name.setText(cards.get(position).getName());
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
                 Toast.makeText(view.getContext(), curName, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        if(nameList!=null){
-            return nameList.size();
+        if(cards!=null){
+            return cards.size();
         }
         return 0;
     }
@@ -59,7 +61,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void remove(int position){
         // 값 삭제
         try{
-            nameList.remove(position);      //리스트 지움
+            cards.remove(position);      //리스트 지움
             notifyItemRemoved(position);    //새로 고침
         }catch (IndexOutOfBoundsException ex){
             ex.printStackTrace();
@@ -70,10 +72,44 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         protected TextView name;
         protected EditText editName;
+        protected ImageView bookmark_no;
+        protected ImageView bookmark_yes;
+        protected CheckBox check;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = itemView.findViewById(R.id.main_listName);
+            this.bookmark_no = itemView.findViewById(R.id.bookmark_no);
+            this.bookmark_yes = itemView.findViewById(R.id.bookmark_yes);
+            this.check = itemView.findViewById(R.id.main_check);
+            //빈 북마크 클릭 시
+            bookmark_no.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    bookmark_no.setVisibility(View.INVISIBLE);
+                    bookmark_yes.setVisibility(View.VISIBLE);
+                }
+            });
+            //채워진 북마크 클릭 시
+            bookmark_yes.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    bookmark_no.setVisibility(View.VISIBLE);
+                    bookmark_yes.setVisibility(View.INVISIBLE);
+                }
+            });
+            //체크박스 클릭 시
+            check.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    // 어레이에 추가
+                }
+            });
+
         }
+
+
+
+
     }
 }
