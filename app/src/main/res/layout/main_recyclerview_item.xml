@@ -14,7 +14,7 @@
         android:layout_width="30dp"
         android:layout_height="25dp"
         android:src="@drawable/button_unchecked"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:onClick="main_onClickCheck"/>
 
     <ImageView

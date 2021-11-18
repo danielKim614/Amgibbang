@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean editState = false;
+    static boolean editState = false;
     int a=1;
     String dialogInput;
     private ArrayList<MainCard> cards;
@@ -160,8 +160,10 @@ public class MainActivity extends AppCompatActivity {
             checkAll.setChecked(false);
 
             //체크하는 부분 생성
-            CheckBox check1=findViewById(R.id.main_check);
-            check1.setVisibility(View.VISIBLE);
+            for(int i=0; i< mainAdapter.getItemCount();i++){
+                MainAdapter.MainViewHolder holder = (MainAdapter.MainViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                holder.check.setVisibility(View.VISIBLE);
+            }
         }
         else{
             editState=false;
@@ -173,10 +175,11 @@ public class MainActivity extends AppCompatActivity {
             textView2.setVisibility(View.INVISIBLE);
 
             //체크하는 부분 삭제
-            CheckBox check1=findViewById(R.id.main_check);
-            //체크 모두 초기화
-            check1.setChecked(false);
-            check1.setVisibility(View.INVISIBLE);
+            for(int i=0; i< mainAdapter.getItemCount();i++){
+                MainAdapter.MainViewHolder holder = (MainAdapter.MainViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
+                holder.check.setVisibility(View.INVISIBLE);
+            }
+
         }
     }
 

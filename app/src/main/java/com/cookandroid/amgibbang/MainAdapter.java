@@ -1,5 +1,7 @@
 package com.cookandroid.amgibbang;
 
+import static com.cookandroid.amgibbang.MainActivity.editState;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         //name을 리스트 안에 있는 값으로 변환
         holder.name.setText(cards.get(position).getName());
+
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
