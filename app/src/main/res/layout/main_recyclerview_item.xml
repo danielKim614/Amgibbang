@@ -14,8 +14,7 @@
         android:layout_width="30dp"
         android:layout_height="25dp"
         android:src="@drawable/button_unchecked"
-        android:visibility="invisible"
-        android:onClick="main_onClickCheck"/>
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/bookmark_no"

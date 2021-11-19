@@ -154,6 +154,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             holder.check.setVisibility(View.INVISIBLE);
         } else { //editState가 false 일 때
 
+            boolean isChecked = cards.get(position).getCheckBox();
+            if(isChecked==true){
+                holder.check.setChecked(true);
+            } else {
+                holder.check.setChecked(false);
+            }
+
             //이름 변경
             holder.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -207,7 +214,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     String id = document.getId();
                                     DocumentReference documentReference =db.collection("CardList").document(id);
-                                    documentReference.update("check", false);
+                                    if(holder.check.isChecked()){
+                                        documentReference.update("check", true);
+                                    } else{
+                                        documentReference.update("check", false);
+                                    }
                                 }
                             } else {
                                 Log.v("main", "오류 발생");
