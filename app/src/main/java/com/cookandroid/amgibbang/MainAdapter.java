@@ -4,13 +4,17 @@ import static com.cookandroid.amgibbang.MainActivity.bookmarkState;
 import static com.cookandroid.amgibbang.MainActivity.editState;
 import static com.cookandroid.amgibbang.MainActivity.editTextState;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -74,8 +78,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.itemView.setTag(position);
 
         if(editState==false){
-            holder.editName.setVisibility(View.INVISIBLE);
-            holder.name.setVisibility(View.VISIBLE);
             holder.bookmark_no.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -91,7 +93,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                     DocumentReference documentReference =db.collection("CardList").document(id);
                                     documentReference.update("bookmark", true);
                                 }
-                                notifyDataSetChanged();
                             } else {
                                 Log.v("main", "오류 발생");
                             }
@@ -115,7 +116,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                     DocumentReference documentReference =db.collection("CardList").document(id);
                                     documentReference.update("bookmark", false);
                                 }
-                                notifyDataSetChanged();
                             } else {
                                 Log.v("main", "오류 발생");
                             }
@@ -142,7 +142,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                     Log.v("다이얼로그", curName + " / "+dID);
                                     context.startActivity(intent);
                                 }
-                                notifyDataSetChanged();
+                                //notifyDataSetChanged();
                             } else {
                                 Log.v("main", "오류 발생");
                             }
@@ -153,30 +153,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
             holder.check.setVisibility(View.INVISIBLE);
         } else { //editState가 false 일 때
+
+            //이름 변경
             holder.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    if(editTextState==false){
-                        holder.editName.setVisibility(View.VISIBLE);
-                        holder.name.setVisibility(View.INVISIBLE);
-                        editTextState=true;
-                    } else {
-                        editTextState = false;
-                        holder.editName.setText("");
-                        holder.editName.setVisibility(View.INVISIBLE);
-                        holder.name.setVisibility(View.VISIBLE);
-                    }
-                }
-            });
-            // editText
-            holder.editName.setOnKeyListener(new View.OnKeyListener(){
-
-                @Override
-                public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    switch (i){
-                        case KeyEvent.KEYCODE_ENTER:
-                            String curName = holder.name.getText().toString();
-                            edited = holder.editName.getText().toString();
+                    String curName = holder.name.getText().toString();
+                    MainCustomDialog dialog = new MainCustomDialog(context);
+                    dialog.setMainDialogListener(new MainCustomDialog.MainCustomDialogListener(){
+                        @Override
+                        public void mainDialogPositive(String inputName) {
+                            String dialogInput=inputName;
                             db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -184,25 +171,51 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                         for(QueryDocumentSnapshot document : task.getResult()){
                                             String id = document.getId();
                                             DocumentReference documentReference =db.collection("CardList").document(id);
-                                            documentReference.update("name", edited);
+                                            documentReference.update("name", dialogInput);
                                         }
-
                                     } else {
                                         Log.v("main", "오류 발생");
                                     }
                                 }
                             });
-                            editTextState=false;
-                            holder.name.setVisibility(View.VISIBLE);
-                            holder.name.setVisibility(View.INVISIBLE);
-                            holder.name.setText(edited);
-                            editState=false;
-                            break;
-                    }
-                    return false;
+                            for(MainCard card:cards){
+                                if(card.getName()==curName){
+                                    card.cancelName(dialogInput);
+                                }
+                            }
+                            notifyDataSetChanged(); // 새로 고침
+                        }
+                        @Override
+                        public void mainDialogNegative(){
+                            Log.v("다이얼로그", "취소되었습니다.");
+                        }
+                    });
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
                 }
             });
 
+            // 선택 삭제
+            holder.check.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    String id = document.getId();
+                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    documentReference.update("check", false);
+                                }
+                            } else {
+                                Log.v("main", "오류 발생");
+                            }
+                        }
+                    });
+                }
+            });
             holder.check.setVisibility(View.VISIBLE);
         }
     }
@@ -239,7 +252,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             this.bookmark_no = itemView.findViewById(R.id.bookmark_no);
             this.bookmark_yes = itemView.findViewById(R.id.bookmark_yes);
             this.check = itemView.findViewById(R.id.main_check);
-            this.editName = itemView.findViewById(R.id.main_editText);
 
             //체크박스 클릭 시
             check.setOnClickListener(new View.OnClickListener(){

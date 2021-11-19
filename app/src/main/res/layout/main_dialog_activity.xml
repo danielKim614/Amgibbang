@@ -6,13 +6,6 @@
     android:background="@drawable/main_dialog_background"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="- 단어장 폴더 -"
-        android:textSize="18dp"
-        android:gravity="center"/>
-
     <EditText
         android:id="@+id/main_dialog_edittext"
         android:layout_width="match_parent"
@@ -21,7 +14,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center"
         android:maxLength="9"
-        android:hint="9자 이내"
+        android:hint="Title.."
         android:textSize="24sp"
         android:inputType="text"
         android:background="@android:color/transparent"/>

@@ -26,6 +26,9 @@ public class MainCard {
     public String getName() {
         return name;
     }
+    public void cancelName(String name){
+        this.name=name;
+    }
 
 
 }

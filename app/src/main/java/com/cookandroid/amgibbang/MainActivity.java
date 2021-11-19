@@ -82,39 +82,43 @@ public class MainActivity extends AppCompatActivity {
 
     public void main_onClickMove(View v){
         // 화면 전환
-        switch (v.getId()){
-            case R.id.main_button_cal:
-                Intent intent=new Intent(MainActivity.this, CalendarActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.main_button_timer:
-                break;
-            case R.id.main_button_dictionary:
-                Intent intent1=new Intent(MainActivity.this, DictionaryMainActivity.class);
-                startActivity(intent1);
-                break;
+        if(editState==false){
+            switch (v.getId()){
+                case R.id.main_button_cal:
+                    Intent intent=new Intent(MainActivity.this, CalendarActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.main_button_timer:
+                    break;
+                case R.id.main_button_dictionary:
+                    Intent intent1=new Intent(MainActivity.this, DictionaryMainActivity.class);
+                    startActivity(intent1);
+                    break;
+            }
         }
     }
     public void main_onClickAdd(View v){
         // 단어장 추가
         // 다이얼로그 올라옴
-        MainCustomDialog dialog = new MainCustomDialog(this);
-        dialog.setMainDialogListener(new MainCustomDialog.MainCustomDialogListener(){
-            @Override
-            public void mainDialogPositive(String inputName) {
-                dialogInput=inputName;
-                MainCard mainCard = new MainCard(dialogInput, false, false);
-                cards.add(mainCard);
-                db.collection("CardList").document().set(mainCard);
-                mainAdapter.notifyDataSetChanged(); // 새로 고침
-            }
-            @Override
-            public void mainDialogNegative(){
-                Log.v("다이얼로그", "취소되었습니다.");
-            }
-        });
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
+        if(editState==false){
+            MainCustomDialog dialog = new MainCustomDialog(this);
+            dialog.setMainDialogListener(new MainCustomDialog.MainCustomDialogListener(){
+                @Override
+                public void mainDialogPositive(String inputName) {
+                    dialogInput=inputName;
+                    MainCard mainCard = new MainCard(dialogInput, false, false);
+                    cards.add(mainCard);
+                    db.collection("CardList").document().set(mainCard);
+                    mainAdapter.notifyDataSetChanged(); // 새로 고침
+                }
+                @Override
+                public void mainDialogNegative(){
+                    Log.v("다이얼로그", "취소되었습니다.");
+                }
+            });
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.show();
+        }
     }
     //카드리스트로 이동
     public void main_onClickList(View v){
