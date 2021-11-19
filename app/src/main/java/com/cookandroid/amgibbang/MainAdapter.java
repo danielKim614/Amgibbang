@@ -75,6 +75,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             holder.bookmark_no.setVisibility(View.VISIBLE);
             holder.bookmark_yes.setVisibility(View.INVISIBLE);
         }
+
+        boolean isChecked = cards.get(position).getCheckBox();
+        if(isChecked==true){
+            holder.check.setChecked(true);
+            Log.v("check", holder.name.getText().toString() + " / " + isChecked);
+        } else {
+            holder.check.setChecked(false);
+        }
+
         holder.itemView.setTag(position);
 
         if(editState==false){
@@ -153,13 +162,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
             holder.check.setVisibility(View.INVISIBLE);
         } else { //editState가 false 일 때
-
-            boolean isChecked = cards.get(position).getCheckBox();
-            if(isChecked==true){
-                holder.check.setChecked(true);
-            } else {
-                holder.check.setChecked(false);
-            }
 
             //이름 변경
             holder.itemView.setOnClickListener(new View.OnClickListener(){

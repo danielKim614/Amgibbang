@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
 
         // check가 true 인것만 다시 가져옴
         cards.clear();
-        db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("CardList").whereEqualTo("check", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -256,14 +256,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        // 다시 보여줌
-        recyclerView.setAdapter(mainAdapter);
+
     }
 
     public void main_onClickSelectAll(View v){
         // 전체 선택 클릭 시 모든 체크박스 체크 됨
         CheckBox checkBox = findViewById(R.id.main_button_selectAll);
-        cards.clear();
         db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -276,8 +274,6 @@ public class MainActivity extends AppCompatActivity {
                         } else{
                             documentReference.update("check", false);
                         }
-                        MainCard card = document.toObject(MainCard.class);
-                        cards.add(card);
                     }
                     mainAdapter.notifyDataSetChanged();
                 } else {
@@ -286,7 +282,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView.setAdapter(mainAdapter);
-
+        if(checkBox.isChecked()){
+            for(MainCard card:cards){
+                card.cancelCheck(true);
+            }
+        } else {
+            for(MainCard card:cards){
+                card.cancelCheck(false);
+            }
+        }
     }
 }

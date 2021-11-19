@@ -30,5 +30,8 @@ public class MainCard {
         this.name=name;
     }
 
+    public void cancelCheck(Boolean check){
+        this.checkBox=check;
+    }
 
 }
