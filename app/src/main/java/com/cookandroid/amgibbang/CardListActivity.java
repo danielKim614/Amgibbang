@@ -46,7 +46,8 @@ public class CardListActivity extends AppCompatActivity {
     boolean editState = false;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
-    String titleText;
+    String titleText;  // 단어장 이름
+    String id;         // document id값
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<Word> list = new ArrayList<>();
 
@@ -70,14 +71,15 @@ public class CardListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         titleText = intent.getStringExtra("TITLE");
+        id = intent.getStringExtra("ID");
 
         title = findViewById(R.id.cardlist_title);
-        title.setText(""+titleText);
+        title.setText(titleText);
 
 
         // 리사이클러뷰에 표시할 데이터 리스트 생성.
 
-        db.collection(titleText)
+        db.collection(id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -94,12 +96,6 @@ public class CardListActivity extends AppCompatActivity {
                     }
                 });
 
-
-
-
-//        for (int i=0; i<100; i++) {
-//            list.add(String.format("TEXT %d", i)) ;
-//        }
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         recyclerView = findViewById(R.id.cardlist_RecyclerView) ;
@@ -119,6 +115,7 @@ public class CardListActivity extends AppCompatActivity {
                 Word word = list.get(pos);
                 intent.putExtra("POSITION", pos);
                 intent.putExtra("DATA", word);
+                intent.putExtra("ID", id);
                 startActivity(intent);
             }
         });
@@ -132,7 +129,7 @@ public class CardListActivity extends AppCompatActivity {
                     // + 버튼 행동
                     case R.id.cardlist_addCardButton:
                         Intent intent=new Intent(CardListActivity.this, AddWordActivity.class);
-                        intent.putExtra("TITLE", titleText);
+                        intent.putExtra("ID", id);
                         startActivity(intent);
                         break;
                 }
@@ -233,7 +230,7 @@ public class CardListActivity extends AppCompatActivity {
 
         list.clear();
 
-        db.collection(titleText)
+        db.collection(id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

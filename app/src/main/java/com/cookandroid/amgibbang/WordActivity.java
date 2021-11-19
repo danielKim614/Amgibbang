@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,9 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class WordActivity extends AppCompatActivity {
     boolean editState = false;
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String titleText;
+    int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,14 @@ public class WordActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
 
         TextView toolbarText = findViewById(R.id.word_toolbar_text);
-        toolbarText.setText("단어장이름");
+        toolbarText.setText("단어장이름"); // 여기 고치기
+
+        Intent intent = getIntent();
+        pos = intent.getIntExtra("POSITION", 0);
+        titleText = intent.getStringExtra("TITLE");
+        Word word = (Word) intent.getSerializableExtra("WORD");
+
+
 
     }
 

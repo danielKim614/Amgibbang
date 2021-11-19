@@ -17,7 +17,7 @@ public class AddWordActivity extends AppCompatActivity {
     String word;         // 단어
     String meaning;      // 뜻
     String explanation;  // 설명
-    String titleText;
+    String id;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -33,7 +33,7 @@ public class AddWordActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
 
         Intent intent = getIntent();
-        titleText = intent.getStringExtra("TITLE");
+        id = intent.getStringExtra("ID");
     }
 
     public void onButtonClick(View view) {
@@ -53,7 +53,7 @@ public class AddWordActivity extends AppCompatActivity {
             explanation = String.valueOf(charSequence);
 
             // word, meaning, explanation 어딘가에 넘기거나 저장해야 함
-            db.collection(titleText).document(word).set(new Word(explanation, meaning, word));
+            db.collection(id).document(word).set(new Word(explanation, meaning, word));
             finish();
         }
     }
