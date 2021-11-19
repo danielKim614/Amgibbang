@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -62,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         cards = new ArrayList<>();   // MainCard 리스트
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
+
+        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        if (animator instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
+        }
 
         //데이터 베이스에서 값 가져오기
         db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -148,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+            mainAdapter.notifyDataSetChanged();
+
         } else{
             bookmarkState=false;
             cards.clear();
@@ -167,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+            mainAdapter.notifyDataSetChanged();
         }
 
 
@@ -225,8 +235,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void main_onClickDelete(View v){
         // 삭제 버튼 누를 시 체크된 단어장 삭제됨
+        // check가 true 인것만 다시 가져옴
+
         // check가 true인거 db에서 삭제
-        db.collection("CardList").whereEqualTo("check", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("CardList").whereEqualTo("checkBox", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -240,9 +252,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // check가 true 인것만 다시 가져옴
         cards.clear();
-        db.collection("CardList").whereEqualTo("check", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("CardList").whereEqualTo("checkBox", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -256,7 +267,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public void main_onClickSelectAll(View v){
@@ -270,9 +280,9 @@ public class MainActivity extends AppCompatActivity {
                         String id = document.getId();
                         DocumentReference documentReference =db.collection("CardList").document(id);
                         if(checkBox.isChecked()){
-                            documentReference.update("check", true);
+                            documentReference.update("checkBox", true);
                         } else{
-                            documentReference.update("check", false);
+                            documentReference.update("checkBox", false);
                         }
                     }
                     mainAdapter.notifyDataSetChanged();
@@ -291,5 +301,6 @@ public class MainActivity extends AppCompatActivity {
                 card.cancelCheck(false);
             }
         }
+
     }
 }

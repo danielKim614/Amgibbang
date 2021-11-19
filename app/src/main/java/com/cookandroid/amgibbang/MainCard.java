@@ -33,5 +33,7 @@ public class MainCard {
     public void cancelCheck(Boolean check){
         this.checkBox=check;
     }
-
+    public void cancelBookmark(Boolean bookmark){
+        this.bookmark=bookmark;
+    }
 }

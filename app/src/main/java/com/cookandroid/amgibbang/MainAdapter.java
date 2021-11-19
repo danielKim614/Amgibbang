@@ -75,14 +75,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             holder.bookmark_no.setVisibility(View.VISIBLE);
             holder.bookmark_yes.setVisibility(View.INVISIBLE);
         }
-
+        //체크박스
         boolean isChecked = cards.get(position).getCheckBox();
         if(isChecked==true){
             holder.check.setChecked(true);
-            Log.v("check", holder.name.getText().toString() + " / " + isChecked);
         } else {
             holder.check.setChecked(false);
         }
+
 
         holder.itemView.setTag(position);
 
@@ -90,9 +90,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             holder.bookmark_no.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    holder.bookmark_no.setVisibility(View.INVISIBLE);
-                    holder.bookmark_yes.setVisibility(View.VISIBLE);
                     String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    for(MainCard card:cards){
+                        if(card.getName()==curName){
+                            card.cancelBookmark(true);
+                        }
+                    }
+                    notifyDataSetChanged();
                     db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -113,9 +117,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             holder.bookmark_yes.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
-                    holder.bookmark_no.setVisibility(View.VISIBLE);
-                    holder.bookmark_yes.setVisibility(View.INVISIBLE);
                     String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    notifyDataSetChanged();
+                    for(MainCard card:cards){
+                        if(card.getName()==curName){
+                            card.cancelBookmark(false);
+                        }
+                    }
                     db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -217,9 +225,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                                     String id = document.getId();
                                     DocumentReference documentReference =db.collection("CardList").document(id);
                                     if(holder.check.isChecked()){
-                                        documentReference.update("check", true);
+                                        documentReference.update("checkBox", true);
                                     } else{
-                                        documentReference.update("check", false);
+                                        documentReference.update("checkBox", false);
                                     }
                                 }
                             } else {
