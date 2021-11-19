@@ -1,10 +1,13 @@
 package com.cookandroid.amgibbang;
 
+import static com.cookandroid.amgibbang.MainActivity.bookmarkState;
 import static com.cookandroid.amgibbang.MainActivity.editState;
+import static com.cookandroid.amgibbang.MainActivity.editTextState;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +34,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     private Context context;
     private ArrayList<MainCard> cards;
-    private ArrayList<MainBookmark> bookmark;
-    private String bookName;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String edited;
+    private String dID;
 
     public MainAdapter(ArrayList<MainCard> cards, Context context) {
         this.cards = cards;
@@ -54,19 +62,149 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         //name을 리스트 안에 있는 값으로 변환
         holder.name.setText(cards.get(position).getName());
-        bookName = cards.get(position).getName();
-
+        //북마크
+        boolean isBookmark = cards.get(position).getBookmark();
+        if(isBookmark==true){
+            holder.bookmark_no.setVisibility(View.INVISIBLE);
+            holder.bookmark_yes.setVisibility(View.VISIBLE);
+        } else {
+            holder.bookmark_no.setVisibility(View.VISIBLE);
+            holder.bookmark_yes.setVisibility(View.INVISIBLE);
+        }
         holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
-                Toast.makeText(view.getContext(), curName, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, CardListActivity.class);
-                intent.putExtra("TITLE", curName);
-                context.startActivity(intent);
-            }
-        });
+
+        if(editState==false){
+            holder.editName.setVisibility(View.INVISIBLE);
+            holder.name.setVisibility(View.VISIBLE);
+            holder.bookmark_no.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    holder.bookmark_no.setVisibility(View.INVISIBLE);
+                    holder.bookmark_yes.setVisibility(View.VISIBLE);
+                    String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    String id = document.getId();
+                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    documentReference.update("bookmark", true);
+                                }
+                                notifyDataSetChanged();
+                            } else {
+                                Log.v("main", "오류 발생");
+                            }
+                        }
+                    });
+                }
+            });
+
+            holder.bookmark_yes.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    holder.bookmark_no.setVisibility(View.VISIBLE);
+                    holder.bookmark_yes.setVisibility(View.INVISIBLE);
+                    String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    String id = document.getId();
+                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    documentReference.update("bookmark", false);
+                                }
+                                notifyDataSetChanged();
+                            } else {
+                                Log.v("main", "오류 발생");
+                            }
+                        }
+                    });
+                }
+            });
+
+            holder.itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
+                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    String id = document.getId();
+                                    Log.v("다이얼로그", id);
+                                    dID = id;
+                                    Intent intent = new Intent(context, CardListActivity.class);
+                                    intent.putExtra("TITLE", curName);
+                                    intent.putExtra("ID", dID);
+                                    Log.v("다이얼로그", curName + " / "+dID);
+                                    context.startActivity(intent);
+                                }
+                                notifyDataSetChanged();
+                            } else {
+                                Log.v("main", "오류 발생");
+                            }
+                        }
+                    });
+                }
+            });
+
+            holder.check.setVisibility(View.INVISIBLE);
+        } else { //editState가 false 일 때
+            holder.itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    if(editTextState==false){
+                        holder.editName.setVisibility(View.VISIBLE);
+                        holder.name.setVisibility(View.INVISIBLE);
+                        editTextState=true;
+                    } else {
+                        editTextState = false;
+                        holder.editName.setText("");
+                        holder.editName.setVisibility(View.INVISIBLE);
+                        holder.name.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+            // editText
+            holder.editName.setOnKeyListener(new View.OnKeyListener(){
+
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                    switch (i){
+                        case KeyEvent.KEYCODE_ENTER:
+                            String curName = holder.name.getText().toString();
+                            edited = holder.editName.getText().toString();
+                            db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        for(QueryDocumentSnapshot document : task.getResult()){
+                                            String id = document.getId();
+                                            DocumentReference documentReference =db.collection("CardList").document(id);
+                                            documentReference.update("name", edited);
+                                        }
+
+                                    } else {
+                                        Log.v("main", "오류 발생");
+                                    }
+                                }
+                            });
+                            editTextState=false;
+                            holder.name.setVisibility(View.VISIBLE);
+                            holder.name.setVisibility(View.INVISIBLE);
+                            holder.name.setText(edited);
+                            editState=false;
+                            break;
+                    }
+                    return false;
+                }
+            });
+
+            holder.check.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -101,29 +239,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             this.bookmark_no = itemView.findViewById(R.id.bookmark_no);
             this.bookmark_yes = itemView.findViewById(R.id.bookmark_yes);
             this.check = itemView.findViewById(R.id.main_check);
+            this.editName = itemView.findViewById(R.id.main_editText);
 
-            //빈 북마크 클릭 시
-            bookmark_no.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    bookmark_no.setVisibility(View.INVISIBLE);
-                    bookmark_yes.setVisibility(View.VISIBLE);
-                    //MainBookmark mainBookmark = new MainBookmark(bookName);
-                    //bookmark.add(mainBookmark);
-                    //db.collection("BookMark").document(bookName).set(bookmark);
-                }
-            });
-            //채워진 북마크 클릭 시
-            bookmark_yes.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-                    bookmark_no.setVisibility(View.VISIBLE);
-                    bookmark_yes.setVisibility(View.INVISIBLE);
-                    //MainBookmark mainBookmark = new MainBookmark(bookName);
-                    //bookmark.add(mainBookmark);
-                    //db.collection("BookMark").document(bookName).delete();
-                }
-            });
             //체크박스 클릭 시
             check.setOnClickListener(new View.OnClickListener(){
                 @Override

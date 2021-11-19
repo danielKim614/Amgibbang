@@ -36,12 +36,15 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     static boolean editState = false;
+    static boolean bookmarkState = false;
+    static boolean editTextState = false;
     String dialogInput;
     private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.main_rv);
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        cards = new ArrayList<>();   // string 리스트
+        cards = new ArrayList<>();   // MainCard 리스트
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
 
@@ -100,11 +103,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void mainDialogPositive(String inputName) {
                 dialogInput=inputName;
-                Log.v("다이얼로그", "입력되었습니다.");
-                Log.v("다이얼로그", "입력값 : "+dialogInput);
                 MainCard mainCard = new MainCard(dialogInput, false, false);
                 cards.add(mainCard);
-                db.collection("CardList").document(dialogInput).set(mainCard);
+                db.collection("CardList").document().set(mainCard);
                 mainAdapter.notifyDataSetChanged(); // 새로 고침
             }
             @Override
@@ -124,10 +125,49 @@ public class MainActivity extends AppCompatActivity {
     }
     public void main_onClickBookmarkList(View v){
         //북마크 된 것들만 화면에 나타냄
+        if(bookmarkState==false){
+            bookmarkState=true;
+            cards.clear();
+            ImageView imageView = findViewById(R.id.main_button_bookmark);
+            imageView.setImageResource(R.drawable.button_bookmark_filled);
+            db.collection("CardList").whereEqualTo("bookmark", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot document : task.getResult()){
+                            MainCard card = document.toObject(MainCard.class);
+                            cards.add(card);
+                        }
+                        mainAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.v("main", "오류 발생");
+                    }
+                }
+            });
+        } else{
+            bookmarkState=false;
+            cards.clear();
+            ImageView imageView = findViewById(R.id.main_button_bookmark);
+            imageView.setImageResource(R.drawable.button_bookmark_notfilled);
+            db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot document : task.getResult()){
+                            MainCard card = document.toObject(MainCard.class);
+                            cards.add(card);
+                        }
+                        mainAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.v("main", "오류 발생");
+                    }
+                }
+            });
+        }
+
+
     }
-    public void main_onClickBookmark(View v){
-        //북마크 실행
-    }
+
     public void main_setting(View v){
         // 로그아웃, 다크모드 온 오프 창 띄움
         String[] array = {"다크 모드 ON", "다크 모드 OFF"};
@@ -164,9 +204,8 @@ public class MainActivity extends AppCompatActivity {
             textView2.setVisibility(View.VISIBLE);
             CheckBox checkAll=findViewById(R.id.main_button_selectAll);
             checkAll.setChecked(false);
-            mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
-            //체크하는 부분 생성
-            //CheckBox checkBox1 = findViewById(R.id.main_check);
+
+            recyclerView.setAdapter(mainAdapter);
         }
         else{
             editState=false;
@@ -176,8 +215,9 @@ public class MainActivity extends AppCompatActivity {
             textView.setText("edit");
             textView1.setVisibility(View.INVISIBLE);
             textView2.setVisibility(View.INVISIBLE);
-            //체크하는 부분 삭제
-            mainAdapter.notifyItemRangeChanged(0, mainAdapter.getItemCount(), "click");
+
+            recyclerView.setAdapter(mainAdapter);
+            mainAdapter.notifyDataSetChanged();
         }
     }
     public void main_onClickDelete(View v){
