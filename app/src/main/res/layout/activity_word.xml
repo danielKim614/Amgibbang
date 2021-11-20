@@ -50,7 +50,6 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"
         android:textColor="@color/black"
         android:inputType="text"
         android:enabled="false"/>
@@ -65,7 +64,6 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"
         android:textColor="@color/black"
         android:inputType="text"
         android:enabled="false"/>
@@ -81,7 +79,6 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:text="text"
         android:textColor="@color/black"
         android:inputType="text|textMultiLine"
         android:gravity="top"

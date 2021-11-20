@@ -100,9 +100,7 @@ public class CardListActivity extends AppCompatActivity {
             public void onItemClick(View view, int pos){
                 Intent intent = new Intent(CardListActivity.this, WordActivity.class);
                 intent.putExtra("TITLE", titleText);
-                Word word = list.get(pos);
                 intent.putExtra("POSITION", pos);
-                intent.putExtra("DATA", word);
                 intent.putExtra("ID", id);
                 startActivity(intent);
             }

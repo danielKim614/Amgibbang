@@ -14,16 +14,17 @@
         android:layout_height="wrap_content"
         android:textColor="?attr/colorOnPrimary"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"/>
 
-    <Button
+    <TextView
         android:id="@+id/word_button_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="@string/edit"
-        android:textSize="20sp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/white"
+        android:text="edit"
+        android:textSize="18sp"
         android:onClick="onButtonClick"/>
 
 </androidx.appcompat.widget.Toolbar>

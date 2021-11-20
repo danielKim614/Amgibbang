@@ -2,20 +2,25 @@ package com.cookandroid.amgibbang;
 
 import java.io.Serializable;
 
-public class Word implements Serializable {
+public class Word {
+    boolean checkBox = false;
     String explanation;
     String meaning;
     String word;
-    private boolean checkBox;
-
 
     public Word() {}
+
+    public Word(String explanation, String meaning, String word, boolean checkBox) {
+        this.explanation = explanation;
+        this.meaning = meaning;
+        this.word = word;
+        this.checkBox=checkBox;
+    }
 
     public Word(String explanation, String meaning, String word) {
         this.explanation = explanation;
         this.meaning = meaning;
         this.word = word;
-        this.checkBox=checkBox;
     }
 
     public Word(String meaning, String word) {

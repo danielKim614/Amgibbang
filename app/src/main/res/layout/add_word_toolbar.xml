@@ -14,16 +14,17 @@
         android:text="단어 추가"
         android:textColor="?attr/colorOnPrimary"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"/>
 
-    <Button
+    <TextView
         android:id="@+id/add_word_button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="@string/save"
-        android:textSize="20sp"
+        android:layout_marginRight="20dp"
+        android:text="save"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:onClick="onButtonClick"/>
 
 </androidx.appcompat.widget.Toolbar>

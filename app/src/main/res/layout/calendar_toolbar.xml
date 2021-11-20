@@ -15,7 +15,6 @@
         android:text="Calendar"
         android:textColor="?attr/colorOnPrimary"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textSize="18sp"/>
 
 </androidx.appcompat.widget.Toolbar>
