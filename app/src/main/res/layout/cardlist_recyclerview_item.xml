@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:focusable="false"
+        android:src="@drawable/button_unchecked"
         android:visibility="invisible" />
 </RelativeLayout>

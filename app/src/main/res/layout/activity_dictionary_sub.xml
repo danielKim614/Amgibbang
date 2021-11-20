@@ -7,10 +7,9 @@
     tools:context=".DictionarySubActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:text="검색결과"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include
+        layout="@layout/dictionary_result_toolbar"
+        android:id="@+id/dictionary_result_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,5 +1,7 @@
 package com.cookandroid.amgibbang;
 
+import static com.cookandroid.amgibbang.CardListActivity.editState;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,7 @@ import java.util.ArrayList;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
-    private ArrayList<Word> mData = null ;
-    private int ck = 0;
+    private ArrayList<Word> mData;
     CardListAdapter.OnItemClickListener listener;
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
@@ -29,6 +30,15 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             textView1 = itemView.findViewById(R.id.itemlist_word) ;
             textView2 = itemView.findViewById(R.id.itemlist_meaning) ;
             checkBox = itemView.findViewById(R.id.single_item_list_checkbox);
+
+            //체크박스 클릭 시
+            checkBox.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    // 어레이에 추가
+                }
+            });
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,15 +74,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         holder.textView1.setText(mData.get(position).word) ;
         holder.textView2.setText(mData.get(position).meaning);
 
-        if(ck == 1) {
+        if(editState==false){
+            holder.checkBox.setVisibility(View.INVISIBLE);
+        } else {
             holder.checkBox.setVisibility(View.VISIBLE);
         }
-        else
-            holder.checkBox.setVisibility(View.INVISIBLE);
-    }
 
-    public void updateCheckbox(int n) {
-        ck = n;
+//        //체크박스
+//        boolean isChecked = mData.get(position).getCheckBox();
+//        if(isChecked==true){
+//            holder.checkBox.setChecked(true);
+//        } else {
+//            holder.checkBox.setChecked(false);
+//        }
     }
 
     // getItemCount() - 전체 데이터 갯수 리턴.

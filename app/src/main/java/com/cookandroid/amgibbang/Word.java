@@ -6,6 +6,8 @@ public class Word implements Serializable {
     String explanation;
     String meaning;
     String word;
+    private boolean checkBox;
+
 
     public Word() {}
 
@@ -13,6 +15,7 @@ public class Word implements Serializable {
         this.explanation = explanation;
         this.meaning = meaning;
         this.word = word;
+        this.checkBox=checkBox;
     }
 
     public Word(String meaning, String word) {
@@ -33,6 +36,10 @@ public class Word implements Serializable {
         return word;
     }
 
+    public boolean getCheckBox() {
+        return checkBox;
+    }
+
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
@@ -43,5 +50,9 @@ public class Word implements Serializable {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public void cancelCheck(Boolean check){
+        this.checkBox=check;
     }
 }
