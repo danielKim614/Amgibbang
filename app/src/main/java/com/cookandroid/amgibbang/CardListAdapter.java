@@ -83,9 +83,9 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if(task.isSuccessful()){
                                         for(QueryDocumentSnapshot document : task.getResult()){
-                                            String id = document.getId();
+                                            String Cid = document.getId();
                                             DocumentReference documentReference =db.collection(id)
-                                                    .document(id);
+                                                    .document(Cid);
                                             if(holder.checkBox.isChecked()){
                                                 documentReference.update("checkBox", true);
                                             } else{
@@ -151,9 +151,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                 }
             });
 
-
-            if(MainActivity.editState==true){
+            if(editState==true){
                 checkBox.setVisibility(View.VISIBLE);
+            } else {
+                checkBox.setVisibility(View.INVISIBLE);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {

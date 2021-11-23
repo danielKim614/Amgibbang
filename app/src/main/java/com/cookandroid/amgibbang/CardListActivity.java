@@ -85,15 +85,15 @@ public class CardListActivity extends AppCompatActivity {
         cardListAdapter.setOnItemClickListener(new CardListAdapter.OnItemClickListener() {
 
             @Override
-            public void onItemClick(View view, int pos){
-                Intent intent = new Intent(CardListActivity.this, WordActivity.class);
-                intent.putExtra("TITLE", titleText);
-                intent.putExtra("POSITION", pos);
-                intent.putExtra("ID", id);
-                startActivity(intent);
+            public void onItemClick(View view, int pos) {
+                if (editState == false) { // edit 버튼 눌렀을 때는 동작하지 않음
+                    Intent intent = new Intent(CardListActivity.this, WordActivity.class);
+                    intent.putExtra("TITLE", titleText);
+                    intent.putExtra("POSITION", pos);
+                    intent.putExtra("ID", id);
+                    startActivity(intent);
+                }
             }
-
-
         });
 
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
@@ -242,8 +242,8 @@ public class CardListActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
-                        String id = document.getId();
-                        DocumentReference documentReference =db.collection("CardList").document(id);
+                        String Cid = document.getId();
+                        DocumentReference documentReference =db.collection(id).document(Cid);
                         if(checkBox.isChecked()){
                             documentReference.update("checkBox", true);
                         } else{
@@ -294,7 +294,14 @@ public class CardListActivity extends AppCompatActivity {
                 });
     }
 
-//    // 검색을 수행하는 메소드
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        editState = false;
+    }
+
+    //    // 검색을 수행하는 메소드
 //    public void search(String charText) {
 //
 //        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
