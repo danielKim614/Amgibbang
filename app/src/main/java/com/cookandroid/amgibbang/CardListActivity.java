@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,9 +36,10 @@ public class CardListActivity extends AppCompatActivity {
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
     String titleText;  // 단어장 이름
-    String id;         // document id값
+    static String id;         // document id값
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<Word> list = new ArrayList<>();
+    ArrayList<Word> arraylist = new ArrayList<>();
 
 
     @Override
@@ -54,6 +56,7 @@ public class CardListActivity extends AppCompatActivity {
 
         edit_btn = findViewById(R.id.cardlist_button_edit);
         add_btn = findViewById(R.id.cardlist_addCardButton);
+        CheckBox checkAll=findViewById(R.id.cardlist_button_selectAll);
         FloatingActionButton fab = findViewById(R.id.cardlist_fab);
         fab.setOnClickListener(new FABClickListener());
 
@@ -65,24 +68,9 @@ public class CardListActivity extends AppCompatActivity {
         title.setText(titleText);
 
 
-        // 리사이클러뷰에 표시할 데이터 리스트 생성.
 
-        db.collection(id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Word word = document.toObject(Word.class);
-                                list.add(word);
-                            }
-                            cardListAdapter.notifyDataSetChanged();
-                        } else {
-                            Log.w("test", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        // list 복사본을 만든다.
+        arraylist.addAll(list);
 
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
@@ -90,7 +78,7 @@ public class CardListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
         // 리사이클러뷰에 CardListAdapter 객체 지정.
-        cardListAdapter = new CardListAdapter(list) ;
+        cardListAdapter = new CardListAdapter(list, this) ;
         recyclerView.setAdapter(cardListAdapter) ;
 
         // 리스트뷰 클릭 이벤트
@@ -104,6 +92,8 @@ public class CardListActivity extends AppCompatActivity {
                 intent.putExtra("ID", id);
                 startActivity(intent);
             }
+
+
         });
 
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
@@ -200,16 +190,89 @@ public class CardListActivity extends AppCompatActivity {
 
     public void cardlist_onClickDelete(View v){
         // 삭제 버튼 누를 시 체크된 단어장 삭제됨
+        // check가 true 인것만 다시 가져옴
+
+        // check가 true인거 db에서 삭제
+        db.collection(id)
+                .whereEqualTo("checkBox", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        db.collection(id)
+                                .document(document.getId())
+                                .delete();
+                    }
+                    cardListAdapter.notifyDataSetChanged();
+                } else {
+                    Log.v("main", "오류 발생");
+                }
+            }
+        });
+
+        list.clear();
+        db.collection(id)
+                .whereEqualTo("checkBox", false)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        Word word = document.toObject(Word.class);
+                        list.add(word);
+                    }
+                    cardListAdapter.notifyDataSetChanged();
+                } else {
+                    Log.v("main", "오류 발생");
+                }
+            }
+        });
     }
 
     public void cardlist_onClickSelectAll(View v){
-        // 원 체크 후 확인 버튼 누를 시 삭제
+        // 전체 선택 클릭 시 모든 체크박스 체크 됨
+        CheckBox checkBox = findViewById(R.id.cardlist_button_selectAll);
+        db.collection(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        String id = document.getId();
+                        DocumentReference documentReference =db.collection("CardList").document(id);
+                        if(checkBox.isChecked()){
+                            documentReference.update("checkBox", true);
+                        } else{
+                            documentReference.update("checkBox", false);
+                        }
+                    }
+                    cardListAdapter.notifyDataSetChanged();
+                } else {
+                    Log.v("cardlist", "오류 발생");
+                }
+            }
+        });
+
+        if(checkBox.isChecked()){
+            for(Word word:list){
+                word.cancelCheck(true);
+            }
+        } else {
+            for(Word word:list){
+                word.cancelCheck(false);
+            }
+        }
+
     }
 
 
     @Override
-    public void onRestart() {
-        super.onRestart();
+    public void onStart() {
+        super.onStart();
 
         list.clear();
 
@@ -230,4 +293,32 @@ public class CardListActivity extends AppCompatActivity {
                     }
                 });
     }
+
+//    // 검색을 수행하는 메소드
+//    public void search(String charText) {
+//
+//        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
+//        list.clear();
+//
+//        // 문자 입력이 없을때는 모든 데이터를 보여준다.
+//        if (charText.length() == 0) {
+//            list.addAll(arraylist);
+//        }
+//        // 문자 입력을 할때..
+//        else
+//        {
+//            // 리스트의 모든 데이터를 검색한다.
+//            for(int i = 0;i < arraylist.size(); i++)
+//            {
+//                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
+//                if (arraylist.get(i).toLowerCase().contains(charText))
+//                {
+//                    // 검색된 데이터를 리스트에 추가한다.
+//                    list.add(arraylist.get(i));
+//                }
+//            }
+//        }
+//        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
+//        adapter.notifyDataSetChanged();
+//    }
 }

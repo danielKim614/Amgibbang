@@ -1,9 +1,7 @@
 package com.cookandroid.amgibbang;
 
-import java.io.Serializable;
-
 public class Word {
-    boolean checkBox = false;
+    boolean checkBox;
     String explanation;
     String meaning;
     String word;
@@ -26,6 +24,7 @@ public class Word {
     public Word(String meaning, String word) {
         this.meaning = meaning;
         this.word = word;
+        this.checkBox=checkBox;
     }
 
 
@@ -60,4 +59,5 @@ public class Word {
     public void cancelCheck(Boolean check){
         this.checkBox=check;
     }
+
 }

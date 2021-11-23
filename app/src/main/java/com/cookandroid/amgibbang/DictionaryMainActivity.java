@@ -1,14 +1,14 @@
 package com.cookandroid.amgibbang;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class DictionaryMainActivity extends AppCompatActivity {
 
@@ -33,7 +33,6 @@ public class DictionaryMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 TextView searchText = (TextView) findViewById(R.id.searchText);
                 //final TextView searchResult = (TextView) findViewById(R.id.searchResult);
                 keyword = searchText.getText().toString();
@@ -42,8 +41,6 @@ public class DictionaryMainActivity extends AppCompatActivity {
                 intent.putExtra("keyword", keyword);
                 startActivity(intent);
                 //searchResult.setText(str);
-
-
             }
         });
     }
@@ -58,7 +55,5 @@ public class DictionaryMainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
 

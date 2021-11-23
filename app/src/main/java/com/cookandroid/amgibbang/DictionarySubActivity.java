@@ -1,12 +1,12 @@
 package com.cookandroid.amgibbang;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -26,7 +26,7 @@ public class DictionarySubActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dictionary_sub);
 
         //toolbar 지정
-        Toolbar toolbar = findViewById(R.id.dictionary_toolbar);
+        Toolbar toolbar = findViewById(R.id.dictionary_result_toolbar);
         setSupportActionBar(toolbar);  // 액션바를 없앴으니까 그걸 툴바가 대신하게 하기
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);    // 툴바 왼쪽에 뒤로가기 버튼 추가
         getSupportActionBar().setDisplayShowTitleEnabled(false);  // 타이틀 안 보이게 하기
@@ -37,8 +37,6 @@ public class DictionarySubActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-
-
                     Intent intent = getIntent();
                     keyword = intent.getStringExtra("keyword");
                     str = getNaverSearch(keyword);
@@ -46,20 +44,14 @@ public class DictionarySubActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-
-
-                            TextView searchResult2 = (TextView) findViewById(R.id.searchResult2);
+                            TextView searchResult2 = (TextView) findViewById(R.id.searchResult);
                             searchResult2.setText(str);
-
                         }
                     });
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
             }
         });thread.start();
     }
@@ -75,7 +67,6 @@ public class DictionarySubActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public String getNaverSearch(String keyword) {
 
         String clientID = "oh37omGP22ZYKqwHTCcd";
@@ -83,14 +74,9 @@ public class DictionarySubActivity extends AppCompatActivity {
         StringBuffer sb = new StringBuffer();
 
         try {
-
-
             String text = URLEncoder.encode(keyword, "UTF-8");
 
-
-
             String apiURL = "https://openapi.naver.com/v1/search/encyc.xml?query=" + text + "&display=10" + "&start=1";
-
 
             URL url = new URL(apiURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -101,6 +87,7 @@ public class DictionarySubActivity extends AppCompatActivity {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             XmlPullParser xpp = factory.newPullParser();
             String tag;
+
             //inputStream으로부터 xml값 받기
             xpp.setInput(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 
@@ -119,7 +106,6 @@ public class DictionarySubActivity extends AppCompatActivity {
 
                             xpp.next();
 
-
                             sb.append(xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
                             sb.append("\n");
 
@@ -128,25 +114,16 @@ public class DictionarySubActivity extends AppCompatActivity {
                             sb.append("내용 : ");
                             xpp.next();
 
-
                             sb.append(xpp.getText().replaceAll("<(/)?([a-zA-Z]*)(\\\\s[a-zA-Z]*=[^>]*)?(\\\\s)*(/)?>", ""));
-                            sb.append("\n");
-
-
+                            sb.append("\n\n");
                         }
                         break;
                 }
-
                 eventType = xpp.next();
-
-
             }
-
         } catch (Exception e) {
             return e.toString();
-
         }
-
         return sb.toString();
     }
 }
