@@ -70,7 +70,6 @@ public class WordActivity extends AppCompatActivity {
         explanation = findViewById(R.id.word_text_explanation);
         edit = findViewById(R.id.word_button_edit);
 
-        Log.d("dabin", "----------------------");
         db.collection(id)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -118,9 +117,28 @@ public class WordActivity extends AppCompatActivity {
                     Log.d("dabin", updWord.word + updWord.meaning);
                     list.remove(pos);
                     list.add(pos, updWord);
+
+                    db.collection(id)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    int i = 0;
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Word updWord = list.get(i); i++;
+                                            String docId = document.getId();
+                                            db.collection(id).document(docId).set(updWord);
+                                        }
+                                    } else {
+                                        Log.d("dabin", "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
                 }
                 break;
             case R.id.word_button_prev_word: // 이전 단어로 넘어가기
+                if (editState == true) break;
                 if (pos == 0) {
                     Log.d("dabin", "pos == 0");
                     Toast.makeText(WordActivity.this, "첫 단어입니다", Toast.LENGTH_SHORT).show();
@@ -130,6 +148,7 @@ public class WordActivity extends AppCompatActivity {
                 showWord(pos);
                 break;
             case R.id.word_button_next_word: // 다음 단어로 넘어가기
+                if (editState == true) break;
                 if (pos == list.size() - 1) {
                     Log.d("dabin", "pos == " + (list.size() - 1));
                     Toast.makeText(WordActivity.this, "마지막 단어입니다", Toast.LENGTH_SHORT).show();
@@ -156,29 +175,5 @@ public class WordActivity extends AppCompatActivity {
         word.setText(curWord.word);
         meaning.setText(curWord.meaning);
         explanation.setText(curWord.explanation);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        db.collection(id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        int i = 0;
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Word updWord = list.get(i); i++;
-                                String docId = document.getId();
-                                db.collection(id).document(docId).set(updWord);
-                            }
-                        } else {
-                            Log.d("dabin", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
     }
 }

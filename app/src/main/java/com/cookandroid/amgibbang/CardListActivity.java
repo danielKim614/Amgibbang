@@ -38,7 +38,7 @@ public class CardListActivity extends AppCompatActivity {
     String titleText;  // 단어장 이름
     static String id;         // document id값
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<Word> list = new ArrayList<>();
+    static ArrayList<Word> list = new ArrayList<>();
     ArrayList<Word> arraylist = new ArrayList<>();
 
 
@@ -142,6 +142,9 @@ public class CardListActivity extends AppCompatActivity {
                                 break;
                             case "스피드 모드":
                                 Log.v("다이얼로그", "스피드 모드 시작");
+                                Intent intent = new Intent(CardListActivity.this, SpeedModeActivity.class);
+                                intent.putExtra("TITLE", titleText);
+                                startActivity(intent);
                                 break;
                             case "퀴즈 모드":
                                 Log.v("다이얼로그", "퀴즈 모드 시작");
@@ -292,6 +295,7 @@ public class CardListActivity extends AppCompatActivity {
                         }
                     }
                 });
+        recyclerView.setAdapter(cardListAdapter);
     }
 
     @Override
