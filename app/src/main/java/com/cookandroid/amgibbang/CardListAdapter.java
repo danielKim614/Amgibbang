@@ -84,7 +84,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                                     if(task.isSuccessful()){
                                         for(QueryDocumentSnapshot document : task.getResult()){
                                             String id = document.getId();
-                                            DocumentReference documentReference =db.collection("CardList").document(id);
+                                            DocumentReference documentReference =db.collection(id)
+                                                    .document(id);
                                             if(holder.checkBox.isChecked()){
                                                 documentReference.update("checkBox", true);
                                             } else{
