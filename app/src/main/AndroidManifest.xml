@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Amgibbang">
         <activity
+            android:name=".StudyModeActivity"
+            android:exported="false" />
+        <activity
             android:name=".SpeedModeActivity"
             android:exported="true">
             <intent-filter>

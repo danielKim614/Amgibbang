@@ -139,12 +139,15 @@ public class CardListActivity extends AppCompatActivity {
                         switch(array[i]){
                             case "공부 모드":
                                 Log.v("다이얼로그", "공부 모드 시작");
+                                Intent intentToSt = new Intent(CardListActivity.this, StudyModeActivity.class);
+                                intentToSt.putExtra("TITLE", titleText);
+                                startActivity(intentToSt);
                                 break;
                             case "스피드 모드":
                                 Log.v("다이얼로그", "스피드 모드 시작");
-                                Intent intent = new Intent(CardListActivity.this, SpeedModeActivity.class);
-                                intent.putExtra("TITLE", titleText);
-                                startActivity(intent);
+                                Intent intentToSp = new Intent(CardListActivity.this, SpeedModeActivity.class);
+                                intentToSp.putExtra("TITLE", titleText);
+                                startActivity(intentToSp);
                                 break;
                             case "퀴즈 모드":
                                 Log.v("다이얼로그", "퀴즈 모드 시작");
