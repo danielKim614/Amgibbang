@@ -8,8 +8,8 @@
     tools:context=".SpeedModeActivity">
 
     <include
-        layout="@layout/speed_mode_toolbar"
-        android:id="@+id/speed_mode_toolbar"/>
+        layout="@layout/mode_toolbar"
+        android:id="@+id/mode_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,6 +66,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/speed_mode_button_sec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -73,7 +74,8 @@
             android:text="3s"
             android:textSize="18sp"
             android:textColor="?attr/Black"
-            android:background="@drawable/speed_mode_background_button_time" />
+            android:background="@drawable/speed_mode_background_button_time"
+            android:onClick="onButtonClick"/>
 
     </LinearLayout>
 

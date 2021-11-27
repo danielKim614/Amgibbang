@@ -38,7 +38,7 @@ public class StudyModeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_study_mode);
 
         // 툴바 커스텀
-        Toolbar toolbar = findViewById(R.id.speed_mode_toolbar);
+        Toolbar toolbar = findViewById(R.id.mode_toolbar);
         setSupportActionBar(toolbar);  // 액션바를 없앴으니까 그걸 툴바가 대신하게 하기
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);    // 툴바 왼쪽에 뒤로가기 버튼 추가
         getSupportActionBar().setDisplayShowTitleEnabled(false);  // 타이틀 안 보이게 하기
@@ -47,7 +47,7 @@ public class StudyModeActivity extends AppCompatActivity {
         settingButton = findViewById(R.id.study_mode_setting);
         settingButton.setOnClickListener(new settingClickListener());
 
-        TextView toolbarText = findViewById(R.id.speed_mode_toolbar_text);
+        TextView toolbarText = findViewById(R.id.mode_toolbar_text);
         wordTextView = findViewById(R.id.study_mode_word);
         wordTextView.setText(list.get(curPos).word);
 

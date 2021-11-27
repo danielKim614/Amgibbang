@@ -1,6 +1,8 @@
 package com.cookandroid.amgibbang;
 
-public class CalendarProgressbarInfo {
+import java.io.Serializable;
+
+public class CalendarProgressbarInfo implements Serializable {
     int progress;
     int score;
     int total;

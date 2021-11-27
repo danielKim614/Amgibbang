@@ -8,8 +8,8 @@
     tools:context=".SpeedModeActivity">
 
     <include
-        layout="@layout/speed_mode_toolbar"
-        android:id="@+id/speed_mode_toolbar"/>
+        layout="@layout/mode_toolbar"
+        android:id="@+id/mode_toolbar"/>
 
     <LinearLayout
         android:layout_width="match_parent"

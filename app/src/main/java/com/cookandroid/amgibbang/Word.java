@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 public class Word {
     boolean checkBox;
     String explanation;
+    boolean isRight = false;  // 채점 결과 화면에서 쓸 변수
     String meaning;
     String word;
 
@@ -25,6 +26,13 @@ public class Word {
         this.meaning = meaning;
         this.word = word;
         this.checkBox=checkBox;
+    }
+
+    public Word(Word word, boolean isRight) {
+        this.explanation = word.explanation;
+        this.meaning = word.meaning;
+        this.word = word.word;
+        this.isRight = isRight;
     }
 
 

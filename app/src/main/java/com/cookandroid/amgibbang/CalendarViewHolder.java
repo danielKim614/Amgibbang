@@ -17,7 +17,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int pos = getAdapterPosition();
+                int pos = getBindingAdapterPosition();
                 if (pos != RecyclerView.NO_POSITION) listener.onItemClick(view, pos);
             }
         });

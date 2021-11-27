@@ -54,6 +54,4 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public int getItemViewType(int position) {
         return super.getItemViewType(position);
     }
-
-
 }
