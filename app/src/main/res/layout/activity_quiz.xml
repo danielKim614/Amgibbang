@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/quiz_toolbar"
+        android:id="@+id/quiz_toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/quiz_question"
+            android:text="문제"
+            android:textColor="?attr/Black"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="30sp"/>
+
+        <ImageView
+            android:id="@+id/quiz_x"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/x_mark"
+            android:layout_margin="30dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/quiz_o"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="35dp"
+            android:src="@drawable/o_mark"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.5"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="?attr/cardColor"
+                android:onClick="main_onClickList1">
+
+                <TextView
+                    android:id="@+id/quiz_answer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="정답1"
+                    android:textSize="25dp"
+                    android:textColor="?attr/Black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="?attr/cardColor"
+                android:onClick="main_onClickList2">
+
+                <TextView
+                    android:id="@+id/quiz_answer2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="정답2"
+                    android:textSize="25dp"
+                    android:textColor="?attr/Black"/>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="?attr/cardColor"
+                android:onClick="main_onClickList3">
+
+                <TextView
+                    android:id="@+id/quiz_answer3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="정답3"
+                    android:textSize="25dp"
+                    android:textColor="?attr/Black"/>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="?attr/cardColor"
+                android:onClick="main_onClickList4">
+
+                <TextView
+                    android:id="@+id/quiz_answer4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="정답4"
+                    android:textSize="25dp"
+                    android:textColor="?attr/Black"/>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/quiz_solved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/Grey"
+                android:text="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/Grey"
+                android:text=" / "/>
+
+            <TextView
+                android:id="@+id/quiz_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/Grey"
+                android:text="총 개수"/>
+
+
+        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="7dp"
+            android:text="채점"
+            android:textSize="20dp"
+            android:backgroundTint="?attr/Grey"
+            android:textColor="?attr/White"
+            android:onClick="score"/>
+
+    </FrameLayout>
+
+</LinearLayout>

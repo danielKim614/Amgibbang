@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean bookmarkState = false;
     static boolean editTextState = false;
     String dialogInput;
+    String documentId;
     private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
@@ -243,7 +244,28 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
+                        String dId = document.getId();
+                        documentId = dId;
                         db.collection("CardList").document(document.getId()).delete();
+                        Log.v("삭제", documentId);
+                        db.collection(documentId)
+                                .whereEqualTo("checkBox", false)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for(QueryDocumentSnapshot document : task.getResult()){
+                                                db.collection(documentId)
+                                                        .document(document.getId())
+                                                        .delete();
+                                            }
+                                        } else {
+                                            Log.v("main", "오류 발생");
+                                        }
+                                    }
+                                });
+                        db.collection(documentId).document().delete();
                     }
                     mainAdapter.notifyDataSetChanged();
                 } else {
@@ -251,6 +273,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // 카드리스트 모두 삭제
+        //collection 삭제
 
         cards.clear();
         db.collection("CardList").whereEqualTo("checkBox", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

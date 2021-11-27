@@ -87,6 +87,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         holder.itemView.setTag(position);
 
         if(editState==false){
+            holder.check.setVisibility(View.INVISIBLE);
             holder.bookmark_no.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -167,8 +168,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     });
                 }
             });
-
-            holder.check.setVisibility(View.INVISIBLE);
         } else { //editState가 false 일 때
 
             //이름 변경

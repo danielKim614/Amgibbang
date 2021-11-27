@@ -14,8 +14,9 @@
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:layout_marginTop="150dp"
+        android:padding="8dp"
         android:background="@drawable/dictionary_background_editview"
-        android:hint="   Search"
+        android:hint="Search"
         android:inputType="text"/>
 
     <Button

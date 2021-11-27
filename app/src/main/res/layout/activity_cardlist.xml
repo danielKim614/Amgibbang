@@ -21,11 +21,13 @@
 
         <EditText
             android:id="@+id/editSearch"
+            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Search"
             android:inputType="text|textNoSuggestions"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:background="@android:color/transparent"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
