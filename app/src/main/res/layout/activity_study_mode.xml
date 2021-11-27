@@ -27,7 +27,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/speed_mode_word"
+            android:id="@+id/study_mode_word"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"

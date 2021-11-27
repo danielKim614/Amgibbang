@@ -48,7 +48,7 @@ public class StudyModeActivity extends AppCompatActivity {
         settingButton.setOnClickListener(new settingClickListener());
 
         TextView toolbarText = findViewById(R.id.speed_mode_toolbar_text);
-        wordTextView = findViewById(R.id.speed_mode_word);
+        wordTextView = findViewById(R.id.study_mode_word);
         wordTextView.setText(list.get(curPos).word);
 
         head = true;
