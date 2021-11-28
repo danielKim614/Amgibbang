@@ -21,10 +21,11 @@
             android:layout_height="match_parent"
             android:id="@+id/quiz_question"
             android:text="문제"
+            android:textStyle="bold"
             android:textColor="?attr/Black"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="30sp"/>
+            android:textSize="28sp"/>
 
         <ImageView
             android:id="@+id/quiz_x"
@@ -76,7 +77,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="정답1"
-                    android:textSize="25dp"
+                    android:textSize="23dp"
                     android:textColor="?attr/Black"/>
             </androidx.cardview.widget.CardView>
 
@@ -98,7 +99,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="정답2"
-                    android:textSize="25dp"
+                    android:textSize="23dp"
                     android:textColor="?attr/Black"/>
             </androidx.cardview.widget.CardView>
 
@@ -128,7 +129,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="정답3"
-                    android:textSize="25dp"
+                    android:textSize="23dp"
                     android:textColor="?attr/Black"/>
             </androidx.cardview.widget.CardView>
 
@@ -150,7 +151,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="정답4"
-                    android:textSize="25dp"
+                    android:textSize="23dp"
                     android:textColor="?attr/Black"/>
             </androidx.cardview.widget.CardView>
 

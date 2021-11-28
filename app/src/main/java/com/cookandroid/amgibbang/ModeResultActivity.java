@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ModeResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Word> list = CardListActivity.list;
-
+    //ArrayList<Word> quizList = QuizActivity.list;
     TextView toolbarText;
     ProgressBar progressbar;
     TextView progressbarScore;

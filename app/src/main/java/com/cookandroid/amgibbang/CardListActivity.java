@@ -1,5 +1,7 @@
 package com.cookandroid.amgibbang;
 
+import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -154,11 +156,12 @@ public class CardListActivity extends AppCompatActivity {
                                 Log.v("다이얼로그", "퀴즈 모드 시작");
                                 if(list.size()>=4) {
                                     Intent intent1 = new Intent(CardListActivity.this, QuizActivity.class);
+                                    intent1.addFlags(FLAG_ACTIVITY_NO_HISTORY);
                                     intent1.putExtra("TITLE", titleText);
                                     startActivity(intent1);
                                 }
                                 else{
-                                    Toast.makeText(CardListActivity.this, "4단어 이하는 퀴즈 모드를 실행할 수 없습니다.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(CardListActivity.this, "4단어 이하는 퀴즈 모드를 실행할 수 없습니다.", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
                         }

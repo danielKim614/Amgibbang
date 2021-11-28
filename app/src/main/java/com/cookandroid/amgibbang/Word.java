@@ -35,6 +35,10 @@ public class Word {
         this.isRight = isRight;
     }
 
+    public void setIsRight(boolean isRight){
+        this.isRight = isRight;
+    }
+
 
     public String getExplanation() {
         return explanation;

@@ -22,6 +22,19 @@
         <entry key="..\:/Amgibbang/app/src/main/res/layout/main_toolbar.xml" value="0.16666666666666666" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/toolbar.xml" value="0.16666666666666666" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/word_toolbar.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_cardlist.xml" value="0.4" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_dictionary_main.xml" value="0.16" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_mode_result.xml" value="0.2" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_quiz.xml" value="0.176" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_speed_mode.xml" value="0.2" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.16" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/cardlist_recyclerview_item.xml" value="0.10677083333333333" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/cardlist_toolbar.xml" value="0.10677083333333333" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/main_activity.xml" value="0.12916666666666668" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/main_recyclerview_item.xml" value="0.12916666666666668" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/mode_result_recyclerview_item.xml" value="0.264" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/quiz_toolbar.xml" value="0.152" />
+        <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/speed_mode_toolbar.xml" value="0.12916666666666668" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_add.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_setting.xml" value="0.378125" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_unchecked.xml" value="0.2759259259259259" />
@@ -38,7 +51,6 @@
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_speed_mode.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_study_mode.xml" value="0.25" />
-        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.26313405797101447" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/cardlist_recyclerview_item.xml" value="0.1" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/cardlist_toolbar.xml" value="0.25" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/dictionary_result_toolbar.xml" value="0.35052083333333334" />
