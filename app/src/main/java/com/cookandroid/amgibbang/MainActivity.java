@@ -1,40 +1,31 @@
 package com.cookandroid.amgibbang;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
 import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     static boolean editState = false;
@@ -93,14 +84,16 @@ public class MainActivity extends AppCompatActivity {
         if(editState==false){
             switch (v.getId()){
                 case R.id.main_button_cal:
-                    Intent intent=new Intent(MainActivity.this, CalendarActivity.class);
-                    startActivity(intent);
+                    Intent intent1=new Intent(MainActivity.this, CalendarActivity.class);
+                    startActivity(intent1);
                     break;
                 case R.id.main_button_timer:
+                    Intent intent2=new Intent(MainActivity.this, TimeTableActivity.class);
+                    startActivity(intent2);
                     break;
                 case R.id.main_button_dictionary:
-                    Intent intent1=new Intent(MainActivity.this, DictionaryMainActivity.class);
-                    startActivity(intent1);
+                    Intent intent3=new Intent(MainActivity.this, DictionaryMainActivity.class);
+                    startActivity(intent3);
                     break;
             }
         }

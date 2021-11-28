@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Amgibbang">
         <activity
+            android:name=".TimeTableActivity"
+            android:exported="false" />
+        <activity
             android:name=".ModeResultActivity"
             android:exported="true">
             <intent-filter>

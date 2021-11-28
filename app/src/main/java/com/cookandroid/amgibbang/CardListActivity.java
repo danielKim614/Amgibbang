@@ -102,7 +102,7 @@ public class CardListActivity extends AppCompatActivity {
         });
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-        recyclerView = findViewById(R.id.cardlist_RecyclerView) ;
+        recyclerView = findViewById(R.id.cardlist_recyclerView) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
         // 리사이클러뷰에 CardListAdapter 객체 지정.

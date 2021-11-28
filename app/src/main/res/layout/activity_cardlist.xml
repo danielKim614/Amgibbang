@@ -35,7 +35,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/cardlist_RecyclerView"
+                    android:id="@+id/cardlist_recyclerView"
                     android:scrollbars="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
