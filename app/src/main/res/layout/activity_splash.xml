@@ -9,18 +9,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/flash"
+        android:src="@drawable/flash1"
         android:scaleType="centerCrop"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="암기빵"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        android:layout_marginBottom="200dp"
-        android:textStyle="bold"/>
 
 
 
