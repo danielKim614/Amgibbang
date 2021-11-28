@@ -1,6 +1,8 @@
 package com.cookandroid.amgibbang;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -18,7 +21,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class ModeResultAdapter extends RecyclerView.Adapter<ModeResultAdapter.ViewHolder> {
-    private ArrayList<Word> list = null;
+    private ArrayList<Word> list;
     boolean isExpanded = false;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -30,12 +33,11 @@ public class ModeResultAdapter extends RecyclerView.Adapter<ModeResultAdapter.Vi
 
         LinearLayout expandBar;
 
-        FrameLayout expandButton;
-        ImageButton expandMoreButton;
-        ImageButton expandLessButton;
+        ImageButton expandButton;
 
         ViewHolder(View itemView) {
             super(itemView) ;
+            Log.d("dabin", "in ViewHolder 생성자");
 
             word = itemView.findViewById(R.id.mode_result_tv_word);
             meaning = itemView.findViewById(R.id.mode_result_tv_meaning);
@@ -46,13 +48,11 @@ public class ModeResultAdapter extends RecyclerView.Adapter<ModeResultAdapter.Vi
             expandBar = itemView.findViewById(R.id.mode_result_expand);
 
             expandButton = itemView.findViewById(R.id.mode_result_button_expand);
-            expandMoreButton = itemView.findViewById(R.id.mode_result_button_expand_more);
-            expandLessButton = itemView.findViewById(R.id.mode_result_button_expand_less);
         }
     }
 
     ModeResultAdapter(ArrayList<Word> list) {
-        list = list ;
+        this.list = list ;
     }
 
     @NonNull
@@ -69,6 +69,7 @@ public class ModeResultAdapter extends RecyclerView.Adapter<ModeResultAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("dabin", "in onBindViewHolder");
         holder.word.setText(list.get(position).word);
         holder.meaning.setText(list.get(position).meaning);
         holder.expandBar.setVisibility(View.GONE);
@@ -76,30 +77,25 @@ public class ModeResultAdapter extends RecyclerView.Adapter<ModeResultAdapter.Vi
         if (list.get(position).isRight == true) {
             holder.markO.setVisibility(View.VISIBLE);
             holder.markX.setVisibility(View.INVISIBLE);
-            holder.expandButton.setEnabled(false);
-            holder.expandMoreButton.setVisibility(View.INVISIBLE);
-            holder.expandLessButton.setVisibility(View.INVISIBLE);
+            holder.expandButton.setVisibility(View.INVISIBLE);
         } else {
             holder.markO.setVisibility(View.INVISIBLE);
             holder.markX.setVisibility(View.VISIBLE);
-            holder.expandButton.setEnabled(true);
-            holder.expandMoreButton.setVisibility(View.VISIBLE);
-            holder.expandLessButton.setVisibility(View.INVISIBLE);
+            holder.expandButton.setVisibility(View.VISIBLE);;
         }
 
         holder.expandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("dabin", "clicked");
                 if (isExpanded == false) {
                     isExpanded = true;
-                    holder.expandMoreButton.setVisibility(View.INVISIBLE);
-                    holder.expandLessButton.setVisibility(View.VISIBLE);
                     holder.expandBar.setVisibility(View.VISIBLE);
+                    holder.expandButton.setBackgroundResource(R.drawable.button_expand_less_gray);
                 } else {
-                    isExpanded = false;
-                    holder.expandMoreButton.setVisibility(View.VISIBLE);
-                    holder.expandLessButton.setVisibility(View.INVISIBLE);
+                    isExpanded = false;;
                     holder.expandBar.setVisibility(View.GONE);
+                    holder.expandButton.setBackgroundResource(R.drawable.button_expand_more_gray);
                 }
             }
         });

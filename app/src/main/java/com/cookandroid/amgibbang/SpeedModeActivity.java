@@ -35,7 +35,6 @@ import java.util.ArrayList;
 
 public class SpeedModeActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    static ArrayList<Word> list = CardListActivity.list;
     TextView wordTextView;
     ImageView oMark;
     ImageView xMark;
@@ -93,7 +92,7 @@ public class SpeedModeActivity extends AppCompatActivity {
                             Log.d("dabin", "right to left");
                             if (showState == false) {
                                 oMark.setVisibility(View.VISIBLE);
-                                list.get(curPos).isRight = true;
+                                CardListActivity.list.get(curPos).isRight = true;
                                 score++;
                                 showState = true;
                             }
@@ -107,7 +106,7 @@ public class SpeedModeActivity extends AppCompatActivity {
                             Log.d("dabin", "dowm to up");
                             if (showState == false) {
                                 xMark.setVisibility(View.VISIBLE);
-                                list.get(curPos).isRight = false;
+                                CardListActivity.list.get(curPos).isRight = false;
                                 showState = true;
                             }
                         }
@@ -122,7 +121,7 @@ public class SpeedModeActivity extends AppCompatActivity {
         // 작업 스레드에서 초 세는 작업 해줌
         Thread thread = new Thread() {
             public void run() {
-                for (curPos = 0; curPos < list.size(); curPos++) {
+                for (curPos = 0; curPos < CardListActivity.list.size(); curPos++) {
 
                     mHandler.post(new Runnable() {
                         @Override
@@ -130,7 +129,7 @@ public class SpeedModeActivity extends AppCompatActivity {
                             showState = false;
                             xMark.setVisibility(View.INVISIBLE);
                             oMark.setVisibility(View.INVISIBLE);
-                            wordTextView.setText(list.get(curPos).word);
+                            wordTextView.setText(CardListActivity.list.get(curPos).word);
                         }
                     });
 
@@ -152,7 +151,7 @@ public class SpeedModeActivity extends AppCompatActivity {
 
                     if (showState == false) {
                         showState = true;
-                        list.get(curPos).isRight = false;
+                        CardListActivity.list.get(curPos).isRight = false;
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -167,20 +166,20 @@ public class SpeedModeActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        CalendarProgressbarInfo info = new CalendarProgressbarInfo(score, CardListActivity.list.size());
+                        Intent intent = new Intent(SpeedModeActivity.this, ModeResultActivity.class);
+                        intent.putExtra("TITLE", titleText);
+                        intent.putExtra("INFO", info);
+                        startActivity(intent);
+                    }
+                });
             }
         };
         thread.start();
-
-
-
-
-/*        CalendarProgressbarInfo info = new CalendarProgressbarInfo(score, list.size());
-        Intent intent = new Intent(this, ModeResultActivity.class);
-        intent.putExtra("TITLE", titleText);
-        intent.putExtra("INFO", info);
-        Log.d("dabin", "putExtra 끝냄");
-        startActivity(intent);*/
-        // 작업 스레드 끝나기를 기다린 다음 스피드 모드 결과 화면 띄우기
     }
 
     @Override

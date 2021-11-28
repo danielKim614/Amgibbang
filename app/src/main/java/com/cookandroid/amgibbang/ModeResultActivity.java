@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ModeResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    ArrayList<Word> list = SpeedModeActivity.list;
+    ArrayList<Word> list = CardListActivity.list;
 
     TextView toolbarText;
     ProgressBar progressbar;
