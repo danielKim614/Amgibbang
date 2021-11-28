@@ -317,7 +317,7 @@ public class CardListActivity extends AppCompatActivity {
         editState = false;
     }
 
-    //    // 검색을 수행하는 메소드
+//        // 검색을 수행하는 메소드
 //    public void search(String charText) {
 //
 //        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
@@ -342,6 +342,6 @@ public class CardListActivity extends AppCompatActivity {
 //            }
 //        }
 //        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-//        adapter.notifyDataSetChanged();
+//        cardListAdapter.notifyDataSetChanged();
 //    }
 }
