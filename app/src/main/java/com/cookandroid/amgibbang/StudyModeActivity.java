@@ -22,8 +22,8 @@ public class StudyModeActivity extends AppCompatActivity {
     ArrayList<Word> list = CardListActivity.list;
     TextView wordTextView;
     ImageButton settingButton;
-    boolean settingValue = true;
-    boolean head;
+    public int settingValue = 0;
+    int tempValue = 0;
     int curPos = 0; // 현재 단어 위치
 
     // 스와이프에 필요한 변수
@@ -51,8 +51,6 @@ public class StudyModeActivity extends AppCompatActivity {
         wordTextView = findViewById(R.id.study_mode_word);
         wordTextView.setText(list.get(curPos).word);
 
-        head = true;
-
         Intent intent = getIntent();
         toolbarText.setText(intent.getStringExtra("TITLE"));
 
@@ -62,11 +60,13 @@ public class StudyModeActivity extends AppCompatActivity {
             new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onSingleTapUp(MotionEvent e) {
-                    if (head == true) {
+                    if (tempValue == 0) {
                         wordTextView.setText(list.get(curPos).meaning);
+                        tempValue = 1;
                     }
                     else {
                         wordTextView.setText(list.get(curPos).word);
+                        tempValue = 0;
                     }
                     return super.onSingleTapUp(e);
                 }
@@ -75,19 +75,18 @@ public class StudyModeActivity extends AppCompatActivity {
                 public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                     //if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                     //  return false;
-                        head = settingValue; // * 세팅값에 따라 바뀌지 않음 *
                         // right to left swipe
                         if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                             Log.d("StudyMode", "right to left");
                             ++curPos;
                             if (curPos < list.size()) {
-                                if (head = true)
+                                if (settingValue == 0)
                                     wordTextView.setText(list.get(curPos).word);
                                 else
                                     wordTextView.setText(list.get(curPos).meaning);
                             }
                             else {
-                                Toast.makeText(StudyModeActivity.this.getApplicationContext(), "마지막 단어입니다.", Toast.LENGTH_LONG).show(); // * 구동 안됨 *
+                                Toast.makeText(StudyModeActivity.this.getApplicationContext(), "마지막 단어입니다.", Toast.LENGTH_SHORT).show();
                                 curPos--;
                             }
                         }
@@ -96,13 +95,13 @@ public class StudyModeActivity extends AppCompatActivity {
                             Log.d("StudyMode", "left to right");
                             --curPos;
                             if (curPos >= 0) {
-                                    if (head = true)
+                                    if (settingValue == 0)
                                         wordTextView.setText(list.get(curPos).word);
                                     else
                                         wordTextView.setText(list.get(curPos).meaning);
                             }
                             else {
-                                Toast.makeText(StudyModeActivity.this.getApplicationContext(), "첫 단어입니다.", Toast.LENGTH_LONG).show(); // * 구동 안됨 *
+                                Toast.makeText(StudyModeActivity.this.getApplicationContext(), "첫 단어입니다.", Toast.LENGTH_SHORT).show();
                                 curPos = 0;
                             }
                         }
@@ -123,11 +122,11 @@ public class StudyModeActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     switch(array[i]){
                         case "단어 먼저 표시":
-                            settingValue = true;
+                            settingValue = 0;
                             wordTextView.setText(list.get(curPos).word);
                             break;
                         case "뜻 먼저 표시":
-                            settingValue = false;
+                            settingValue = 1;
                             wordTextView.setText(list.get(curPos).meaning);
                             break;
                     }
