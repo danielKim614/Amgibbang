@@ -112,6 +112,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         return 0;
     }
 
+    public void  filterList(ArrayList<Word> filteredList) {
+        mData = filteredList;
+        notifyDataSetChanged();
+    }
+
     public void remove(int position){
         // 값 삭제
         try{

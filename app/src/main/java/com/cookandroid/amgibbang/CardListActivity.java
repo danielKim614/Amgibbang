@@ -6,11 +6,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,12 +38,16 @@ public class CardListActivity extends AppCompatActivity {
 
     ImageButton add_btn;
     TextView edit_btn, title;
-    static boolean editState = false;
+    EditText editText;
     private CardListAdapter cardListAdapter;
     private RecyclerView recyclerView;
     String titleText;  // 단어장 이름
-    static String id;         // document id값
+    static String id;  // document id값
+
+    static boolean editState = false;  // 단어, 뜻 먼저 보어줄 것 결정값
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     static ArrayList<Word> list = new ArrayList<>();
     ArrayList<Word> arraylist = new ArrayList<>();
 
@@ -70,11 +77,29 @@ public class CardListActivity extends AppCompatActivity {
         title = findViewById(R.id.cardlist_title);
         title.setText(titleText);
 
-
+        editText = findViewById(R.id.edit_text_filter);
 
         // list 복사본을 만든다.
         arraylist.addAll(list);
 
+        // 텍스트 필터
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = editText.getText().toString();
+                searchFilter(searchText);
+            }
+        });
 
         // 리사이클러뷰에 LinearLayoutManager 객체 지정.
         recyclerView = findViewById(R.id.cardlist_RecyclerView) ;
@@ -99,19 +124,13 @@ public class CardListActivity extends AppCompatActivity {
             }
         });
 
+        // + 버튼 행동
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
-                    // edit 버튼 행동
-
-                    // + 버튼 행동
-                    case R.id.cardlist_addCardButton:
-                        Intent intent=new Intent(CardListActivity.this, AddWordActivity.class);
-                        intent.putExtra("ID", id);
-                        startActivity(intent);
-                        break;
-                }
+                Intent intent=new Intent(CardListActivity.this, AddWordActivity.class);
+                intent.putExtra("ID", id);
+                startActivity(intent);
             }
         };
         add_btn.setOnClickListener(onClickListener);
@@ -172,9 +191,8 @@ public class CardListActivity extends AppCompatActivity {
         }
     }
 
-
+    // edit 버튼
     public void onEditButtonClick(View v){
-        // edit 버튼
         if(editState == false) {
             editState = true;
             // 버튼 설정
@@ -189,9 +207,7 @@ public class CardListActivity extends AppCompatActivity {
             checkAll.setChecked(false);
 
             recyclerView.setAdapter(cardListAdapter);
-
         }
-
         else {
             editState = false;
             TextView textView=findViewById(R.id.cardlist_button_edit);
@@ -292,6 +308,7 @@ public class CardListActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+        // Firebase로부터 단어장 데이터 가져오기
         list.clear();
 
         db.collection(id)
@@ -317,34 +334,19 @@ public class CardListActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        editState = false;
+        editState = false; // edit 상태 초기화
     }
 
-//        // 검색을 수행하는 메소드
-//    public void search(String charText) {
-//
-//        // 문자 입력시마다 리스트를 지우고 새로 뿌려준다.
-//        list.clear();
-//
-//        // 문자 입력이 없을때는 모든 데이터를 보여준다.
-//        if (charText.length() == 0) {
-//            list.addAll(arraylist);
-//        }
-//        // 문자 입력을 할때..
-//        else
-//        {
-//            // 리스트의 모든 데이터를 검색한다.
-//            for(int i = 0;i < arraylist.size(); i++)
-//            {
-//                // arraylist의 모든 데이터에 입력받은 단어(charText)가 포함되어 있으면 true를 반환한다.
-//                if (arraylist.get(i).toLowerCase().contains(charText))
-//                {
-//                    // 검색된 데이터를 리스트에 추가한다.
-//                    list.add(arraylist.get(i));
-//                }
-//            }
-//        }
-//        // 리스트 데이터가 변경되었으므로 아답터를 갱신하여 검색된 데이터를 화면에 보여준다.
-//        cardListAdapter.notifyDataSetChanged();
-//    }
+    // 검색 필터 구현
+    public void searchFilter(String searchText) {
+        arraylist.clear();
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getWord().toLowerCase().contains(searchText.toLowerCase())) {
+                arraylist.add(list.get(i));
+            }
+        }
+
+        cardListAdapter.filterList(arraylist);
+    }
 }
