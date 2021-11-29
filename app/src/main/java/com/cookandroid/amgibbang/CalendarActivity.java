@@ -118,6 +118,7 @@ public class CalendarActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case android.R.id.home:
                 finish();   // 뒤로가기 버튼 누르면 액티비티 종료
+                overridePendingTransition(R.anim.none, R.anim.slide_right_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);

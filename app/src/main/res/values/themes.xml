@@ -12,11 +12,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-        <item name="toolbarColor">#2C82AF</item>
+        <item name="toolbarColor">@color/black</item>
         <item name="Black">@color/black</item>
         <item name="White">@color/white</item>
         <item name="Grey">@color/gray_600</item>
         <item name="toolbarGrey">#F1F1F1</item>
         <item name="cardColor">#E6E6E6</item>
+        <item name="edge">#EE000000</item>
+        <item name="date">#235197</item>
+        <item name="list">@color/white</item>
+        <item name="button">@color/white</item>
     </style>
 </resources>

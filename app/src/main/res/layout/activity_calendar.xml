@@ -23,7 +23,8 @@
             android:layout_weight="1"
             android:src="@drawable/button_back_black"
             android:background="@android:color/transparent"
-            android:onClick="previousMonthAction"/>
+            android:onClick="previousMonthAction"
+            app:tint="?attr/Black"/>
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
@@ -32,7 +33,7 @@
             android:layout_weight="2"
             android:text="Feb 2021"
             android:textSize="20sp"
-            android:textColor="@color/black"
+            android:textColor="?attr/Black"
             android:gravity="center_horizontal"/>
 
         <ImageButton
@@ -41,7 +42,8 @@
             android:layout_weight="1"
             android:src="@drawable/button_forward_black"
             android:background="@android:color/transparent"
-            android:onClick="nextMonthAction"/>
+            android:onClick="nextMonthAction"
+            app:tint="?attr/Black" />
 
     </LinearLayout>
 
@@ -54,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="SUN"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -63,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="MON"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -72,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TUE"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -81,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="WED"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -90,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="THU"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -99,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="FRI"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 
@@ -108,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="SAT"
-            android:textColor="?attr/colorPrimary"
+            android:textColor="?attr/date"
             android:gravity="center_horizontal"
             android:textSize="16sp"/>
 

@@ -18,5 +18,9 @@
         <item name="Grey">@color/gray_400</item>
         <item name="toolbarGrey">#222222</item>
         <item name="cardColor">#323232</item>
+        <item name="edge">#EB808080</item>
+        <item name="date">#A3A3A3</item>
+        <item name="list">#2B2B2B</item>
+        <item name="button">#141414</item>
     </style>
 </resources>

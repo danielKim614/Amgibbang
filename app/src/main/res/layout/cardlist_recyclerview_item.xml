@@ -14,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:text="Word"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:textSize="15sp" />
 
     <TextView
@@ -25,7 +25,7 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@id/itemlist_word"
         android:text="Meaning"
-        android:textColor="@color/gray_600"
+        android:textColor="?attr/Grey"
         android:textSize="15sp" />
 
     <CheckBox

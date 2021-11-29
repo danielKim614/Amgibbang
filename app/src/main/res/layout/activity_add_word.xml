@@ -22,7 +22,7 @@
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
         android:hint="단어"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text"/>
 
     <EditText
@@ -36,7 +36,7 @@
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
         android:hint="뜻 (의미, 설명)"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text"/>
 
     <EditText
@@ -51,7 +51,7 @@
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
         android:hint="메모"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text|textMultiLine"
         android:gravity="top"/>
 

@@ -34,6 +34,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:text="word"
+            android:textColor="?attr/Black"
             android:textSize="18sp"/>
 
         <ImageButton
@@ -50,6 +51,7 @@
         android:id="@+id/mode_result_expand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/gray_400"
         android:visibility="visible">
 
         <FrameLayout
@@ -64,6 +66,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:text="뜻"
+            android:textColor="?attr/Black"
             android:textSize="18sp"/>
 
     </LinearLayout>

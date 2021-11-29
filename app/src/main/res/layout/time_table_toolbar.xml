@@ -5,7 +5,7 @@
     android:id="@+id/time_table_toolbar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/toolbarColor"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 

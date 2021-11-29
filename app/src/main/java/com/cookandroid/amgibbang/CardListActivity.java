@@ -142,6 +142,7 @@ public class CardListActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case android.R.id.home:
                 finish();
+                overridePendingTransition(R.anim.none, R.anim.slide_right_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);

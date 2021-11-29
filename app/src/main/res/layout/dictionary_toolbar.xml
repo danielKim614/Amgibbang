@@ -5,7 +5,7 @@
     android:id="@+id/dictionary_toolbar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/toolbarColor"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Dictionary"
-        android:textColor="?attr/colorOnPrimary"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
 </androidx.appcompat.widget.Toolbar>

@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            mainAdapter.notifyDataSetChanged();
 
         } else{
             bookmarkState=false;
@@ -170,9 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            mainAdapter.notifyDataSetChanged();
         }
-
 
     }
 
@@ -319,5 +316,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void onPause() {
+        super.onPause();
+
+        overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
     }
 }

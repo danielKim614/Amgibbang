@@ -50,7 +50,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text"
         android:enabled="false"/>
 
@@ -64,7 +64,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text"
         android:enabled="false"/>
 
@@ -79,7 +79,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:background="@drawable/word_background_textview"
-        android:textColor="@color/black"
+        android:textColor="?attr/Black"
         android:inputType="text|textMultiLine"
         android:gravity="top"
         android:enabled="false"/>

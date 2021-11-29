@@ -17,6 +17,7 @@
         <TextView
             android:id="@+id/searchResult"
             android:textSize="20dp"
+            android:text="?attr/Black"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

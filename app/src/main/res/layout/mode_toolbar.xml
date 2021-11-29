@@ -4,7 +4,7 @@
     android:id="@+id/mode_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary"
+    android:background="?attr/toolbarColor"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -12,7 +12,7 @@
         android:id="@+id/mode_toolbar_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="?attr/White"
+        android:textColor="@color/white"
         android:layout_gravity="center"
         android:text="title"
         android:textSize="18sp"/>
