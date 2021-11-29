@@ -53,7 +53,7 @@ public class AddWordActivity extends AppCompatActivity {
             explanation = String.valueOf(charSequence);
 
             // word, meaning, explanation 어딘가에 넘기거나 저장해야 함
-            db.collection(id).document(word).set(new Word(explanation, meaning, word));
+            db.collection(id).document().set(new Word(explanation, meaning, word));
             finish();
         }
     }

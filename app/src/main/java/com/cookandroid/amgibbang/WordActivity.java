@@ -164,8 +164,10 @@ public class WordActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
-                finish();
-                return true;
+                if (editState == false) {
+                    finish();
+                    return true;
+                }
         }
         return super.onOptionsItemSelected(item);
     }

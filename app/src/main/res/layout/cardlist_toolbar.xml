@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:text="단어장A"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/cardlist_button_edit"

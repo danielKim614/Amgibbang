@@ -1,5 +1,6 @@
 package com.cookandroid.amgibbang;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,11 +20,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.apphosting.datastore.testing.DatastoreTestTrace;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.ListCollectionIdsRequest;
+
+import org.w3c.dom.Text;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 
 public class CalendarActivity extends AppCompatActivity {
     private TextView monthYearText;
@@ -31,6 +46,13 @@ public class CalendarActivity extends AppCompatActivity {
     private LocalDate selectedDate;
 
     private RecyclerView calendarProgressbarRecyclerView;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String yearId;
+    String monthId;
+    String dayId;
+
+    ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -48,10 +70,6 @@ public class CalendarActivity extends AppCompatActivity {
         calendarProgressbarRecyclerView = findViewById(R.id.calendar_progressbar_recyclerview);
         selectedDate = LocalDate.now();
         setMonthView();
-
-        ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
-        infoList.add(new CalendarProgressbarInfo(3, 10));
-        infoList.add(new CalendarProgressbarInfo(4, 10));
 
         setProgressbarView(infoList);
     }
@@ -79,11 +97,33 @@ public class CalendarActivity extends AppCompatActivity {
                 for (int i = 0; i < calendarAdapter.getItemCount(); i++) {
                     CalendarViewHolder holder =  (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(i);
                     if (i == pos) {
-                        holder.dayOfMonth.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.calendar_background_cell, null));
+                        holder.dayOfMonth.setBackgroundResource(R.drawable.calendar_background_cell);
                         continue;
                     }
-                    holder.dayOfMonth.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    holder.dayOfMonth.setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 }
+
+                // 클릭하면 프로그래스바 표시되게 해야되는데..
+                dayId = daysInMonth.get(pos);
+                infoList.clear();
+
+                db.collection(yearId).document(monthId).collection(dayId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        CalendarProgressbarInfo info = (CalendarProgressbarInfo) document.toObject(CalendarProgressbarInfo.class);
+                                        infoList.add(info);
+                                        // 단어장 이름을 못가져옴..왜지
+                                    }
+                                } else {
+                                    Log.d("dabin", "Error getting documents: ", task.getException());
+                                }
+                                setProgressbarView(infoList);
+                            }
+                        });
             }
         });
     }
@@ -91,7 +131,14 @@ public class CalendarActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private String monthYearFromDate(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-        return date.format(formatter);
+        String monthYear = date.format(formatter);
+
+        formatter = DateTimeFormatter.ofPattern("yyyy");
+        yearId = date.format(formatter);
+        formatter = DateTimeFormatter.ofPattern("MMMM");
+        monthId = date.format(formatter);
+
+        return monthYear;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

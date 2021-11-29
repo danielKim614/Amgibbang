@@ -3,16 +3,20 @@ package com.cookandroid.amgibbang;
 import java.io.Serializable;
 
 public class CalendarProgressbarInfo implements Serializable {
+    String name;
     int progress;
     int score;
     int total;
 
     CalendarProgressbarInfo() {}
-    CalendarProgressbarInfo(int progress, int total, int score) {
-        this.progress = progress;
+
+    CalendarProgressbarInfo(String name, int score, int total) {
+        this.name = name;
+        this.progress = (int)(((double)score / total) * 100);
         this.score = score;
         this.total = total;
     }
+
     CalendarProgressbarInfo(int score, int total) {
         this.progress = (int)(((double)score / total) * 100);
         this.score = score;

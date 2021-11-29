@@ -8,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -42,10 +47,14 @@ public class SpeedModeActivity extends AppCompatActivity {
     int curPos; // 현재 단어 위치
     int sec;    // 타이머 초
     int score = 0;
+    boolean DialogShowState; // 도움말 다이얼로그 띄울지말지
+    boolean showState = false;
 
+    SharedPreferences sharedPref;
+    Thread thread;
     Handler mHandler = new Handler();
 
-    boolean showState = false;
+
 
     // 스와이프에 필요한 변수
     private GestureDetector mGestures;
@@ -70,6 +79,8 @@ public class SpeedModeActivity extends AppCompatActivity {
         oMark = findViewById(R.id.speed_mode_o);
         xMark = findViewById(R.id.speed_mode_x);
         secButton = findViewById(R.id.speed_mode_button_sec);
+
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
 
         // 타이머 몇 초로 시작할건지
         sec = 3;
@@ -119,10 +130,9 @@ public class SpeedModeActivity extends AppCompatActivity {
                 });
 
         // 작업 스레드에서 초 세는 작업 해줌
-        Thread thread = new Thread() {
+        thread = new Thread() {
             public void run() {
                 for (curPos = 0; curPos < CardListActivity.list.size(); curPos++) {
-
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -137,13 +147,13 @@ public class SpeedModeActivity extends AppCompatActivity {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
                         }
                         if (showState == true) {
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                return;
                             }
                             break;
                         }
@@ -162,7 +172,7 @@ public class SpeedModeActivity extends AppCompatActivity {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            return;
                         }
                     }
                 }
@@ -179,7 +189,13 @@ public class SpeedModeActivity extends AppCompatActivity {
                 });
             }
         };
-        thread.start();
+
+        DialogShowState = sharedPref.getBoolean("DIALOG_SHOW", true);
+
+        if (DialogShowState == true)
+            showHelpDialog();
+        else
+            thread.start();
     }
 
     @Override
@@ -209,6 +225,44 @@ public class SpeedModeActivity extends AppCompatActivity {
         else {
             sec = 1;
             secButton.setText(sec + "s");
+        }
+    }
+
+    public void showHelpDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View helpDialogView = inflater.inflate(R.layout.speed_mode_hlep_dialog, null);
+        builder.setView(helpDialogView);
+
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                thread.start();
+            }
+        });
+
+        CheckBox check = helpDialogView.findViewById(R.id.speed_mode_dialog_check);
+        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b == true) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean("DIALOG_SHOW", false);
+                    editor.commit();
+                }
+            }
+        });
+
+        AlertDialog helpDialog = builder.create();
+        helpDialog.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (thread != null) {
+            thread.interrupt();
+            thread=null;
         }
     }
 }

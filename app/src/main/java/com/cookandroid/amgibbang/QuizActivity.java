@@ -111,7 +111,7 @@ public class QuizActivity extends AppCompatActivity {
 
     //채점 버튼
     public void score(View view){
-        CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(hit, position);
+        CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
         db.collection(localYearMonth).document(localDate).collection(title).document().set(calendarProgressbarInfo);
         //배열 리스트에 다시 저장시킴
         list.clear();
@@ -120,7 +120,7 @@ public class QuizActivity extends AppCompatActivity {
         }
         //인텐트로 화면 전환 시킴
         Intent intent = new Intent(this, ModeResultActivity.class);
-        CalendarProgressbarInfo info = new CalendarProgressbarInfo(hit, position);
+        CalendarProgressbarInfo info = new CalendarProgressbarInfo(title, hit, position);
         intent.putExtra("TITLE", title);
         intent.putExtra("INFO", info);
         startActivity(intent);
@@ -187,7 +187,7 @@ public class QuizActivity extends AppCompatActivity {
         if(position+1 == list.size()){
             Log.v("퀴즈", "값 저장하고 넘어감");
             Toast.makeText(QuizActivity.this, "채점되었습니다.", Toast.LENGTH_SHORT).show();
-            CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(hit, position);
+            CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
             db.collection(localYearMonth).document(localDate).collection(title).document().set(calendarProgressbarInfo);
             //배열 리스트에 다시 저장시킴
             list.clear();
@@ -196,7 +196,7 @@ public class QuizActivity extends AppCompatActivity {
             }
             //채점 결과 화면으로 이동
             Intent intent = new Intent(this, ModeResultActivity.class);
-            CalendarProgressbarInfo info = new CalendarProgressbarInfo(hit, position);
+            CalendarProgressbarInfo info = new CalendarProgressbarInfo(title, hit, position);
             intent.putExtra("TITLE", title);
             intent.putExtra("INFO", info);
             startActivity(intent);

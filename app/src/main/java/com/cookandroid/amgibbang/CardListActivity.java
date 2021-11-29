@@ -170,6 +170,7 @@ public class CardListActivity extends AppCompatActivity {
                                 Log.v("다이얼로그", "스피드 모드 시작");
                                 Intent intentToSp = new Intent(CardListActivity.this, SpeedModeActivity.class);
                                 intentToSp.putExtra("TITLE", titleText);
+                                intentToSp.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                 startActivity(intentToSp);
                                 break;
                             case "퀴즈 모드":

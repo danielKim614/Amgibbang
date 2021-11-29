@@ -20,9 +20,9 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:max="100"
-            android:progressBackgroundTint="@color/gray_400"
+            android:progressBackgroundTint="?attr/Grey"
             android:progressDrawable="@drawable/calendar_circle_progressbar"
-            android:progressTint="?attr/colorPrimary"
+            android:progressTint="?attr/Black"
             android:progress="70"/>
         <LinearLayout
             android:layout_width="wrap_content"

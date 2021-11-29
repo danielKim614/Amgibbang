@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/speed_mode_dialog_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:text="도움말"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/speed_mode_dialog_help2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@id/speed_mode_dialog_help"
+        android:layout_below="@id/speed_mode_dialog_help"
+        android:text="3초에 한 번씩 단어가 넘어갑니다.\n왼쪽으로 넘기면 정답처리 되고,\n위로 넘기면 오답 처리 됩니다.\n3초가 지나도 오답처리 됩니다.\n하단의 버튼을 통해 시간을 조절할 수 있습니다." />
+
+
+    <CheckBox
+        android:id="@+id/speed_mode_dialog_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다시 보지 않기"
+        android:layout_below="@id/speed_mode_dialog_help2"
+        android:layout_alignLeft="@id/speed_mode_dialog_help2"/>
+</RelativeLayout>

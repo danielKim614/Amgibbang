@@ -13,9 +13,9 @@
                 android:useLevel="false"
                 android:type="sweep">
                 <gradient
-                    android:centerColor="?attr/colorOnBackground"
-                    android:endColor="?attr/colorOnBackground"
-                    android:startColor="?attr/colorOnBackground"
+                    android:centerColor="?attr/Grey"
+                    android:endColor="?attr/Grey"
+                    android:startColor="?attr/Grey"
                     android:type="sweep"/>
             </shape>
         </rotate>
@@ -34,9 +34,9 @@
                 android:angle="0"
                 android:type="sweep">
                 <gradient
-                android:centerColor="?attr/colorPrimary"
-                android:endColor="?attr/colorPrimary"
-                android:startColor="?attr/colorPrimary"
+                android:centerColor="?attr/Black"
+                android:endColor="?attr/Black"
+                android:startColor="?attr/Black"
                 android:type="sweep"/>
             </shape>
         </rotate>
