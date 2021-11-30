@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,8 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -31,13 +37,17 @@ public class MainActivity extends AppCompatActivity {
     static boolean editState = false;
     static boolean bookmarkState = false;
     static boolean editTextState = false;
+    static boolean settingState = false;
+    static boolean darkState;
     String dialogInput;
     String documentId;
+    private ToggleButton darkButton;
     private ArrayList<MainCard> cards;
     private MainAdapter mainAdapter;
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         cards = new ArrayList<>();   // MainCard 리스트
         mainAdapter = new MainAdapter(cards, MainActivity.this);
         recyclerView.setAdapter(mainAdapter);
+        darkButton = findViewById(R.id.setting_toggle);
+        mAuth = FirebaseAuth.getInstance();
 
         RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof SimpleItemAnimator) {
@@ -174,28 +186,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void main_setting(View v){
-        // 로그아웃, 다크모드 온 오프 창 띄움
-        String[] array = {"다크 모드 ON", "다크 모드 OFF"};
-        if(editState==false){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setItems(array, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    switch(array[i]){
-                        case "다크 모드 ON":
-                            Log.v("다이얼로그", "다크모드를 킵니다.");
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            break;
-                        case "다크 모드 OFF":
-                            Log.v("다이얼로그", "다크모드를 끕니다.");
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            break;
-                    }
-                }
-            });
-            builder.show();
+        if(settingState==false){
+            settingState=true;
+            LinearLayout linearLayout = findViewById(R.id.main_setting);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+        else{
+            settingState=false;
+            LinearLayout linearLayout = findViewById(R.id.main_setting);
+            linearLayout.setVisibility(View.INVISIBLE);
         }
     }
+
+    public void darkMode(View v){
+        if(darkButton.isChecked()){
+            settingState=false;
+            darkState=true;
+            setDark(true);
+        }
+        else{
+            settingState=false;
+            darkState=false;
+            setDark(false);
+        }
+    }
+
+    public void setDark(boolean b){
+        if(b==true){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     public void main_onClickEdit(View v){
         // edit 버튼
         if(editState==false){
@@ -321,6 +344,30 @@ public class MainActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
 
-        overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
+        overridePendingTransition(0, 0);
+    }
+
+    // 로그아웃
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    // 탈퇴
+    private void revokeAccess() {
+        mAuth.getCurrentUser().delete();
+    }
+
+    public void onButtonClick(View view) {
+        switch(view.getId()) {
+            case R.id.logOut:  // 로그아웃하고 액티비티 종료됨
+                signOut();
+                Intent intent1 = new Intent(this, SplashActivity.class);
+                startActivity(intent1);
+                finish();
+                break;
+            case R.id.Delete:  // 탈퇴하고 액티비티 종료됨
+                revokeAccess();
+                break;
+        }
     }
 }

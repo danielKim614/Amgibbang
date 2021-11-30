@@ -22,8 +22,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -84,7 +86,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         } else {
             holder.check.setChecked(false);
         }
-
 
         holder.itemView.setTag(position);
 
@@ -267,6 +268,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         protected ImageView bookmark_no;
         protected ImageView bookmark_yes;
         protected CheckBox check;
+        protected ToggleButton darkMode;
 
         public MainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -274,6 +276,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             this.bookmark_no = itemView.findViewById(R.id.bookmark_no);
             this.bookmark_yes = itemView.findViewById(R.id.bookmark_yes);
             this.check = itemView.findViewById(R.id.main_check);
+            this.darkMode = itemView.findViewById(R.id.setting_toggle);
 
             //체크박스 클릭 시
             check.setOnClickListener(new View.OnClickListener(){

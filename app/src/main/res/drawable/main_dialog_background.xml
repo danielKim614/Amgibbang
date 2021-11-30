@@ -10,7 +10,7 @@
         android:right="5dp"
         android:top="5dp"/>
 
-    <solid android:color="?attr/White"/>
+    <solid android:color="?attr/list"/>
 
     <stroke
         android:width="2dp"

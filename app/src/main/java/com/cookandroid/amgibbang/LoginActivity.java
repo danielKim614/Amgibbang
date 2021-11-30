@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 한 번 로그인하면 로그인 화면 패스함
         if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, AfterLoginActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -75,7 +75,11 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            } catch (ApiException e) { }
+            } catch (ApiException e) {
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
@@ -101,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {  // update ui code here
         if (user != null) {
-            Intent intent = new Intent(this, AfterLoginActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }

@@ -23,10 +23,6 @@ public class CalendarProgressbarInfo implements Serializable {
         this.total = total;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public int getProgress() {
         return progress;
     }

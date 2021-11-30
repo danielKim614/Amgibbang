@@ -12,17 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Amgibbang">
         <activity
-            android:name=".AfterLoginActivity"
-            android:exported="true" />
-        <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -46,29 +37,29 @@
             android:exported="true" />
         <activity
             android:name=".SpeedModeActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".AddWordActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".DictionarySubActivity"
             android:exported="false" />
         <activity
             android:name=".DictionaryMainActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".CalendarActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".WordActivity"
             android:exported="true" />
         <activity
             android:name=".CardListActivity"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"/>
     </application>
 
 </manifest>

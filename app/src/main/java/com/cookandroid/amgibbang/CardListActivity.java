@@ -310,6 +310,7 @@ public class CardListActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
 
+        overridePendingTransition(R.anim.slide_right_enter, R.anim.none);
         // Firebase로부터 단어장 데이터 가져오기
         list.clear();
 
