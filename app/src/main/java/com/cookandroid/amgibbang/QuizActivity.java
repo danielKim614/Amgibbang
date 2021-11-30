@@ -42,7 +42,8 @@ public class QuizActivity extends AppCompatActivity {
     TextView select4;
     ImageView o;
     ImageView x;
-    String localYearMonth;
+    String localYear;
+    String localMonth;
     String localDate;
     int position = 0;
     int hit=0;
@@ -90,10 +91,12 @@ public class QuizActivity extends AppCompatActivity {
 
         //날짜 가져오기
 
-        localYearMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM yyy"));
+        localYear = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        localMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM"));
         localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
 
-        Log.v("퀴즈", ""+localYearMonth);
+        Log.v("퀴즈", ""+localYear);
+        Log.v("퀴즈", ""+localMonth);
         Log.v("퀴즈", ""+localDate);
 
         screen();
@@ -112,7 +115,7 @@ public class QuizActivity extends AppCompatActivity {
     //채점 버튼
     public void score(View view){
         CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
-        db.collection(localYearMonth).document(localDate).collection(title).document().set(calendarProgressbarInfo);
+        db.collection(localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
         //배열 리스트에 다시 저장시킴
         list.clear();
         for(int i=0; i<position; i++){
@@ -187,8 +190,10 @@ public class QuizActivity extends AppCompatActivity {
         if(position+1 == list.size()){
             Log.v("퀴즈", "값 저장하고 넘어감");
             Toast.makeText(QuizActivity.this, "채점되었습니다.", Toast.LENGTH_SHORT).show();
+            position++;
             CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
-            db.collection(localYearMonth).document(localDate).collection(title).document().set(calendarProgressbarInfo);
+            Log.v("퀴즈모드", title+hit+position);
+            db.collection(localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
             //배열 리스트에 다시 저장시킴
             list.clear();
             for(int i=0; i<position; i++){

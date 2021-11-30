@@ -57,7 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:layout_margin="15dp"
-            android:src="@drawable/button_setting">
+            android:src="@drawable/button_setting"
+            android:background="?attr/button">
 
         </ImageButton>
 

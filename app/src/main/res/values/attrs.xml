@@ -10,6 +10,7 @@
     <attr name="date" format="color"/>
     <attr name="list" format="color"/>
     <attr name="button" format="color"/>
+    <attr name="button_background" format="color"/>
     //사용하고 싶은 색깔 이름 지정해주시면 됩니다. 이름 정의
 
 </resources>

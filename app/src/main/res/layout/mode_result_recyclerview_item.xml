@@ -51,7 +51,7 @@
         android:id="@+id/mode_result_expand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/gray_400"
+        android:background="?attr/toolbarGrey"
         android:visibility="visible">
 
         <FrameLayout
