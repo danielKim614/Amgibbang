@@ -12,9 +12,11 @@
         <entry key="..\:/Amgibbang/app/src/main/res/drawable/speed_mode_background_button_time.xml" value="0.25025641025641027" />
         <entry key="..\:/Amgibbang/app/src/main/res/drawable/word_background_textview.xml" value="0.26979166666666665" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_add_word.xml" value="0.23802083333333332" />
+        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_after_login.xml" value="0.23802083333333332" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_calendar.xml" value="0.264" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_card_list.xml" value="0.16666666666666666" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_cardlist.xml" value="0.2105978260869565" />
+        <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_mode_result.xml" value="0.1157548125633232" />
         <entry key="..\:/Amgibbang/app/src/main/res/layout/activity_word.xml" value="0.1" />

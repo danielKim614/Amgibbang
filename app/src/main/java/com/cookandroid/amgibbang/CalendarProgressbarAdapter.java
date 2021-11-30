@@ -34,7 +34,7 @@ public class CalendarProgressbarAdapter extends RecyclerView.Adapter<CalendarPro
     public void onBindViewHolder(@NonNull CalendarProgressbarAdapter.ViewHolder holder, int position) {
         CalendarProgressbarInfo info = infoList.get(position);
         holder.progressbar.setProgress(info.progress);
-        holder.name.setText(info.name);
+        holder.name.setText(info.title);
         holder.score.setText(info.score + "/" + info.total);
     }
 
