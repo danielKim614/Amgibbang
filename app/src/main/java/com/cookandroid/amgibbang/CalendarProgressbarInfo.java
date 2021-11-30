@@ -34,4 +34,6 @@ public class CalendarProgressbarInfo implements Serializable {
     public int getTotal() {
         return total;
     }
+
+    public String getTitle(){return title;}
 }
