@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
@@ -54,6 +55,7 @@ public class CalendarActivity extends AppCompatActivity {
     String yearId;
     String monthId;
     String dayId;
+    String userEmail;
 
     ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
 
@@ -69,6 +71,8 @@ public class CalendarActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);  // 타이틀 안 보이게 하기
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
 
+        Intent intent = getIntent();
+        userEmail = intent.getStringExtra("EMAIL");
         initWidgets();
         calendarProgressbarRecyclerView = findViewById(R.id.calendar_progressbar_recyclerview);
         selectedDate = LocalDate.now();
@@ -153,7 +157,7 @@ public class CalendarActivity extends AppCompatActivity {
         String monthYear = date.format(formatter);
 
         formatter = DateTimeFormatter.ofPattern("yyyy");
-        yearId = date.format(formatter);
+        yearId = userEmail + date.format(formatter);
         formatter = DateTimeFormatter.ofPattern("MMMM");
         monthId = date.format(formatter);
 

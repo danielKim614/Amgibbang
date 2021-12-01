@@ -95,7 +95,7 @@ public class QuizActivity extends AppCompatActivity {
 
         localYear = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
         localMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM"));
-        localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
+        localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("d"));
 
         Log.v("퀴즈", ""+localYear);
         Log.v("퀴즈", ""+localMonth);
