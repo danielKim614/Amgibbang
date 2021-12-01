@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 import static com.cookandroid.amgibbang.MainActivity.bookmarkState;
 import static com.cookandroid.amgibbang.MainActivity.editState;
 import static com.cookandroid.amgibbang.MainActivity.editTextState;
+import static com.cookandroid.amgibbang.MainActivity.user;
 
 import android.app.Activity;
 import android.content.Context;
@@ -101,13 +102,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                         }
                     }
                     notifyDataSetChanged();
-                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection(user).whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     String id = document.getId();
-                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    DocumentReference documentReference =db.collection(user).document(id);
                                     documentReference.update("bookmark", true);
                                 }
                             } else {
@@ -128,13 +129,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                             card.cancelBookmark(false);
                         }
                     }
-                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection(user).whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     String id = document.getId();
-                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    DocumentReference documentReference =db.collection(user).document(id);
                                     documentReference.update("bookmark", false);
                                 }
                             } else {
@@ -149,7 +150,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 @Override
                 public void onClick(View view) {
                     String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
-                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection(user).whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
@@ -183,13 +184,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                         @Override
                         public void mainDialogPositive(String inputName) {
                             String dialogInput=inputName;
-                            db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            db.collection(user).whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if(task.isSuccessful()){
                                         for(QueryDocumentSnapshot document : task.getResult()){
                                             String id = document.getId();
-                                            DocumentReference documentReference =db.collection("CardList").document(id);
+                                            DocumentReference documentReference =db.collection(user).document(id);
                                             documentReference.update("name", dialogInput);
                                         }
                                     } else {
@@ -219,13 +220,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                 @Override
                 public void onClick(View view) {
                     String curName = holder.name.getText().toString();  // 클릭 한 것 값 가져옴
-                    db.collection("CardList").whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    db.collection(user).whereEqualTo("name", curName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if(task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     String id = document.getId();
-                                    DocumentReference documentReference =db.collection("CardList").document(id);
+                                    DocumentReference documentReference =db.collection(user).document(id);
                                     if(holder.check.isChecked()){
                                         documentReference.update("checkBox", true);
                                     } else{

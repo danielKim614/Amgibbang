@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean editTextState = false;
     static boolean settingState = false;
     static boolean darkState;
+    static String user;
     String dialogInput;
     String documentId;
     private ToggleButton darkButton;
@@ -80,8 +81,12 @@ public class MainActivity extends AppCompatActivity {
             ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
+        //인텐트 가져오기
+        Intent intent = getIntent();
+        user = intent.getStringExtra("CardList");
+        Log.v("로그인", user);
         //데이터 베이스에서 값 가져오기
-        db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -127,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     dialogInput=inputName;
                     MainCard mainCard = new MainCard(dialogInput, false, false);
                     cards.add(mainCard);
-                    db.collection("CardList").document().set(mainCard);
+                    db.collection(user).document().set(mainCard);
                     mainAdapter.notifyDataSetChanged(); // 새로 고침
                 }
                 @Override
@@ -153,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             cards.clear();
             ImageView imageView = findViewById(R.id.main_button_bookmark);
             imageView.setImageResource(R.drawable.button_bookmark_filled);
-            db.collection("CardList").whereEqualTo("bookmark", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection(user).whereEqualTo("bookmark", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if(task.isSuccessful()){
@@ -173,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             cards.clear();
             ImageView imageView = findViewById(R.id.main_button_bookmark);
             imageView.setImageResource(R.drawable.button_bookmark_notfilled);
-            db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            db.collection(user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if(task.isSuccessful()){
@@ -258,14 +263,14 @@ public class MainActivity extends AppCompatActivity {
         // check가 true 인것만 다시 가져옴
 
         // check가 true인거 db에서 삭제
-        db.collection("CardList").whereEqualTo("checkBox", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(user).whereEqualTo("checkBox", true).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot document : task.getResult()){
                         String dId = document.getId();
                         documentId = dId;
-                        db.collection("CardList").document(document.getId()).delete();
+                        db.collection(user).document(document.getId()).delete();
                         Log.v("삭제", documentId);
                         db.collection(documentId)
                                 .whereEqualTo("checkBox", false)
@@ -296,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
         //collection 삭제
 
         cards.clear();
-        db.collection("CardList").whereEqualTo("checkBox", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(user).whereEqualTo("checkBox", false).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -315,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
     public void main_onClickSelectAll(View v){
         // 전체 선택 클릭 시 모든 체크박스 체크 됨
         CheckBox checkBox = findViewById(R.id.main_button_selectAll);
-        db.collection("CardList").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -356,7 +361,6 @@ public class MainActivity extends AppCompatActivity {
     // 로그아웃
     private void signOut() {
         mAuth.getInstance().signOut();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com")
                 .requestEmail()
@@ -368,7 +372,41 @@ public class MainActivity extends AppCompatActivity {
 
     // 탈퇴
     private void revokeAccess() {
-        mAuth.getCurrentUser().delete();
+        //데이터 삭제
+        db.collection(user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        String dId = document.getId();
+                        documentId = dId;
+                        db.collection(user).document(document.getId()).delete();
+                        Log.v("삭제", documentId);
+                        db.collection(documentId)
+                                .whereEqualTo("checkBox", false)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for(QueryDocumentSnapshot document : task.getResult()){
+                                                db.collection(documentId)
+                                                        .document(document.getId())
+                                                        .delete();
+                                            }
+                                        } else {
+                                            Log.v("main", "오류 발생");
+                                        }
+                                    }
+                                });
+                        db.collection(documentId).document().delete();
+                    }
+                    mainAdapter.notifyDataSetChanged();
+                } else {
+                    Log.v("main", "오류 발생");
+                }
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com")
