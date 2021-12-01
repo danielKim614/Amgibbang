@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,16 @@ import java.util.ArrayList;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public final ArrayList<String> daysOfMonth;
     OnItemClickListener listener;
-/*    LocalDate date;
-    int today;*/
+    String selectedDay;
+    int flag;
+    ArrayList<Integer> list = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public CalendarAdapter(ArrayList<String> daysOfMonth) {
+    public CalendarAdapter(ArrayList<String> daysOfMonth, String selectedDay, int flag) {
         this.daysOfMonth = daysOfMonth;
-/*        date = LocalDate.now();
-        today = date.getDayOfMonth();*/
+        this.selectedDay = selectedDay;
+        this.flag = flag;
+        setList();
     }
 
     @NonNull
@@ -42,10 +45,38 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
-        /*String str = today+"";
-        if (daysOfMonth.get(position).equals(str))
-            holder.dayOfMonth.setBackgroundResource(R.drawable.calendar_background_cell);*/
-        holder.dayOfMonth.setText(daysOfMonth.get(position));
+        String day = daysOfMonth.get(position);
+
+        holder.dayOfMonth.setText(day);
+        if (day.equals(selectedDay) && flag == 0) holder.dot.setVisibility(View.VISIBLE);
+        int intDay;
+        if (day.equals("")) return;
+        else intDay = Integer.valueOf(day);
+
+        holder.dayOfMonth.setBackgroundResource(getBackgroundResourceId(list.get(intDay - 1)));
+    }
+
+    private int getBackgroundResourceId(int n) {
+        switch(n) {
+            case 1:
+                return R.drawable.calendar_cell_background1;
+            case 2:
+                return R.drawable.calendar_cell_background2;
+            case 3:
+                return R.drawable.calendar_cell_background3;
+            case 4:
+                return R.drawable.calendar_cell_background4;
+            default:
+                return android.R.color.transparent;
+        }
+    }
+
+    private void setList() {
+        list.clear();
+
+        for (int i = 0;i < 31; i++) {
+            list.add(i%5);
+        }
     }
 
     @Override

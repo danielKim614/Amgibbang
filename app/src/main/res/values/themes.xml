@@ -22,5 +22,9 @@
         <item name="date">#235197</item>
         <item name="list">@color/white</item>
         <item name="button">@color/white</item>
+        <item name="calendarBackground1">#89B5AF</item>
+        <item name="calendarBackground2">#96C7C1</item>
+        <item name="calendarBackground3">#DED9C4</item>
+        <item name="calendarBackground4">#D0CAB2</item>
     </style>
 </resources>

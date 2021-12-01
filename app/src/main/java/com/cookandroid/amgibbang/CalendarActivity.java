@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,9 @@ public class CalendarActivity extends AppCompatActivity {
     CalendarAdapter calendarAdapter;
     RecyclerView.LayoutManager calendarLayoutManager;
 
+    String selectedDay;
+    int flag = 0;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String yearId;
     String monthId;
@@ -76,6 +80,9 @@ public class CalendarActivity extends AppCompatActivity {
         initWidgets();
         calendarProgressbarRecyclerView = findViewById(R.id.calendar_progressbar_recyclerview);
         selectedDate = LocalDate.now();
+        int day = selectedDate.getDayOfMonth();
+        selectedDay = String.valueOf(day);
+
         setMonthView();
     }
 
@@ -88,17 +95,10 @@ public class CalendarActivity extends AppCompatActivity {
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         daysInMonth = daysInMonthArray(selectedDate);
-        calendarAdapter= new CalendarAdapter(daysInMonth);
+        calendarAdapter= new CalendarAdapter(daysInMonth,selectedDay, flag);
         calendarLayoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(calendarLayoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
-
-        int day = selectedDate.getDayOfMonth();
-        dayId = String.valueOf(day);
-
-        int startWeek = selectedDate.withDayOfMonth(1).getDayOfWeek().getValue();
-        Log.d("캘린더", "pos: " + (day + startWeek - 1));
-
 
         // 캘린더 셀 클릭 이벤트
         calendarAdapter.setOnItemClickListener(new CalendarAdapter.OnItemClickListener() {
@@ -107,27 +107,37 @@ public class CalendarActivity extends AppCompatActivity {
                 // dayId에 선택된 날짜 들어감
                 dayId = daysInMonth.get(pos);
                 // 클릭된 셀 배경 바꿔주고 and 프로그래스바 보여주기
-                clickAndShow(pos);
+                click(pos);
+                showProgressbar();
             }
         });
-        Log.d("캘린더", "클릭리스너 달았음");
-        CalendarViewHolder holder = (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(day + startWeek - 1);
-        //holder.dayOfMonth.setBackgroundResource(R.drawable.calendar_background_cell);
+
+        if (flag == 0) {
+            dayId = selectedDay;
+            showProgressbar();
+        } else {
+            dayId = "-";
+            showProgressbar();
+        }
     }
 
     // 캘린더 셀 선택하면 선택되게 바꿔주고 프로그래스바 보여주기
-    private void clickAndShow(int pos) {
+    private void click(int pos) {
         // 아이템 하나만 선택되게
         for (int i = 0; i < calendarAdapter.getItemCount(); i++) {
             CalendarViewHolder holder = (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(i);
             Log.d("캘린더", String.valueOf(holder.dayOfMonth.getText()));
             if (i == pos) {
-                holder.dayOfMonth.setBackgroundResource(R.drawable.calendar_background_cell);
+                holder.dot.setVisibility(View.VISIBLE);
+                holder.dot.bringToFront();
+                if (flag == 0) selectedDay = String.valueOf(holder.dayOfMonth.getText());
                 continue;
             }
-            holder.dayOfMonth.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            holder.dot.setVisibility(View.INVISIBLE);
         }
+    }
 
+    private void showProgressbar() {
         // 프로그래스바에 담을 데이터 리스트 초기화
         infoList.clear();
 
@@ -141,7 +151,6 @@ public class CalendarActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CalendarProgressbarInfo info = (CalendarProgressbarInfo) document.toObject(CalendarProgressbarInfo.class);
                                 infoList.add(info);
-                                // 단어장 이름을 못가져옴..왜지
                             }
                         } else {
                             Log.d("dabin", "Error getting documents: ", task.getException());
@@ -196,12 +205,14 @@ public class CalendarActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void previousMonthAction(View view) {
+        flag--;
         selectedDate = selectedDate.minusMonths(1);
         setMonthView();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextMonthAction(View view) {
+        flag++;
         selectedDate = selectedDate.plusMonths(1);
         setMonthView();
     }

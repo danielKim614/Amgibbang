@@ -20,7 +20,7 @@
         android:layout_marginRight="20dp"
         android:padding="10dp"
         android:textSize="20sp"
-        android:background="@drawable/word_background_textview"
+        android:background="@drawable/add_word_background_textview"
         android:hint="단어"
         android:textColor="?attr/Black"
         android:inputType="text"/>
@@ -34,7 +34,7 @@
         android:layout_marginRight="20dp"
         android:padding="10dp"
         android:textSize="20sp"
-        android:background="@drawable/word_background_textview"
+        android:background="@drawable/add_word_background_textview"
         android:hint="뜻 (의미, 설명)"
         android:textColor="?attr/Black"
         android:inputType="text"/>
@@ -49,7 +49,7 @@
         android:minLines="6"
         android:padding="10dp"
         android:textSize="20sp"
-        android:background="@drawable/word_background_textview"
+        android:background="@drawable/add_word_background_textview"
         android:hint="메모"
         android:textColor="?attr/Black"
         android:inputType="text|textMultiLine"
