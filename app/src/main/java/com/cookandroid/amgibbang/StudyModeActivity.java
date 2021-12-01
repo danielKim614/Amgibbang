@@ -1,8 +1,11 @@
 package com.cookandroid.amgibbang;
 
+import static com.cookandroid.amgibbang.MainActivity.user;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -13,18 +16,31 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class StudyModeActivity extends AppCompatActivity {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     ArrayList<Word> list = CardListActivity.list;
+    String titleText;  // 단어장 이름
     TextView wordTextView;
     ImageButton settingButton;
     public int settingValue = 0;
     int tempValue = 0;
     int curPos = 0; // 현재 단어 위치
+    long studyStartTime, studyEndTime, secDiffTime; // 액티비티 시작 및 종료 시간
+    String startTimeString, endTimeString;
+    String localYear;
+    String localMonth;
+    String localDate;
 
     // 스와이프에 필요한 변수
     private GestureDetector mGestures;
@@ -32,6 +48,7 @@ public class StudyModeActivity extends AppCompatActivity {
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +69,13 @@ public class StudyModeActivity extends AppCompatActivity {
         wordTextView.setText(list.get(curPos).word);
 
         Intent intent = getIntent();
+        titleText = intent.getStringExtra("TITLE");
         toolbarText.setText(intent.getStringExtra("TITLE"));
 
+        //날짜 가져오기
+        localYear = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
+        localMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM"));
+        localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
 
         // 스와이프 제스쳐
         mGestures = new GestureDetector(this,
@@ -136,7 +158,6 @@ public class StudyModeActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (mGestures != null) {
@@ -154,5 +175,27 @@ public class StudyModeActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // 공부 시간 기록
+    public void setTime() {
+        Time time = new Time(titleText, startTimeString, endTimeString);
+        db.collection(user + localYear + "Time").document(localMonth).collection(localDate).document().set(time);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        studyStartTime = System.currentTimeMillis()/(1000*60); //코드 실행 전에 시간 받아오기
+        startTimeString = new SimpleDateFormat("HH:mm:ss").format(studyStartTime);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        studyEndTime = System.currentTimeMillis()/(1000*60); // 코드 실행 후에 시간 받아오기
+        endTimeString = new SimpleDateFormat("HH:mm:ss").format(studyEndTime);
+        secDiffTime = (studyEndTime - studyStartTime); //두 시간에 차 계산
+        setTime();
     }
 }

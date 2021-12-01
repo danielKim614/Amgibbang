@@ -1,6 +1,6 @@
 package com.cookandroid.amgibbang;
 
-public class Word {
+public class Word implements Comparable<Word>{
     boolean checkBox;
     String explanation;
     boolean isRight = false;  // 채점 결과 화면에서 쓸 변수
@@ -72,4 +72,8 @@ public class Word {
         this.checkBox=check;
     }
 
+    @Override
+    public int compareTo(Word o) {
+        return this.word.compareTo(o.word);
+    }
 }

@@ -6,6 +6,7 @@
     android:layout_marginRight="20dp"
     android:orientation="horizontal">
     <TextView
+        android:id="@+id/hours"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -21,36 +22,42 @@
         android:numColumns="6">
 
         <View
+            android:id="@+id/min10"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_margin="1dp"
             android:layout_columnWeight="1"/>
         <View
+            android:id="@+id/min20"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_margin="1dp"
             android:layout_columnWeight="1"/>
         <View
+            android:id="@+id/min30"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_margin="1dp"
             android:layout_columnWeight="1"/>
         <View
+            android:id="@+id/min40"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_margin="1dp"
             android:layout_columnWeight="1"/>
         <View
+            android:id="@+id/min50"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_margin="1dp"
             android:layout_columnWeight="1"/>
         <View
+            android:id="@+id/min60"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/white"

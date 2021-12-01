@@ -33,6 +33,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CardListActivity extends AppCompatActivity {
 
@@ -260,6 +261,7 @@ public class CardListActivity extends AppCompatActivity {
                         Word word = document.toObject(Word.class);
                         list.add(word);
                     }
+                    Collections.sort(list);
                     cardListAdapter.notifyDataSetChanged();
                 } else {
                     Log.v("main", "오류 발생");
@@ -306,6 +308,7 @@ public class CardListActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -324,6 +327,7 @@ public class CardListActivity extends AppCompatActivity {
                                 Word word = document.toObject(Word.class);
                                 list.add(word);
                             }
+                            Collections.sort(list);
                             cardListAdapter.notifyDataSetChanged();
                         } else {
                             Log.w("test", "Error getting documents.", task.getException());
@@ -353,3 +357,4 @@ public class CardListActivity extends AppCompatActivity {
         cardListAdapter.filterList(arraylist);
     }
 }
+

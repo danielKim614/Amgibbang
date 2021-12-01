@@ -3,6 +3,7 @@ package com.cookandroid.amgibbang;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,9 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 한 번 로그인하면 로그인 화면 패스함
         if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+            updateUI(mAuth.getCurrentUser());
         }
 
         // Configure Google Sign In
@@ -75,7 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
-            } catch (ApiException e) { }
+                Toast.makeText(LoginActivity.this, "login", Toast.LENGTH_SHORT).show();
+            } catch (ApiException e) {
+                Toast.makeText(LoginActivity.this, "exception", Toast.LENGTH_SHORT).show();}
         }
     }
 
@@ -102,6 +103,8 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {  // update ui code here
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
+            String email = user.getEmail();
+            intent.putExtra("CardList", email);
             startActivity(intent);
             finish();
         }
