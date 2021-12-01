@@ -356,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
     // 로그아웃
     private void signOut() {
         mAuth.getInstance().signOut();
-        GoogleSignInClient mgoogleSignInClient;
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com")
                 .requestEmail()
@@ -369,6 +369,13 @@ public class MainActivity extends AppCompatActivity {
     // 탈퇴
     private void revokeAccess() {
         mAuth.getCurrentUser().delete();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut();
     }
 
     public void onButtonClick(View view) {
