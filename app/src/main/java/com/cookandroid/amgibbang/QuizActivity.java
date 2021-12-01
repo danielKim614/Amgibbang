@@ -3,6 +3,8 @@ package com.cookandroid.amgibbang;
 import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 import static android.os.SystemClock.sleep;
 
+import static com.cookandroid.amgibbang.MainActivity.user;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -115,7 +117,7 @@ public class QuizActivity extends AppCompatActivity {
     //채점 버튼
     public void score(View view){
         CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
-        db.collection(localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
+        db.collection(user+localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
         //배열 리스트에 다시 저장시킴
         list.clear();
         for(int i=0; i<position; i++){
@@ -193,7 +195,7 @@ public class QuizActivity extends AppCompatActivity {
             position++;
             CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
             Log.v("퀴즈모드", title+hit+position);
-            db.collection(localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
+            db.collection(user+localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
             //배열 리스트에 다시 저장시킴
             list.clear();
             for(int i=0; i<position; i++){
