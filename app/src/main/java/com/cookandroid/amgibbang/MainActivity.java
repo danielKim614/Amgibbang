@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.main_button_cal:
                     Intent intent1=new Intent(MainActivity.this, CalendarActivity.class);
+                    intent1.putExtra("EMAIL", user);
                     startActivity(intent1);
                     break;
                 case R.id.main_button_timer:
