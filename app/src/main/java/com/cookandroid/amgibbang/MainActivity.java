@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -362,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mGoogleSignInClient.signOut();
+        Toast.makeText(MainActivity.this, "로그아웃", Toast.LENGTH_SHORT).show();
     }
 
     // 탈퇴
@@ -379,6 +381,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.Delete:  // 탈퇴하고 액티비티 종료됨
                 revokeAccess();
+                Intent intent2 = new Intent(this, SplashActivity.class);
+                startActivity(intent2);
+                finish();
                 break;
         }
     }
