@@ -29,7 +29,7 @@
             android:id="@+id/main_button_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/button_timer"
+            android:src="@drawable/button_checkbox"
             app:tint="?attr/Grey"
             android:layout_weight="1"
             android:onClick="main_onClickMove"

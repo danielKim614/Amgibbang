@@ -44,7 +44,10 @@
         <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/quiz_toolbar.xml" value="0.152" />
         <entry key="..\:/Users/clara/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/speed_mode_toolbar.xml" value="0.12916666666666668" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_add.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_calender.xml" value="0.38229166666666664" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_checkbox.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_setting.xml" value="0.378125" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_timer.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/button_unchecked.xml" value="0.2759259259259259" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/cardlist_list_background.xml" value="0.38229166666666664" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/drawable/dictionary_background_editview.xml" value="0.36666666666666664" />
@@ -71,11 +74,14 @@
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/main_dialog_activity.xml" value="0.35052083333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/main_recyclerview_item.xml" value="0.20208333333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/main_toolbar.xml" value="0.29528985507246375" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/mode_result_recyclerview_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/quiz_toolbar.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/single_item_list.xml" value="0.2966485507246377" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/speed_mode_toolbar.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/time_table_recyclerview_item.xml" value="0.33" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/time_table_toolbar.xml" value="0.27445652173913043" />
-        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/todo_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/todo_item.xml" value="0.33" />
+        <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/todo_list_toolbar.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/toolbar.xml" value="0.2957427536231884" />
         <entry key="..\:/Users/samsung/AndroidStudioProjects/Amgibbang/app/src/main/res/layout/word_toolbar.xml" value="0.29528985507246375" />
       </map>
