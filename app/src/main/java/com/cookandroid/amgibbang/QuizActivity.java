@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDate;
@@ -49,6 +53,8 @@ public class QuizActivity extends AppCompatActivity {
     String localDate;
     int position = 0;
     int hit=0;
+    int pTotal=0;
+    int score=0;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -118,6 +124,29 @@ public class QuizActivity extends AppCompatActivity {
     public void score(View view){
         CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
         db.collection(user+localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
+        //색깔 디비에 저장시킴
+        //이전 cellInfo 가져오기
+        db.collection(user+localYear+localMonth).document(localDate).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                CalendarCellInfo calendarCellInfo = documentSnapshot.toObject(CalendarCellInfo.class);
+                if(calendarCellInfo!=null){
+                    pTotal = calendarCellInfo.getTotal();
+                    score = calendarCellInfo.getScore();
+                    Log.v("가져온 값", ""+pTotal+score);
+                    db.collection(user+localYear+localMonth).document(localDate).delete();
+                    //새로 집어 넣음
+                    Log.v("가져온 값", ""+pTotal+score);
+                    int newTotal = pTotal+position;
+                    int newScore = score+hit;
+                    CalendarCellInfo calendarCellInfo1 = new CalendarCellInfo(newScore, newTotal);
+                    db.collection(user+localYear+localMonth).document(localDate).set(calendarCellInfo1);
+                } else {
+                    CalendarCellInfo calendarCellInfo1 = new CalendarCellInfo(hit, position);
+                    db.collection(user+localYear+localMonth).document(localDate).set(calendarCellInfo1);
+                }
+            }
+        });
         //배열 리스트에 다시 저장시킴
         list.clear();
         for(int i=0; i<position; i++){
@@ -196,6 +225,29 @@ public class QuizActivity extends AppCompatActivity {
             CalendarProgressbarInfo calendarProgressbarInfo = new CalendarProgressbarInfo(title, hit, position);
             Log.v("퀴즈모드", title+hit+position);
             db.collection(user+localYear).document(localMonth).collection(localDate).document().set(calendarProgressbarInfo);
+            //이전 cellInfo 가져오기
+            db.collection(user+localYear+localMonth).document(localDate).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    CalendarCellInfo calendarCellInfo = documentSnapshot.toObject(CalendarCellInfo.class);
+                    if(calendarCellInfo!=null){
+                        pTotal = calendarCellInfo.getTotal();
+                        score = calendarCellInfo.getScore();
+                        Log.v("가져온 값", ""+pTotal+score);
+                        db.collection(user+localYear+localMonth).document(localDate).delete();
+                        //새로 집어 넣음
+                        Log.v("가져온 값", ""+pTotal+score);
+                        int newTotal = pTotal+position;
+                        int newScore = score+hit;
+                        CalendarCellInfo calendarCellInfo1 = new CalendarCellInfo(newScore, newTotal);
+                        db.collection(user+localYear+localMonth).document(localDate).set(calendarCellInfo1);
+                    } else {
+                        CalendarCellInfo calendarCellInfo1 = new CalendarCellInfo(hit, position);
+                        db.collection(user+localYear+localMonth).document(localDate).set(calendarCellInfo1);
+                    }
+                }
+            });
+
             //배열 리스트에 다시 저장시킴
             list.clear();
             for(int i=0; i<position; i++){

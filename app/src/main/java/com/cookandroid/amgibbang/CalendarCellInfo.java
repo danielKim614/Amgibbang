@@ -7,7 +7,7 @@ public class CalendarCellInfo {
 
     public CalendarCellInfo() { }
 
-    public CalendarCellInfo(int level, int score, int total) {
+    public CalendarCellInfo(int score, int total) {
         this.score = score;
         this.total = total;
 
