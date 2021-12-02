@@ -15,6 +15,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -23,7 +29,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     OnItemClickListener listener;
     String selectedDay;  // 선택(클릭)된 날짜
     int flag;  // 선택(클릭)된 날짜가 있는 달일 때 flag가 0이 됨.
-    ArrayList<Integer> list = new ArrayList<>();
+    int list[];
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public CalendarAdapter(ArrayList<String> daysOfMonth, String selectedDay, int flag) {
@@ -56,7 +64,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         if (day.equals("")) return;
         else intDay = Integer.valueOf(day);
 
-        holder.dayOfMonth.setBackgroundResource(getBackgroundResourceId(list.get(intDay - 1)));
+        holder.dayOfMonth.setBackgroundResource(getBackgroundResourceId(list[intDay - 1]));
     }
 
     private int getBackgroundResourceId(int n) {
@@ -75,11 +83,24 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     }
 
     private void setList() {
-        list.clear();
+        list = new int[31];
 
-        for (int i = 0;i < 31; i++) {
-            list.add(i%5);
-        }
+        db.collection(CalendarActivity.userEmail + CalendarActivity.yearId + CalendarActivity.monthId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                CalendarCellInfo info = document.toObject(CalendarCellInfo.class);
+                                int index = Integer.valueOf(document.getId());
+                                list[index] = info.level;
+                            }
+                        } else {
+                            Log.d("dabin", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
     @Override

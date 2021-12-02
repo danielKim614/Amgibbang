@@ -56,10 +56,10 @@ public class CalendarActivity extends AppCompatActivity {
     int flag = 0;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String yearId;
-    String monthId;
+    static String yearId;
+    static String monthId;
     String dayId;
-    String userEmail;
+    static String userEmail;
 
     ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
 
