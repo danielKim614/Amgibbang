@@ -17,8 +17,6 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.View
     String [] AP = {"am", "pm"};
     int [] H = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 
-//    private ArrayList<Word> mData;
-    TimeTableAdapter.OnItemClickListener listener;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // 생성자에서 데이터 리스트 객체를 전달받음.
@@ -60,14 +58,6 @@ public class TimeTableAdapter extends RecyclerView.Adapter<TimeTableAdapter.View
     public int getItemCount() {
         return 0;
     }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int pos);
-    }
-
-//    public void setOnItemClickListener(TimeTableAdapter.OnItemClickListener listener) {
-//        this.listener = listener;
-//    }
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
     public class ViewHolder extends RecyclerView.ViewHolder {

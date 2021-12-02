@@ -22,8 +22,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -36,11 +36,11 @@ public class StudyModeActivity extends AppCompatActivity {
     public int settingValue = 0;
     int tempValue = 0;
     int curPos = 0; // 현재 단어 위치
-    long studyStartTime, studyEndTime, secDiffTime; // 액티비티 시작 및 종료 시간
-    String startTimeString, endTimeString;
     String localYear;
     String localMonth;
     String localDate;
+    LocalTime startTime, endTime; // 액티비티 시작 및 종료 시간
+    int hour, minute, second;
 
     // 스와이프에 필요한 변수
     private GestureDetector mGestures;
@@ -72,7 +72,7 @@ public class StudyModeActivity extends AppCompatActivity {
         titleText = intent.getStringExtra("TITLE");
         toolbarText.setText(intent.getStringExtra("TITLE"));
 
-        //날짜 가져오기
+        //날짜 및 시간 가져오기
         localYear = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy"));
         localMonth = LocalDate.now().format(DateTimeFormatter.ofPattern("MMMM"));
         localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd"));
@@ -178,24 +178,31 @@ public class StudyModeActivity extends AppCompatActivity {
     }
 
     // 공부 시간 기록
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setTime() {
-        Time time = new Time(titleText, startTimeString, endTimeString);
-        db.collection(user + localYear + "Time").document(localMonth).collection(localDate).document().set(time);
+        int diffHour = startTime.getHour()-endTime.getHour();
+        int diffMinute = startTime.getMinute()-endTime.getMinute();
+        Log.v("공부 모드", diffHour+":"+diffMinute);
+
+        // 10분 이상 공부 하지 않았을 시 기록하지 않음
+       if (diffHour * 60 - diffMinute > 5) {
+            Time time = new Time(titleText, startTime, endTime);
+            db.collection(user + localYear + "Time").document(localMonth).collection(localDate).document().set(time);
+        }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onStart() {
         super.onStart();
-        studyStartTime = System.currentTimeMillis()/(1000*60); //코드 실행 전에 시간 받아오기
-        startTimeString = new SimpleDateFormat("HH:mm:ss").format(studyStartTime);
+        startTime = LocalTime.now();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onStop() {
         super.onStop();
-        studyEndTime = System.currentTimeMillis()/(1000*60); // 코드 실행 후에 시간 받아오기
-        endTimeString = new SimpleDateFormat("HH:mm:ss").format(studyEndTime);
-        secDiffTime = (studyEndTime - studyStartTime); //두 시간에 차 계산
+        endTime = LocalTime.now();
         setTime();
     }
 }
