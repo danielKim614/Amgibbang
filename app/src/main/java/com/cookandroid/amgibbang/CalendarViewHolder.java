@@ -1,12 +1,10 @@
 package com.cookandroid.amgibbang;
 
-import android.content.res.Resources;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder {

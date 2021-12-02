@@ -409,6 +409,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mAuth.getCurrentUser().delete();
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("284297907533-jcfk29m3idrj57jtuajg2l8r91jv3mhv.apps.googleusercontent.com")
                 .requestEmail()
