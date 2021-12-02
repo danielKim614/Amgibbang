@@ -2,12 +2,14 @@ package com.cookandroid.amgibbang;
 
 import static com.cookandroid.amgibbang.MainActivity.user;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +32,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TodoListActivity extends AppCompatActivity {
+    private static final String TAG = "TodoListActivity";
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static NoteDatabase noteDatabase = null;
 
     long mNow;
     Date mDate;
     SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-//    private RecyclerView recyclerView;
-//    private TodoListAdapter timetableAdapter;
     LocalDate now;
     String localYear;
     String localMonth;
@@ -45,7 +48,9 @@ public class TodoListActivity extends AppCompatActivity {
     int hour, minute, second;
     TextView dateText;
     TextView timeText;
+    EditText inputToDo;
     Fragment todoFragment;
+    Context context;
 
     static ArrayList<Time> timeList = new ArrayList<>();
 
@@ -62,15 +67,6 @@ public class TodoListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);  // 타이틀 안 보이게 하기
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.button_back);  // 뒤로가기 버튼 아이콘 수정
 
-//        // 리사이클러뷰에 LinearLayoutManager 객체 지정.
-//        recyclerView = findViewById(R.id.time_table_recyclerView) ;
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
-//
-//        // 리사이클러뷰에 CardListAdapter 객체 지정.
-//        timetableAdapter = new TodoListAdapter(this) ;
-//        recyclerView.setAdapter(timetableAdapter) ;
-
-
         //날짜 가져오기
         now = LocalDate.now();
         localYear = now.format(DateTimeFormatter.ofPattern("yyyy"));
@@ -81,6 +77,7 @@ public class TodoListActivity extends AppCompatActivity {
         timeText = findViewById(R.id.timeText);
 
         getTimeFromDB();
+        openDatabase();
 
         setDateText(dateText);
         setTimeText(timeText);
@@ -95,7 +92,7 @@ public class TodoListActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-//                saveToDo();
+                saveToDo();
                 Toast.makeText(getApplicationContext(),"추가 되었습니다.",Toast.LENGTH_SHORT).show();
 
             }
@@ -189,12 +186,6 @@ public class TodoListActivity extends AppCompatActivity {
         }
     }
 
-    private String getTime(){
-        mNow = System.currentTimeMillis();
-        mDate = new Date(mNow);
-        return mFormat.format(mDate);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -204,4 +195,45 @@ public class TodoListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void openDatabase() {
+
+        if (noteDatabase != null) {
+            noteDatabase.close();
+            noteDatabase = null;
+        }
+
+        noteDatabase = NoteDatabase.getInstance(this);
+        boolean isOpen = noteDatabase.open();
+        if (isOpen) {
+            Log.d("DB", "Note database is open.");
+        } else {
+            Log.d("DB", "Note database is not open.");
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (noteDatabase != null) {
+            noteDatabase.close();
+            noteDatabase = null;
+        }
+    }
+
+    private void saveToDo(){
+        inputToDo = findViewById(R.id.inputToDo);
+
+        String todo = inputToDo.getText().toString();
+
+        String sqlSave = "insert into " + NoteDatabase.TABLE_NOTE + " (TODO) values (" +
+                "'" + todo + "')";
+
+        NoteDatabase database = NoteDatabase.getInstance(context);
+        database.execSQL(sqlSave);
+
+
+        inputToDo.setText("");
+    }
+
 }

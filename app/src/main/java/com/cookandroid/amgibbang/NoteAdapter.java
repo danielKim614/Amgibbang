@@ -1,5 +1,6 @@
 package com.cookandroid.amgibbang;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
-    private static final String TAG = "NoteAdapter";
+
     ArrayList<Note> items = new ArrayList<Note>();
+
 
     @NonNull
     @Override
@@ -38,26 +40,31 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
         return items.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout layoutTodo;
         CheckBox checkBox;
         Button deleteButton;
 
         public ViewHolder(View itemView){
             super(itemView);
-            layoutTodo = itemView.findViewById(R.id.layoutTodo);
-            checkBox = itemView.findViewById(R.id.todoCheckBox);
-            deleteButton = itemView.findViewById(R.id.todoDeleteButton);
+            this.layoutTodo = itemView.findViewById(R.id.layoutTodo);
+            this.checkBox = itemView.findViewById(R.id.todoCheckBox);
+            this.deleteButton = itemView.findViewById(R.id.todoDeleteButton);
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String TODO = (String) checkBox.getText();
                     deleteToDo(TODO);
-                    Toast.makeText(v.getContext(),"삭제되었습니다.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(),"삭제 되었습니다.",Toast.LENGTH_SHORT).show();
                 }
 
+                Context context;
+
                 private void deleteToDo(String TODO){
+                    String deleteSql = "delete from " + NoteDatabase.TABLE_NOTE + " where " + "  TODO = '" + TODO+"'";
+                    NoteDatabase database = NoteDatabase.getInstance(context);
+                    database.execSQL(deleteSql);
                 }
             });
         }

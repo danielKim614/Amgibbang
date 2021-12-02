@@ -18,7 +18,7 @@ public class Time implements Serializable {
 
     }
 
-    public String getNameT(){return name;}
+    public String getName(){return name;}
 
     public int getHour(){return hour;}
 
