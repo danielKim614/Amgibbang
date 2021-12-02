@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     public final ArrayList<String> daysOfMonth;
     OnItemClickListener listener;
-    String selectedDay;
-    int flag;
+    String selectedDay;  // 선택(클릭)된 날짜
+    int flag;  // 선택(클릭)된 날짜가 있는 달일 때 flag가 0이 됨.
     ArrayList<Integer> list = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -48,7 +48,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         String day = daysOfMonth.get(position);
 
         holder.dayOfMonth.setText(day);
-        if (day.equals(selectedDay) && flag == 0) holder.dot.setVisibility(View.VISIBLE);
+        if (flag == 0 && day.equals(selectedDay)) {
+            holder.dot.setVisibility(View.VISIBLE);
+            holder.dot.bringToFront();
+        }
         int intDay;
         if (day.equals("")) return;
         else intDay = Integer.valueOf(day);

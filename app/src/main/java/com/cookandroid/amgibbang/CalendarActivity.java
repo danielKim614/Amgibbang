@@ -123,14 +123,15 @@ public class CalendarActivity extends AppCompatActivity {
 
     // 캘린더 셀 선택하면 선택되게 바꿔주고 프로그래스바 보여주기
     private void click(int pos) {
+        flag = 0;
         // 아이템 하나만 선택되게
         for (int i = 0; i < calendarAdapter.getItemCount(); i++) {
             CalendarViewHolder holder = (CalendarViewHolder) calendarRecyclerView.findViewHolderForAdapterPosition(i);
-            Log.d("캘린더", String.valueOf(holder.dayOfMonth.getText()));
+
             if (i == pos) {
                 holder.dot.setVisibility(View.VISIBLE);
                 holder.dot.bringToFront();
-                if (flag == 0) selectedDay = String.valueOf(holder.dayOfMonth.getText());
+                selectedDay = String.valueOf(holder.dayOfMonth.getText());
                 continue;
             }
             holder.dot.setVisibility(View.INVISIBLE);
