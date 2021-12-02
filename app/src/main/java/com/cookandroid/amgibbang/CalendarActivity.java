@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,7 @@ public class CalendarActivity extends AppCompatActivity {
     String dayId;
     static String userEmail;
 
+    int colorList[];
     ArrayList<CalendarProgressbarInfo> infoList = new ArrayList<>();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -95,30 +97,54 @@ public class CalendarActivity extends AppCompatActivity {
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         daysInMonth = daysInMonthArray(selectedDate);
-        calendarAdapter= new CalendarAdapter(daysInMonth,selectedDay, flag);
-        calendarLayoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(calendarLayoutManager);
-        calendarRecyclerView.setAdapter(calendarAdapter);
 
-        // 캘린더 셀 클릭 이벤트
-        calendarAdapter.setOnItemClickListener(new CalendarAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int pos) {
-                // dayId에 선택된 날짜 들어감
-                dayId = daysInMonth.get(pos);
-                // 클릭된 셀 배경 바꿔주고 and 프로그래스바 보여주기
-                click(pos);
-                showProgressbar();
-            }
-        });
+        colorList = new int[32]; // 0은 안 씀
+        Log.d("dabin2", "in setList");
 
-        if (flag == 0) {
-            dayId = selectedDay;
-            showProgressbar();
-        } else {
-            dayId = "-";
-            showProgressbar();
-        }
+        db.collection(CalendarActivity.yearId + CalendarActivity.monthId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d("dabin2", "in for문");
+                                CalendarCellInfo info = document.toObject(CalendarCellInfo.class);
+                                int index = Integer.valueOf(document.getId());
+                                colorList[index] = info.level;
+                                Log.d("dabin2", index + ", " + info.level);
+                            }
+                        } else {
+                            Log.d("dabin", "Error getting documents: ", task.getException());
+                        }
+
+                        calendarAdapter= new CalendarAdapter(daysInMonth,selectedDay, flag, colorList);
+                        calendarLayoutManager = new GridLayoutManager(getApplicationContext(), 7);
+                        calendarRecyclerView.setLayoutManager(calendarLayoutManager);
+                        calendarRecyclerView.setAdapter(calendarAdapter);
+
+
+                        // 캘린더 셀 클릭 이벤트
+                        calendarAdapter.setOnItemClickListener(new CalendarAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int pos) {
+                                // dayId에 선택된 날짜 들어감
+                                dayId = daysInMonth.get(pos);
+                                // 클릭된 셀 배경 바꿔주고 and 프로그래스바 보여주기
+                                click(pos);
+                                showProgressbar();
+                            }
+                        });
+
+                        if (flag == 0) {
+                            dayId = selectedDay;
+                            showProgressbar();
+                        } else {
+                            dayId = "-";
+                            showProgressbar();
+                        }
+                    }
+                });
     }
 
     // 캘린더 셀 선택하면 선택되게 바꿔주고 프로그래스바 보여주기

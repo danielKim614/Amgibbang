@@ -29,16 +29,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     OnItemClickListener listener;
     String selectedDay;  // 선택(클릭)된 날짜
     int flag;  // 선택(클릭)된 날짜가 있는 달일 때 flag가 0이 됨.
-    int list[];
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    int colorList[];
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public CalendarAdapter(ArrayList<String> daysOfMonth, String selectedDay, int flag) {
+    public CalendarAdapter(ArrayList<String> daysOfMonth, String selectedDay, int flag, int colorList[]) {
         this.daysOfMonth = daysOfMonth;
         this.selectedDay = selectedDay;
         this.flag = flag;
-        setList();
+        this.colorList = colorList;
     }
 
     @NonNull
@@ -64,7 +62,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         if (day.equals("")) return;
         else intDay = Integer.valueOf(day);
 
-        holder.dayOfMonth.setBackgroundResource(getBackgroundResourceId(list[intDay - 1]));
+        holder.dayOfMonth.setBackgroundResource(getBackgroundResourceId(colorList[intDay]));
     }
 
     private int getBackgroundResourceId(int n) {
@@ -80,27 +78,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             default:
                 return android.R.color.transparent;
         }
-    }
-
-    private void setList() {
-        list = new int[31];
-
-        db.collection(CalendarActivity.userEmail + CalendarActivity.yearId + CalendarActivity.monthId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                CalendarCellInfo info = document.toObject(CalendarCellInfo.class);
-                                int index = Integer.valueOf(document.getId());
-                                list[index] = info.level;
-                            }
-                        } else {
-                            Log.d("dabin", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
     }
 
     @Override
