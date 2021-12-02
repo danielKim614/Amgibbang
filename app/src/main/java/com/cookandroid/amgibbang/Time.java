@@ -1,25 +1,29 @@
 package com.cookandroid.amgibbang;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 
 public class Time implements Serializable {
     String name;
-    LocalTime startTime;
-    LocalTime endTime;
+    int hour;
+    int minute;
+    int second;
 
     Time() {}
 
-    Time(String name, LocalTime startTime, LocalTime endTime) {
+    Time(String name, int hour, int minute, int second) {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
 
     }
 
     public String getNameT(){return name;}
 
-    public LocalTime getStartTime(){return startTime;}
+    public int getHour(){return hour;}
 
-    public LocalTime getEndTime(){return endTime;}
+    public int getMinute(){return minute;}
+
+    public int getSecond(){return second;}
+
 }

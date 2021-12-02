@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -180,15 +181,13 @@ public class StudyModeActivity extends AppCompatActivity {
     // 공부 시간 기록
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setTime() {
-        int diffHour = startTime.getHour()-endTime.getHour();
-        int diffMinute = startTime.getMinute()-endTime.getMinute();
-        Log.v("공부 모드", diffHour+":"+diffMinute);
+        Duration duration = Duration.between(startTime, endTime);
+        hour = (int)duration.getSeconds() / 3600;
+        minute = (int)(duration.getSeconds() % 3600) / 60;
+        second = (int)(duration.getSeconds() % 3600) % 60;
 
-        // 10분 이상 공부 하지 않았을 시 기록하지 않음
-       if (diffHour * 60 - diffMinute > 5) {
-            Time time = new Time(titleText, startTime, endTime);
-            db.collection(user + localYear + "Time").document(localMonth).collection(localDate).document().set(time);
-        }
+        Time time = new Time(titleText, hour, minute, second);
+        db.collection(user + localYear + "Time").document(localMonth).collection(localDate).document().set(time);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

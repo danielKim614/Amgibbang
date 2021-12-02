@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TimeTableActivity"
+            android:name=".TodoListActivity"
             android:exported="false" />
         <activity
             android:name=".ModeResultActivity"

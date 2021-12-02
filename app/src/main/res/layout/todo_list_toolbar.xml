@@ -10,11 +10,11 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <TextView
-        android:id="@+id/time_table_title"
+        android:id="@+id/todo_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="TIME"
+        android:text="TO-DO"
         android:textColor="@color/white"
         android:textSize="20sp" />
 
