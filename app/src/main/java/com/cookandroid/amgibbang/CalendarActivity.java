@@ -230,7 +230,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     private void setProgressbarView(ArrayList<CalendarProgressbarInfo> infoList) {
         CalendarProgressbarAdapter adapter= new CalendarProgressbarAdapter(infoList);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 4);
         calendarProgressbarRecyclerView.setLayoutManager(layoutManager);
         calendarProgressbarRecyclerView.setAdapter(adapter);
     }

@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SpeedModeActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     TextView wordTextView;
+    TextView meaningTextView;
     ImageView oMark;
     ImageView xMark;
     TextView secButton;
@@ -61,6 +62,7 @@ public class SpeedModeActivity extends AppCompatActivity {
 
         TextView toolbarText = findViewById(R.id.mode_toolbar_text);
         wordTextView = findViewById(R.id.speed_mode_word);
+        meaningTextView = findViewById(R.id.speed_mode_meaning);
         oMark = findViewById(R.id.speed_mode_o);
         xMark = findViewById(R.id.speed_mode_x);
         secButton = findViewById(R.id.speed_mode_button_sec);
@@ -87,6 +89,8 @@ public class SpeedModeActivity extends AppCompatActivity {
                         if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                             Log.d("dabin", "right to left");
                             if (showState == false) {
+                                wordTextView.setVisibility(View.INVISIBLE);
+                                meaningTextView.setVisibility(View.VISIBLE);
                                 oMark.setVisibility(View.VISIBLE);
                                 CardListActivity.list.get(curPos).isRight = true;
                                 score++;
@@ -101,6 +105,8 @@ public class SpeedModeActivity extends AppCompatActivity {
                         else if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                             Log.d("dabin", "dowm to up");
                             if (showState == false) {
+                                wordTextView.setVisibility(View.INVISIBLE);
+                                meaningTextView.setVisibility(View.VISIBLE);
                                 xMark.setVisibility(View.VISIBLE);
                                 CardListActivity.list.get(curPos).isRight = false;
                                 showState = true;
@@ -122,9 +128,12 @@ public class SpeedModeActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             showState = false;
+                            wordTextView.setVisibility(View.VISIBLE);
+                            meaningTextView.setVisibility(View.INVISIBLE);
                             xMark.setVisibility(View.INVISIBLE);
                             oMark.setVisibility(View.INVISIBLE);
                             wordTextView.setText(CardListActivity.list.get(curPos).word);
+                            meaningTextView.setText(CardListActivity.list.get(curPos).meaning);
                         }
                     });
 
@@ -150,6 +159,8 @@ public class SpeedModeActivity extends AppCompatActivity {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
+                                wordTextView.setVisibility(View.INVISIBLE);
+                                meaningTextView.setVisibility(View.VISIBLE);
                                 xMark.setVisibility(View.VISIBLE);
                             }
                         });

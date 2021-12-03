@@ -27,6 +27,7 @@ public class CalendarProgressbarAdapter extends RecyclerView.Adapter<CalendarPro
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.calendar_progressbar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = 260;
         return new CalendarProgressbarAdapter.ViewHolder(view);
     }
 

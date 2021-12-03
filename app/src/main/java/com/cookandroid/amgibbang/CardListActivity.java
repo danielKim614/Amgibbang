@@ -162,12 +162,20 @@ public class CardListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         switch(array[i]){
                             case "공부 모드":
+                                if (list.size() == 0) {
+                                    Toast.makeText(CardListActivity.this, "단어장이 비어있으므로 공부 모드를 실행시킬 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
                                 Log.v("다이얼로그", "공부 모드 시작");
                                 Intent intentToSt = new Intent(CardListActivity.this, StudyModeActivity.class);
                                 intentToSt.putExtra("TITLE", titleText);
                                 startActivity(intentToSt);
                                 break;
                             case "스피드 모드":
+                                if (list.size() == 0) {
+                                    Toast.makeText(CardListActivity.this, "단어장이 비어있으므로 스피드 모드를 실행시킬 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                    break;
+                                }
                                 Log.v("다이얼로그", "스피드 모드 시작");
                                 Intent intentToSp = new Intent(CardListActivity.this, SpeedModeActivity.class);
                                 intentToSp.putExtra("TITLE", titleText);
@@ -183,7 +191,7 @@ public class CardListActivity extends AppCompatActivity {
                                     startActivity(intent1);
                                 }
                                 else{
-                                    Toast.makeText(CardListActivity.this, "4단어 이하는 퀴즈 모드를 실행할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(CardListActivity.this, "단어 4개 이하는 퀴즈 모드를 실행할 수 없습니다.", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
                         }
