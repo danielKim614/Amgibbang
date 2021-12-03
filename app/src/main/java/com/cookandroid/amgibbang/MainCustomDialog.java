@@ -14,6 +14,7 @@ import com.cookandroid.amgibbang.R;
 public class MainCustomDialog extends Dialog implements View.OnClickListener{
 
     private Context context;
+    private String curName;
     private EditText editText;
     private MainCustomDialogListener mainCustomDialogListener;
     TextView positive;
@@ -22,6 +23,12 @@ public class MainCustomDialog extends Dialog implements View.OnClickListener{
     public MainCustomDialog(Context context){
         super(context);
         this.context=context;
+    }
+
+    public MainCustomDialog(Context context, String curName){
+        super(context);
+        this.context=context;
+        this.curName = curName;
     }
 
     //인터페이스 설정
@@ -42,6 +49,9 @@ public class MainCustomDialog extends Dialog implements View.OnClickListener{
         positive = findViewById(R.id.main_dialog_btnPositive);
         negative = findViewById(R.id.main_dialog_btnNegative);
 
+        if(curName!=null){
+            editText.setText(curName);
+        }
         positive.setOnClickListener(this);
         negative.setOnClickListener(this);
     }

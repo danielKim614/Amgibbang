@@ -1,4 +1,5 @@
 package com.cookandroid.amgibbang;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -422,10 +424,28 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.Delete:  // 탈퇴하고 액티비티 종료됨
-                revokeAccess();
-                Intent intent2 = new Intent(this, SplashActivity.class);
-                startActivity(intent2);
-                finish();
+                //다이얼로그 띄움
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("탈퇴하시겠습니까?").setMessage("탈퇴 시 모든 데이터가 삭제됩니다.");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        revokeAccess();
+                        Intent intent2 = new Intent(MainActivity.this, SplashActivity.class);
+                        startActivity(intent2);
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        //
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 break;
         }
     }

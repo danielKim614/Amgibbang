@@ -172,14 +172,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
                     });
                 }
             });
-        } else { //editState가 false 일 때
+        } else { //editState가 true 일 때
 
             //이름 변경
             holder.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
                     String curName = holder.name.getText().toString();
-                    MainCustomDialog dialog = new MainCustomDialog(context);
+                    MainCustomDialog dialog = new MainCustomDialog(context, curName);
                     dialog.setMainDialogListener(new MainCustomDialog.MainCustomDialogListener(){
                         @Override
                         public void mainDialogPositive(String inputName) {
