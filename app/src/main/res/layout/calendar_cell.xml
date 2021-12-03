@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:visibility="invisible"
-            android:paddingTop="3dp"
+            android:paddingTop="4dp"
             android:src="@drawable/calendar_cell_click"/>
 
         <TextView
