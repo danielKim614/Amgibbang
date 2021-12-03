@@ -26,6 +26,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -405,6 +407,64 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //날짜 삭제 2(collection 없는 것)
+        for(int i=1; i<=12; i++){
+            String month = Integer.toString(i);
+            String c = user+2021+month+"월";
+            db.collection(c).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        for(QueryDocumentSnapshot document : task.getResult()){
+                            db.collection(c).document(document.getId()).delete();
+                        }
+                        mainAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.v("main", "오류 발생");
+                    }
+                }
+            });
+        }
+
+        //날짜 삭제1
+        String c = user+2021;
+        for(int i=1; i<=12; i++){
+            String month = Integer.toString(i)+"월";
+            for(int j=1; j<=31; j++){
+                String date = Integer.toString(j);
+                db.collection(c).document(month).collection(date).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                documentId = document.getId();
+                                db.collection(c).document(month).collection(date).document(documentId).delete();
+                                Log.v("삭제", documentId);
+                            }
+                            mainAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.v("main", "오류 발생");
+                        }
+                    }
+                });
+            }
+        }
+
+        db.collection(c).document("12월").collection("1").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //Log.v("삭제", document.getId());
+                            }
+                        } else {
+                            Log.v("삭제", "실패");
+                        }
+                    }
+                });
+
+
         mAuth.getCurrentUser().delete();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -434,6 +494,7 @@ public class MainActivity extends AppCompatActivity {
                         revokeAccess();
                         Intent intent2 = new Intent(MainActivity.this, SplashActivity.class);
                         startActivity(intent2);
+                        finish();
                     }
                 });
 
