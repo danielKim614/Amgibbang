@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
 import java.util.ArrayList;
 
 public class TodoListActivity extends AppCompatActivity {
@@ -58,6 +60,18 @@ public class TodoListActivity extends AppCompatActivity {
 
             }
         });
+
+        // 플로팅액션버튼(RESET) 버튼
+        ExtendedFloatingActionButton fab = (ExtendedFloatingActionButton) findViewById(R.id.todo_list_fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String sqlReset = "delete from " + NoteDatabase.TABLE_NOTE;
+
+                    NoteDatabase database = NoteDatabase.getInstance(context);
+                    database.execSQL(sqlReset);
+                }
+            });
     }
 
     @Override
@@ -99,6 +113,7 @@ public class TodoListActivity extends AppCompatActivity {
         inputToDo = findViewById(R.id.inputToDo);
 
         String todo = inputToDo.getText().toString();
+        Log.v("String",todo);
 
         String sqlSave = "insert into " + NoteDatabase.TABLE_NOTE + " (TODO) values (" +
                 "'" + todo + "')";
