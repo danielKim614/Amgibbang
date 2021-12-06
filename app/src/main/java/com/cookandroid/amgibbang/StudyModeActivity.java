@@ -138,17 +138,17 @@ public class StudyModeActivity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             // 단어 or 뜻 먼저 표시
-            String[] array = {"단어 먼저 표시", "뜻 먼저 표시"};
+            String[] array = {"단어 표시", "뜻 표시"};
             AlertDialog.Builder builder = new AlertDialog.Builder(StudyModeActivity.this);
             builder.setItems(array, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     switch(array[i]){
-                        case "단어 먼저 표시":
+                        case "단어 표시":
                             settingValue = 0;
                             wordTextView.setText(list.get(curPos).word);
                             break;
-                        case "뜻 먼저 표시":
+                        case "뜻 표시":
                             settingValue = 1;
                             wordTextView.setText(list.get(curPos).meaning);
                             break;
