@@ -1,6 +1,7 @@
 package com.cookandroid.amgibbang;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     ArrayList<Note> items = new ArrayList<Note>();
 
 
+
     @NonNull
     @Override
     public NoteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,8 +33,14 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull NoteAdapter.ViewHolder holder, int position) {
         Note item = items.get(position);
+        int state = item.getCheckBox();
         holder.setItem(item);
         holder.setLayout();
+        if(state == 1)
+            holder.checkBox.setChecked(true);
+        else
+            holder.checkBox.setChecked(false);
+
     }
 
     @Override
@@ -50,6 +58,38 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             this.layoutTodo = itemView.findViewById(R.id.layoutTodo);
             this.checkBox = itemView.findViewById(R.id.todoCheckBox);
             this.deleteButton = itemView.findViewById(R.id.todoDeleteButton);
+
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int state;
+
+                    if (checkBox.isChecked()) {
+                        state = 1;
+                    }
+                    else {
+                        state = 0;
+                    }
+                    String TODO = (String) checkBox.getText();
+                    saveCheckBox(TODO, state);
+
+                }
+
+                Context context;
+
+                private void saveCheckBox(String TODO, int state){
+                    String checkBoxSql;
+                    if (state == 1) {
+                        checkBoxSql = "update " + NoteDatabase.TABLE_NOTE + " set " + "  checkBox = '1'" + " where " + "  TODO = '" + TODO + "'";
+                    }
+                    else {
+                        checkBoxSql = "update " + NoteDatabase.TABLE_NOTE + " set " + "  checkBox = '0'" + " where " + "  TODO = '" + TODO + "'";
+                    }
+                    Log.v("checkBox",""+state);
+                    NoteDatabase database = NoteDatabase.getInstance(context);
+                    database.execSQL(checkBoxSql);
+                }
+            });
 
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override

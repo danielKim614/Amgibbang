@@ -85,7 +85,8 @@ public class NoteDatabase {
 
             String CREATE_SQL = "create table " + TABLE_NOTE + "("
                     + " _id integer NOT NULL PRIMARY KEY AUTOINCREMENT, "
-                    + "  TODO TEXT DEFAULT '' "
+                    + "  TODO TEXT DEFAULT '', "
+                    + " checkBox integer NOT NULL DEFAULT 0"
                     + ")";
             try{
                 db.execSQL(CREATE_SQL);

@@ -44,7 +44,7 @@ public class TodoFragment extends Fragment {
 
     public int loadNoteListData() {
 
-        String loadSql = "select _id, TODO from " + NoteDatabase.TABLE_NOTE + " order by _id desc";
+        String loadSql = "select _id, TODO, checkBox from " + NoteDatabase.TABLE_NOTE + " order by _id desc";
 
         int recordCount = -1;
         NoteDatabase database = NoteDatabase.getInstance(context);
@@ -61,7 +61,8 @@ public class TodoFragment extends Fragment {
 
                 int _id = outCursor.getInt(0);
                 String todo = outCursor.getString(1);
-                items.add(new Note(_id,todo));
+                int checkBox = outCursor.getInt(2);
+                items.add(new Note(_id,todo,checkBox));
             }
 
             outCursor.close();
