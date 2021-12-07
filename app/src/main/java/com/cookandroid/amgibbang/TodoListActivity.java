@@ -118,8 +118,12 @@ public class TodoListActivity extends AppCompatActivity {
         String sqlSave = "insert into " + NoteDatabase.TABLE_NOTE + " (TODO) values (" +
                 "'" + todo + "')";
 
-        NoteDatabase database = NoteDatabase.getInstance(context);
-        database.execSQL(sqlSave);
+        if(todo.getBytes().length > 0) {
+            NoteDatabase database = NoteDatabase.getInstance(context);
+            database.execSQL(sqlSave);
+        }
+        else
+            Toast.makeText(this, "값을 입력하세요.", Toast.LENGTH_SHORT).show();
 
         inputToDo.setText("");
     }

@@ -21,17 +21,18 @@
 
         <CheckBox
             android:id="@+id/todoCheckBox"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="8"/>
 
         <Button
             android:id="@+id/todoDeleteButton"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="7"
+            android:layout_gravity="right"
             android:text="X"
             app:backgroundTint="?attr/Black" />
     </LinearLayout>
